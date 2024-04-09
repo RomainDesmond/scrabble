@@ -1,5 +1,10 @@
 package scrabble.model;
 
 public enum TypeCase {
-	//TODO
+	LETTREDOUBLE,
+	LETTRETRIPLE,
+	MOTDOUBLE,
+	MOTTRIPLE,
+	NORMAL,
+	DEPART,
 }
