@@ -1,10 +1,10 @@
 package scrabble.model;
 
 public class Lettre {
-	private String valeur;
+	private ValeurLettre valeur;
 	private int point;
 
-	public Lettre(String valeur,int point) {
+	public Lettre(ValeurLettre valeur,int point) {
 		this.valeur=valeur;
 		this.point=point;
 	}
