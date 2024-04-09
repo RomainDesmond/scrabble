@@ -1,7 +1,8 @@
 package scrabble.model;
 
-import java.io.Console;
 import java.util.List;
+
+import scrabble.console.Console;
 
 
 
@@ -21,6 +22,6 @@ public class Joueur {
 	}
 	
 	public void echangerLettre(int nombreAEchanger) {
-		valeurEchange=console.keyboard.nextLine()
+		valeurEchange=keyboard.nextLine()
 	}
 }
