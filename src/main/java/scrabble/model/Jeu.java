@@ -11,6 +11,10 @@ public class Jeu {
 	private List<Joueur> listeJoueur;
 	
 	plateau = new ArrayList<Case> (225);
+	for (int i = 0; i < 225; i++) {
+		plateau.add(ValeurLettre.VIDE);
+	}
+	plateau.set(112,DEPART);
 
 	public Jeu(int tour, List<String> motsValides, List<Lettre> sacDeLettre, ArrayList<Case> plateau, List<Joueur> listeJoueur) {
 		this.tour=tour;
