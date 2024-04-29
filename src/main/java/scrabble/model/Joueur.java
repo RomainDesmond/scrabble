@@ -23,6 +23,8 @@ public class Joueur {
 	
 	public void echangerLettre(int nombreAEchanger) {
 		//valeurEchange=keyboard.nextLine()
+		//TODO
+
 		
 	}
 

@@ -14,15 +14,35 @@ public class Case {
 	}
 	
 	public Boolean estUtilise() {
-		//a compléter
+		return null;
+		//TODO
 	}
 	
 	public int compterPoint() {
-		//a compléter
+		return posX;
+		//TODO
 	}
 	
 	public Boolean lettrePeutEtrePlace() {
-		//a compléter
+		return null;
+		//TODO
 	}
+
+	public String getTypeCase() {
+		return typeCase;
+	}
+
+	public void setTypeCase(String typeCase) {
+		this.typeCase = typeCase;
+	}
+
+	public Lettre getContenu() {
+		return contenu;
+	}
+
+	public void setContenu(Lettre contenu) {
+		this.contenu = contenu;
+	}
+
 	
 }

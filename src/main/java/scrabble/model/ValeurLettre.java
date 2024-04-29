@@ -1,5 +1,5 @@
 package scrabble.model;
 
 public enum ValeurLettre {
-	A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,JOKER,VIDE
+	A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,JOKER,DEPART,VIDE
 }
