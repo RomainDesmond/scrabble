@@ -96,7 +96,7 @@ public class Jeu {
 			
 		}
 	}
-	public boolean estVide() {
+	public boolean sacDeLettreEstVide() {
 		boolean booleenEstVide = true;
 		for (int cpt = 0; cpt<101; cpt++) {
 			if (!(sacDeLettre[cpt]== null)) {
