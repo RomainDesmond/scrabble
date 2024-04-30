@@ -1,8 +1,12 @@
 package scrabble.application;
 
+import scrabble.console.Console;
 import scrabble.model.Jeu;
 
 public class ScrabbleApplicationConsole {
+	Console console;
+
+
 
 	public static void main(String[] args) {
 		System.out.println("---------------------------------------------------------");
@@ -14,6 +18,7 @@ public class ScrabbleApplicationConsole {
 		
 		Jeu plateau = new Jeu();
 		plateau.afficherPlateau();
+		System.out.println("le plateau est vide :"+plateau.estVide());
 
 	}
 

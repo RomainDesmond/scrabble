@@ -3,7 +3,13 @@ package scrabble.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import scrabble.console.Console;
+
 public class Jeu {
+	
+	Console console;
+
+	
 	private int tour;
 	private List<String> motsValides;
 	private ArrayList<Case> plateau;
@@ -48,19 +54,9 @@ public class Jeu {
 		plateauDeJeu[7][7]=new Case(7,7,"DEPART",null);
 	}
 	
-	//plateau = new ArrayList<Case> (225);
-	//for (int i = 0; i < 225; i++) {
-	//	plateau.add(new Case());
-	//}
-	//plateau.set(112,DEPART);
-
-	//public Jeu(int tour, List<String> motsValides, List<Lettre> sacDeLettre, ArrayList<Case> plateau, List<Joueur> listeJoueur) {
-	//	this.tour=tour;
-	//	this.motsValides=motsValides;
-	//	this.sacDeLettre=sacDeLettre;
-	//	this.plateau=plateau;
-	//	this.listeJoueur=listeJoueur;
-	//}
+	public void remplirSacDeLettre() {
+		//TODO
+	}
 	
 	public Boolean verifierMot() {
 		return null;
@@ -99,6 +95,16 @@ public class Jeu {
 			
 			
 		}
+	}
+	public boolean estVide() {
+		boolean booleenEstVide = true;
+		for (int cpt = 0; cpt<101; cpt++) {
+			if (!(sacDeLettre[cpt]== null)) {
+				booleenEstVide=false;
+				break;		
+			}
+		}
+        return booleenEstVide;
 	}
 	
 	public String finPartie() {
