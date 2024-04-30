@@ -18,7 +18,10 @@ public class ScrabbleApplicationConsole {
 		
 		Jeu plateau = new Jeu();
 		plateau.afficherPlateau();
-		System.out.println("le plateau est vide :"+plateau.estVide());
+		System.out.println("le plateau est vide :"+plateau.sacDeLettreEstVide());
+		plateau.remplirSacDeLettre();
+		System.out.println("le plateau est vide :"+plateau.sacDeLettreEstVide());
+
 
 	}
 

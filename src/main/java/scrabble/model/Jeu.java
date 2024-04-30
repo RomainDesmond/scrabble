@@ -55,7 +55,12 @@ public class Jeu {
 	}
 	
 	public void remplirSacDeLettre() {
-		//TODO
+		//WIP
+		if (sacDeLettreEstVide()) {
+			for (int cpt=0;cpt<15;cpt++) {
+				sacDeLettre[cpt]=e;			
+			}
+		}
 	}
 	
 	public Boolean verifierMot() {
