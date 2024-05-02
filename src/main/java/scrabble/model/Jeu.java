@@ -55,12 +55,43 @@ public class Jeu {
 	}
 	
 	public void remplirSacDeLettre() {
+		int longueur=0;
 		//WIP
 		if (sacDeLettreEstVide()) {
-			for (int cpt=0;cpt<15;cpt++) {
-				sacDeLettre[cpt]=e;			
-			}
+			longueur=ajouterLettre(longueur,e,15);
+			longueur=ajouterLettre(longueur,a,9);
+			longueur=ajouterLettre(longueur,i,8);
+			longueur=ajouterLettre(longueur,n,6);
+			longueur=ajouterLettre(longueur,o,6);
+			longueur=ajouterLettre(longueur,r,6);
+			longueur=ajouterLettre(longueur,s,6);
+			longueur=ajouterLettre(longueur,t,6);
+			longueur=ajouterLettre(longueur,u,6);
+			longueur=ajouterLettre(longueur,l,5);
+			longueur=ajouterLettre(longueur,d,3);
+			longueur=ajouterLettre(longueur,g,2);
+			longueur=ajouterLettre(longueur,m,3);
+			longueur=ajouterLettre(longueur,b,2);
+			longueur=ajouterLettre(longueur,c,2);
+			longueur=ajouterLettre(longueur,p,2);
+			longueur=ajouterLettre(longueur,f,2);
+			longueur=ajouterLettre(longueur,h,2);
+			longueur=ajouterLettre(longueur,v,2);
+			longueur=ajouterLettre(longueur,j,1);
+			longueur=ajouterLettre(longueur,q,1);
+			longueur=ajouterLettre(longueur,k,1);
+			longueur=ajouterLettre(longueur,w,1);
+			longueur=ajouterLettre(longueur,x,1);
+			longueur=ajouterLettre(longueur,y,1);
+			longueur=ajouterLettre(longueur,z,1);
+
 		}
+	}
+	public int ajouterLettre(int longueur,Lettre lettre,int nombre) {
+		for (int cpt=0;cpt<longueur; cpt++){
+			sacDeLettre[longueur+nombre]=lettre;
+		}
+		return longueur+nombre;
 	}
 	
 	public Boolean verifierMot() {
