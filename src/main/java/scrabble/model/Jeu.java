@@ -43,7 +43,9 @@ public class Jeu {
 	private Lettre y=new Lettre(ValeurLettre.Y,10);
 	private Lettre z=new Lettre(ValeurLettre.Z,10);
 	private Lettre joker=new Lettre(ValeurLettre.JOKER,0);
-	private Random rand = new Random();
+	private Lettre depart=new Lettre(ValeurLettre.DEPART,0);
+
+	private static Random rand = new Random();
 
 
 	static Lettre [] sacDeLettre;
@@ -52,7 +54,7 @@ public class Jeu {
 	public Jeu(){
 		this.sacDeLettre = new Lettre[102];
 		this.plateauDeJeu = new Case[15][15];
-		plateauDeJeu[7][7]=new Case(7,7,"DEPART",null);
+		plateauDeJeu[7][7]=new Case(7,7,TypeCase.DEPART,null);
 	}
 	
 	public void remplirSacDeLettre() {
@@ -86,7 +88,6 @@ public class Jeu {
 			longueur=ajouterLettre(longueur,y,1);
 			longueur=ajouterLettre(longueur,z,1);
 			longueur=ajouterLettre(longueur,joker,2);
-			//ajouter joker
 
 		}
 	}
@@ -96,9 +97,16 @@ public class Jeu {
 		for (int cpt=0;cpt<nombre; cpt++){
 			ajout=longueur+cpt;
 			sacDeLettre[ajout]=lettre;
-			System.out.println("ajout:"+lettre.AffichageLettre()+"index:"+ajout);
 		}
 		return (longueur+nombre);
+	}
+	public void ajouterLettrePosition(int position,Lettre lettre) {
+		if (sacDeLettre[position]==null){
+			sacDeLettre[position]=lettre;
+		}
+	}
+	public void supprimerLettre(int position) {
+		sacDeLettre[position]=null;
 	}
 	
 	public Boolean verifierMot() {
@@ -111,16 +119,19 @@ public class Jeu {
 		//TODO
 	}
 	
-	public Lettre distribuerLettre() {
+	public Lettre distribuerLettre(int position) {
 		//WIP
-		int n = rand.nextInt(50);
-		Lettre lettre=sacDeLettre[n];
-		System.out.println(n);
-		System.out.println(lettre.AffichageLettre());
-		return null;
+		
+		Lettre lettre=sacDeLettre[position];
+		//System.out.println(position);
+		//System.out.println(lettre.AffichageLettre());
+		return lettre;
 		//TODO
 	}
-	
+	public int choixNombreAleatoire() {
+		int nombreAleatoire = rand.nextInt(102);
+		return nombreAleatoire;
+	}
 	public String joueurQuiJoue() {
 		return null;
 		//TODO
@@ -130,9 +141,10 @@ public class Jeu {
 		for (int compteur = 0; compteur<15; compteur++) {
 			System.out.print("|");
 			for (int compteur2 = 0; compteur2<15; compteur2++) {
-				if (plateauDeJeu[compteur][compteur2]!=null){
-					System.out.print(plateauDeJeu[compteur][compteur2].getContenu()+" "+ "|"+" ");
+				if ((plateauDeJeu[compteur][compteur2]!=null)){
+					System.out.print(plateauDeJeu[compteur][compteur2].affichageTypeCase()+" "+ "|"+" ");
 				}
+
 				else {
 				//System.out.print(plateauDeJeu[compteur][compteur2]+" "+"|");
 				System.out.print("  "+ "|"+ " ");
@@ -146,7 +158,7 @@ public class Jeu {
 	}
 	public boolean sacDeLettreEstVide() {
 		boolean booleenEstVide = true;
-		for (int cpt = 0; cpt<101; cpt++) {
+		for (int cpt = 0; cpt<102; cpt++) {
 			if (!(sacDeLettre[cpt]== null)) {
 				booleenEstVide=false;
 				break;		
