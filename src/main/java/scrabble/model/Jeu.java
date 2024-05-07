@@ -2,6 +2,7 @@ package scrabble.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import scrabble.console.Console;
 
@@ -42,14 +43,14 @@ public class Jeu {
 	private Lettre y=new Lettre(ValeurLettre.Y,10);
 	private Lettre z=new Lettre(ValeurLettre.Z,10);
 	private Lettre joker=new Lettre(ValeurLettre.JOKER,0);
-
+	private Random rand = new Random();
 
 
 	static Lettre [] sacDeLettre;
 	static Case [][] plateauDeJeu;
 	
 	public Jeu(){
-		this.sacDeLettre = new Lettre[101];
+		this.sacDeLettre = new Lettre[102];
 		this.plateauDeJeu = new Case[15][15];
 		plateauDeJeu[7][7]=new Case(7,7,"DEPART",null);
 	}
@@ -84,14 +85,20 @@ public class Jeu {
 			longueur=ajouterLettre(longueur,x,1);
 			longueur=ajouterLettre(longueur,y,1);
 			longueur=ajouterLettre(longueur,z,1);
+			longueur=ajouterLettre(longueur,joker,2);
+			//ajouter joker
 
 		}
 	}
 	public int ajouterLettre(int longueur,Lettre lettre,int nombre) {
-		for (int cpt=0;cpt<longueur; cpt++){
-			sacDeLettre[longueur+nombre]=lettre;
+		int temp=longueur+nombre;
+		int ajout=0;
+		for (int cpt=0;cpt<nombre; cpt++){
+			ajout=longueur+cpt;
+			sacDeLettre[ajout]=lettre;
+			System.out.println("ajout:"+lettre.AffichageLettre()+"index:"+ajout);
 		}
-		return longueur+nombre;
+		return (longueur+nombre);
 	}
 	
 	public Boolean verifierMot() {
@@ -105,6 +112,11 @@ public class Jeu {
 	}
 	
 	public Lettre distribuerLettre() {
+		//WIP
+		int n = rand.nextInt(50);
+		Lettre lettre=sacDeLettre[n];
+		System.out.println(n);
+		System.out.println(lettre.AffichageLettre());
 		return null;
 		//TODO
 	}
