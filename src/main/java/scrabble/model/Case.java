@@ -3,14 +3,17 @@ package scrabble.model;
 public class Case {
 	private int posX;
 	private int posY;
-	private String typeCase;
+	private TypeCase typeCase;
 	private Lettre contenu;
 	
-	public Case(int posX, int posY, String typeCase, Lettre contenu) {
+	public Case(int posX, int posY, TypeCase typeCase, Lettre contenu) {
 		this.posX=posX;
 		this.posY=posY;
 		this.typeCase=typeCase;
 		this.contenu=contenu;		
+	}
+	public String affichageTypeCase() {
+		return this.typeCase.AffichageCase();
 	}
 	
 	public Boolean estUtilise() {
@@ -28,17 +31,18 @@ public class Case {
 		//TODO
 	}
 
-	public String getTypeCase() {
-		return typeCase;
+	public TypeCase getTypeCase() {
+		return this.typeCase;
 	}
 
-	public void setTypeCase(String typeCase) {
+	public void setTypeCase(TypeCase typeCase) {
 		this.typeCase = typeCase;
 	}
 
 	public Lettre getContenu() {
 		return contenu;
 	}
+
 
 	public void setContenu(Lettre contenu) {
 		this.contenu = contenu;
