@@ -120,13 +120,10 @@ public class Jeu {
 	}
 	
 	public Lettre distribuerLettre(int position) {
-		//WIP
 		
 		Lettre lettre=sacDeLettre[position];
-		//System.out.println(position);
-		//System.out.println(lettre.AffichageLettre());
+
 		return lettre;
-		//TODO
 	}
 	public int choixNombreAleatoire() {
 		int nombreAleatoire = rand.nextInt(102);
@@ -144,6 +141,7 @@ public class Jeu {
 				if ((plateauDeJeu[compteur][compteur2]!=null)){
 					System.out.print(plateauDeJeu[compteur][compteur2].affichageTypeCase()+" "+ "|"+" ");
 				}
+				//TODO affichage des lettres qaund nécessaire et non du type de case
 
 				else {
 				//System.out.print(plateauDeJeu[compteur][compteur2]+" "+"|");
