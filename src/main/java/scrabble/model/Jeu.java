@@ -16,43 +16,16 @@ public class Jeu {
 	private ArrayList<Case> plateau;
 	private List<Joueur> listeJoueur;
 	
-	private Lettre e=new Lettre(ValeurLettre.E,1);
-	private Lettre a=new Lettre(ValeurLettre.A,1);
-	private Lettre i=new Lettre(ValeurLettre.I,1);
-	private Lettre n=new Lettre(ValeurLettre.N,1);
-	private Lettre o=new Lettre(ValeurLettre.O,1);
-	private Lettre r=new Lettre(ValeurLettre.R,1);
-	private Lettre s=new Lettre(ValeurLettre.S,1);
-	private Lettre t=new Lettre(ValeurLettre.T,1);
-	private Lettre u=new Lettre(ValeurLettre.U,1);
-	private Lettre l=new Lettre(ValeurLettre.L,1);
-	private Lettre d=new Lettre(ValeurLettre.D,2);
-	private Lettre g=new Lettre(ValeurLettre.G,2);
-	private Lettre m=new Lettre(ValeurLettre.M,2);
-	private Lettre b=new Lettre(ValeurLettre.B,3);
-	private Lettre c=new Lettre(ValeurLettre.C,3);
-	private Lettre p=new Lettre(ValeurLettre.P,3);
-	private Lettre f=new Lettre(ValeurLettre.F,4);
-	private Lettre h=new Lettre(ValeurLettre.H,4);
-	private Lettre v=new Lettre(ValeurLettre.V,4);
-	private Lettre j=new Lettre(ValeurLettre.J,8);
-	private Lettre q=new Lettre(ValeurLettre.Q,8);
-	private Lettre k=new Lettre(ValeurLettre.K,10);
-	private Lettre w=new Lettre(ValeurLettre.W,10);
-	private Lettre x=new Lettre(ValeurLettre.X,10);
-	private Lettre y=new Lettre(ValeurLettre.Y,10);
-	private Lettre z=new Lettre(ValeurLettre.Z,10);
-	private Lettre joker=new Lettre(ValeurLettre.JOKER,0);
-	private Lettre depart=new Lettre(ValeurLettre.DEPART,0);
+
 
 	private static Random rand = new Random();
 
 
-	static Lettre [] sacDeLettre;
+	static ValeurLettre[] sacDeLettre;
 	static Case [][] plateauDeJeu;
 	
 	public Jeu(){
-		this.sacDeLettre = new Lettre[102];
+		this.sacDeLettre = new ValeurLettre[102];
 		this.plateauDeJeu = new Case[15][15];
 		plateauDeJeu[7][7]=new Case(7,7,TypeCase.DEPART,null);
 	}
@@ -61,46 +34,22 @@ public class Jeu {
 		int longueur=0;
 		//WIP
 		if (sacDeLettreEstVide()) {
-			longueur=ajouterLettre(longueur,e,15);
-			longueur=ajouterLettre(longueur,a,9);
-			longueur=ajouterLettre(longueur,i,8);
-			longueur=ajouterLettre(longueur,n,6);
-			longueur=ajouterLettre(longueur,o,6);
-			longueur=ajouterLettre(longueur,r,6);
-			longueur=ajouterLettre(longueur,s,6);
-			longueur=ajouterLettre(longueur,t,6);
-			longueur=ajouterLettre(longueur,u,6);
-			longueur=ajouterLettre(longueur,l,5);
-			longueur=ajouterLettre(longueur,d,3);
-			longueur=ajouterLettre(longueur,g,2);
-			longueur=ajouterLettre(longueur,m,3);
-			longueur=ajouterLettre(longueur,b,2);
-			longueur=ajouterLettre(longueur,c,2);
-			longueur=ajouterLettre(longueur,p,2);
-			longueur=ajouterLettre(longueur,f,2);
-			longueur=ajouterLettre(longueur,h,2);
-			longueur=ajouterLettre(longueur,v,2);
-			longueur=ajouterLettre(longueur,j,1);
-			longueur=ajouterLettre(longueur,q,1);
-			longueur=ajouterLettre(longueur,k,1);
-			longueur=ajouterLettre(longueur,w,1);
-			longueur=ajouterLettre(longueur,x,1);
-			longueur=ajouterLettre(longueur,y,1);
-			longueur=ajouterLettre(longueur,z,1);
-			longueur=ajouterLettre(longueur,joker,2);
-
+			for (ValeurLettre valeur : ValeurLettre.values()) {
+				longueur=ajouterLettre(longueur,valeur,valeur.getRecurrence());
+			}
+			
 		}
 	}
-	public int ajouterLettre(int longueur,Lettre lettre,int nombre) {
+	public int ajouterLettre(int longueur,ValeurLettre valeur,int nombre) {
 		int temp=longueur+nombre;
 		int ajout=0;
 		for (int cpt=0;cpt<nombre; cpt++){
 			ajout=longueur+cpt;
-			sacDeLettre[ajout]=lettre;
+			sacDeLettre[ajout]=valeur;
 		}
 		return (longueur+nombre);
 	}
-	public void ajouterLettrePosition(int position,Lettre lettre) {
+	public void ajouterLettrePosition(int position,ValeurLettre lettre) {
 		if (sacDeLettre[position]==null){
 			sacDeLettre[position]=lettre;
 		}
@@ -119,9 +68,9 @@ public class Jeu {
 		//TODO
 	}
 	
-	public Lettre distribuerLettre(int position) {
+	public ValeurLettre distribuerLettre(int position) {
 		
-		Lettre lettre=sacDeLettre[position];
+		ValeurLettre lettre=sacDeLettre[position];
 
 		return lettre;
 	}
