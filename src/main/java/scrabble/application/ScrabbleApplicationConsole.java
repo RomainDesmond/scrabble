@@ -6,6 +6,7 @@ import scrabble.console.Console;
 import scrabble.model.Jeu;
 import scrabble.model.Joueur;
 import scrabble.model.Lettre;
+import scrabble.model.ValeurLettre;
 
 public class ScrabbleApplicationConsole {
 	Console console;
@@ -21,6 +22,7 @@ public class ScrabbleApplicationConsole {
 		System.out.println("--  ainsi que par Romain                               --");
 		System.out.println("---------------------------------------------------------");
 		
+
 		Jeu plateau = new Jeu();
 		Joueur j1 = new Joueur("test");
 		Scanner testInput = new Scanner(System.in);
@@ -40,7 +42,7 @@ public class ScrabbleApplicationConsole {
 		System.out.println(choix);
 		switch(choix) {
 		case 1:
-			echanger();
+			echanger(plateau,j1);
 			//TODO
 		case 2:
 			//TODO
@@ -60,12 +62,50 @@ public class ScrabbleApplicationConsole {
 		System.out.println("--  4-Quitter                                          --");
 		System.out.println("---------------------------------------------------------");
 	}
-	public static void echanger() {
+	public static void echanger(Jeu plateau,Joueur j) {
+		
+		//ajouter une vérification pour ne pas porcéder à l'échange si le sacDeLettre est vide
+		
+		ValeurLettre lettreTemp=null;
+		int nombreTemporaire=-1;
+		int[] positionsEchanger=new int[7];
+		System.out.println("Combien de lettre voulez vous échanger : ");
+		Scanner inputNombreEchange = new Scanner(System.in);
+		int choix=inputNombreEchange.nextShort();
+		int compteur=0;
+		if (choix>0 && choix<8) {
+			for (compteur=0;compteur<choix;compteur++) {
+				System.out.println("Position de la lettre à échanger :");
+				int choixPosition=inputNombreEchange.nextShort();
+				positionsEchanger[compteur]=choixPosition;}
+			
+				//ajouter une vérification entre 0 et 7 et pas de doublon
+			}
+			for (compteur=0;compteur<choix;compteur++) {
+				lettreTemp=plateau.distribuerLettre(nombreTemporaire);
+				j.supprimerLettre(positionsEchanger[compteur]);
+				//WIP
+				while (lettreTemp==null){
+					nombreTemporaire=plateau.choixNombreAleatoire();
+					lettreTemp=plateau.distribuerLettre(nombreTemporaire);
+					}
+				if (j.ajouterLettre(lettreTemp)){
+					plateau.supprimerLettre(nombreTemporaire);
+				}
+					
+				}
+			}
+			
+		
+			
+		
+
+
 		//TODO
-	}
+	
 	public static void distribution(Jeu plateau,Joueur j) {
 		for (int i=0;i<8;i++) {
-			Lettre lettreTemp=null;
+			ValeurLettre lettreTemp=null;
 			int nombreTemporaire=-1;
 			while (lettreTemp==null){
 			nombreTemporaire=plateau.choixNombreAleatoire();
