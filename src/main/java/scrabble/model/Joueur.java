@@ -9,7 +9,7 @@ import scrabble.console.Console;
 public class Joueur {
 	private String nom;
 	private int score;
-	static Lettre [] chevalet;
+	static ValeurLettre [] chevalet;
 
 	//private List<Lettre> chevalet;
 	private int valeurEchange;
@@ -20,25 +20,41 @@ public class Joueur {
 	public Joueur(String nom, int score, List<Lettre> chevalet) {
 		this.nom=nom;
 		this.score=score;
-		this.chevalet = new Lettre[7];
+		this.chevalet = new ValeurLettre[7];
 	}
 	public Joueur(String nom) {
 		this.nom=nom;
 		this.score=0;
-		this.chevalet = new Lettre[7];
+		this.chevalet = new ValeurLettre[7];
 	}
 	public void afficherChevalet() {
 		System.out.println("1 2 3 4 5 6 7");
+		System.out.println();
 		for (int compteur=0;compteur<7;compteur++) {
 			if (chevalet[compteur]!=null) {
 				System.out.print(chevalet[compteur].AffichageLettre()+" ");
 		}
-			else {
-				System.out.print(chevalet[compteur]);
+		
 
-			}
+			//else {
+			//	System.out.print(chevalet[compteur]);
+
+			//}
+		
 	}
 	System.out.println();
+	System.out.println();
+
+	for (int compteur1=0;compteur1<7;compteur1++) {
+		if (chevalet[compteur1]!=null) {
+		System.out.print(chevalet[compteur1].getPoint()+" ");
+		//gérer l'espace si la valeur des points est égal à 10 (affichage décalé sinon)
+		}
+	}
+	System.out.println();
+	System.out.println();
+
+
 	}
 	
 	public void echangerLettre(int nombreAEchanger) {
@@ -77,12 +93,12 @@ public class Joueur {
 	public void entrerNom() {
 		//TODO
 	}
-	public boolean ajouterLettre(Lettre lettre) {
+	public boolean ajouterLettre(ValeurLettre lettreTemp) {
 		int position=0;
 		boolean booleenAjoutLettre=false;
 		while (position<7){
 			if (placeVideChevalet(position)) {
-				chevalet[position]=lettre;
+				chevalet[position]=lettreTemp;
 				booleenAjoutLettre=true;
 				break;
 			}
