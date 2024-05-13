@@ -107,6 +107,15 @@ public class Joueur {
 		return booleenAjoutLettre;
 
 	}
+	public void supprimerLettre(int position) {
+		chevalet[position]=null;
+	}
+	public ValeurLettre donnerLettre(int position) {
+		
+		ValeurLettre lettre=chevalet[position];
+
+		return lettre;
+	}
 	public boolean placeVideChevalet(int position){
 		boolean booleenEstVide = true;
 			if (!(chevalet[position]== null)) {
