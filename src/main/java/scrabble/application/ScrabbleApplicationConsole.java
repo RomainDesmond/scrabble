@@ -51,6 +51,8 @@ public class ScrabbleApplicationConsole {
 		case 4:
 			//TODO
 		}
+		j1.afficherChevalet();
+
 
 		}
 		
@@ -78,20 +80,14 @@ public class ScrabbleApplicationConsole {
 				System.out.println("Position de la lettre à échanger :");
 				int choixPosition=inputNombreEchange.nextShort();
 				positionsEchanger[compteur]=choixPosition;}
+				System.out.println(positionsEchanger[compteur]);
 			
 				//ajouter une vérification entre 0 et 7 et pas de doublon
 			}
 			for (compteur=0;compteur<choix;compteur++) {
-				lettreTemp=plateau.distribuerLettre(nombreTemporaire);
-				j.supprimerLettre(positionsEchanger[compteur]);
-				//WIP
-				while (lettreTemp==null){
-					nombreTemporaire=plateau.choixNombreAleatoire();
-					lettreTemp=plateau.distribuerLettre(nombreTemporaire);
-					}
-				if (j.ajouterLettre(lettreTemp)){
-					plateau.supprimerLettre(nombreTemporaire);
-				}
+				
+				j.supprimerLettre(positionsEchanger[compteur]-1);
+				distribuerUneLettre(plateau,j);
 					
 				}
 			}
@@ -105,18 +101,23 @@ public class ScrabbleApplicationConsole {
 	
 	public static void distribution(Jeu plateau,Joueur j) {
 		for (int i=0;i<8;i++) {
-			ValeurLettre lettreTemp=null;
-			int nombreTemporaire=-1;
-			while (lettreTemp==null){
-			nombreTemporaire=plateau.choixNombreAleatoire();
-			lettreTemp=plateau.distribuerLettre(nombreTemporaire);
-			}
-			if (j.ajouterLettre(lettreTemp)){
-				plateau.supprimerLettre(nombreTemporaire);
-			}
-			lettreTemp=null;
+			distribuerUneLettre(plateau,j);
 
 		}
+	}
+	public static void distribuerUneLettre(Jeu plateau,Joueur j) {
+		ValeurLettre lettreTemp=null;
+		int nombreTemporaire=-1;
+		while (lettreTemp==null){
+		nombreTemporaire=plateau.choixNombreAleatoire();
+		lettreTemp=plateau.distribuerLettre(nombreTemporaire);
+		}
+		if (j.ajouterLettre(lettreTemp)){
+			plateau.supprimerLettre(nombreTemporaire);
+			lettreTemp=null;
+		}
+		
+		
 	}
 
 	
