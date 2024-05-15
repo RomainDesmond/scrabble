@@ -21,6 +21,8 @@ public class ScrabbleApplicationConsole {
 		System.out.println("--  et par Hippolyte                                   --");
 		System.out.println("--  ainsi que par Romain                               --");
 		System.out.println("---------------------------------------------------------");
+		System.out.println();
+
 		
 
 		Jeu plateau = new Jeu();
@@ -28,12 +30,16 @@ public class ScrabbleApplicationConsole {
 		Scanner testInput = new Scanner(System.in);
 		
 		plateau.afficherPlateau();
+		
 		System.out.println("le plateau est vide :"+plateau.sacDeLettreEstVide());
+		plateau.afficherSacDeLettre();
 		plateau.remplirSacDeLettre();
 		System.out.println("le plateau est vide :"+plateau.sacDeLettreEstVide());
+		plateau.afficherSacDeLettre();
 		System.out.println(j1.getNom());
 		distribution(plateau, j1);
-		
+		plateau.afficherSacDeLettre();
+
 		System.out.println("affichage du Chevalet :");
 		j1.afficherChevalet();
 		
@@ -97,7 +103,7 @@ public class ScrabbleApplicationConsole {
 		
 
 
-		//TODO
+
 	
 	public static void distribution(Jeu plateau,Joueur j) {
 		for (int i=0;i<8;i++) {

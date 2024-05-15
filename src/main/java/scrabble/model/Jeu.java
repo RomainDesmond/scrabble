@@ -83,7 +83,8 @@ public class Jeu {
 		//TODO
 	}
 	
-	public static void afficherPlateau() {
+	public void afficherPlateau() {
+		System.out.println("------------------------------------------------------------");
 		for (int compteur = 0; compteur<15; compteur++) {
 			System.out.print("|");
 			for (int compteur2 = 0; compteur2<15; compteur2++) {
@@ -98,7 +99,7 @@ public class Jeu {
 				}
 			}
 			System.out.println("");
-			System.out.println("----------------------------------------------------------");
+			System.out.println("------------------------------------------------------------");
 			
 			
 		}
@@ -113,7 +114,15 @@ public class Jeu {
 		}
         return booleenEstVide;
 	}
-	
+	public void afficherSacDeLettre() {
+		for (int compteur=0;compteur<102;compteur++) {
+			if (sacDeLettre[compteur]!=null) {
+				System.out.print(sacDeLettre[compteur].AffichageLettre()+" ");
+			}
+		}
+		System.out.println();
+
+	}
 	public String finPartie() {
 		return null;
 		//TODO

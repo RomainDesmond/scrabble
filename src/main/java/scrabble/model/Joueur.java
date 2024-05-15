@@ -35,11 +35,6 @@ public class Joueur {
 				System.out.print(chevalet[compteur].AffichageLettre()+" ");
 		}
 		
-
-			//else {
-			//	System.out.print(chevalet[compteur]);
-
-			//}
 		
 	}
 	System.out.println();
