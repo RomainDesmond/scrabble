@@ -10,7 +10,9 @@ public class Jeu {
 	
 	Console console;
 
-	
+	private int longueur=102;
+	private int tailleXY=15;
+	private int caseMilieuXY=7;
 	private int tour;
 	private List<String> motsValides;
 	private ArrayList<Case> plateau;
@@ -25,9 +27,9 @@ public class Jeu {
 	static Case [][] plateauDeJeu;
 	
 	public Jeu(){
-		this.sacDeLettre = new ValeurLettre[102];
-		this.plateauDeJeu = new Case[15][15];
-		plateauDeJeu[7][7]=new Case(7,7,TypeCase.DEPART,null);
+		this.sacDeLettre = new ValeurLettre[longueur];
+		this.plateauDeJeu = new Case[tailleXY][tailleXY];
+		plateauDeJeu[caseMilieuXY][caseMilieuXY]=new Case(caseMilieuXY,caseMilieuXY,TypeCase.DEPART,null);
 	}
 	
 	public void remplirSacDeLettre() {
@@ -49,13 +51,22 @@ public class Jeu {
 		}
 		return (longueur+nombre);
 	}
-	public void ajouterLettrePosition(int position,ValeurLettre lettre) {
-		if (sacDeLettre[position]==null){
-			sacDeLettre[position]=lettre;
+	public void ajouterLettrePremierePositionDisponible(ValeurLettre lettre) {
+		for (int i=0;i<longueur;i++) {
+			if (sacDeLettre[i]==null){
+			sacDeLettre[i]=lettre;
+			break;
+			}
+
 		}
 	}
 	public void supprimerLettre(int position) {
 		sacDeLettre[position]=null;
+		//for (int i=position+1; i<103;i++) {
+		//	if (sacDeLettre[i-1]==null) {
+		//		sacDeLettre[i-1]=sacDeLettre[i];
+		//	}
+		//}
 	}
 	
 	public Boolean verifierMot() {
@@ -75,7 +86,7 @@ public class Jeu {
 		return lettre;
 	}
 	public int choixNombreAleatoire() {
-		int nombreAleatoire = rand.nextInt(102);
+		int nombreAleatoire = rand.nextInt(longueur);
 		return nombreAleatoire;
 	}
 	public String joueurQuiJoue() {
@@ -106,7 +117,7 @@ public class Jeu {
 	}
 	public boolean sacDeLettreEstVide() {
 		boolean booleenEstVide = true;
-		for (int cpt = 0; cpt<102; cpt++) {
+		for (int cpt = 0; cpt<longueur; cpt++) {
 			if (!(sacDeLettre[cpt]== null)) {
 				booleenEstVide=false;
 				break;		
@@ -115,7 +126,7 @@ public class Jeu {
         return booleenEstVide;
 	}
 	public void afficherSacDeLettre() {
-		for (int compteur=0;compteur<102;compteur++) {
+		for (int compteur=0;compteur<longueur;compteur++) {
 			if (sacDeLettre[compteur]!=null) {
 				System.out.print(sacDeLettre[compteur].AffichageLettre()+" ");
 			}
