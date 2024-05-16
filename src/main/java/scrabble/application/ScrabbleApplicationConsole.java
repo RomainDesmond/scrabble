@@ -49,6 +49,7 @@ public class ScrabbleApplicationConsole {
 		switch(choix) {
 		case 1:
 			echanger(plateau,j1);
+
 			//TODO
 		case 2:
 			//TODO
@@ -58,6 +59,7 @@ public class ScrabbleApplicationConsole {
 			//TODO
 		}
 		j1.afficherChevalet();
+		plateau.afficherSacDeLettre();
 
 
 		}
@@ -85,14 +87,12 @@ public class ScrabbleApplicationConsole {
 			for (compteur=0;compteur<choix;compteur++) {
 				System.out.println("Position de la lettre à échanger :");
 				int choixPosition=inputNombreEchange.nextShort();
-				positionsEchanger[compteur]=choixPosition;}
-				System.out.println(positionsEchanger[compteur]);
-			
+				positionsEchanger[compteur]=choixPosition;}			
 				//ajouter une vérification entre 0 et 7 et pas de doublon
 			}
 			for (compteur=0;compteur<choix;compteur++) {
+				plateau.ajouterLettrePosition(j.supprimerLettre(positionsEchanger[compteur]-1));
 				
-				j.supprimerLettre(positionsEchanger[compteur]-1);
 				distribuerUneLettre(plateau,j);
 					
 				}
@@ -107,6 +107,7 @@ public class ScrabbleApplicationConsole {
 	
 	public static void distribution(Jeu plateau,Joueur j) {
 		for (int i=0;i<8;i++) {
+
 			distribuerUneLettre(plateau,j);
 
 		}
@@ -120,6 +121,7 @@ public class ScrabbleApplicationConsole {
 		}
 		if (j.ajouterLettre(lettreTemp)){
 			plateau.supprimerLettre(nombreTemporaire);
+			
 			lettreTemp=null;
 		}
 		
