@@ -102,8 +102,10 @@ public class Joueur {
 		return booleenAjoutLettre;
 
 	}
-	public void supprimerLettre(int position) {
+	public ValeurLettre supprimerLettre(int position) {
+		ValeurLettre tempValeurLettre = chevalet[position];
 		chevalet[position]=null;
+		return tempValeurLettre;
 	}
 	public ValeurLettre donnerLettre(int position) {
 		
