@@ -32,6 +32,34 @@ public class Jeu {
 		plateauDeJeu[caseMilieuXY][caseMilieuXY]=new Case(caseMilieuXY,caseMilieuXY,TypeCase.DEPART,null);
 	}
 	
+	public void ajouteCaseSpecifique() {
+		//WIP
+		for (int cpt1=1;cpt1<5;cpt1++) {
+			this.plateauDeJeu[cpt1][cpt1]=new Case(cpt1,cpt1,TypeCase.MOTDOUBLE,null);
+			this.plateauDeJeu[cpt1][14-cpt1]=new Case(cpt1,cpt1,TypeCase.MOTDOUBLE,null);
+		}
+		for (int cpt1=13;cpt1>9;cpt1--) {
+			this.plateauDeJeu[cpt1][cpt1]=new Case(cpt1,cpt1,TypeCase.MOTDOUBLE,null);
+			this.plateauDeJeu[cpt1][14-cpt1]=new Case(cpt1,cpt1,TypeCase.MOTDOUBLE,null);
+		}
+		for (int cpt1=0;cpt1<15;cpt1=cpt1+14) {
+			for (int cpt2=0;cpt2<15;cpt2=cpt2+7) {
+				this.plateauDeJeu[cpt1][cpt2]=new Case(cpt1,cpt2,TypeCase.MOTTRIPLE,null);
+			}
+		}
+		for (int cpt1=5;cpt1<10;cpt1=cpt1+4) {
+			for (int cpt2=1;cpt2<14;cpt2=cpt2+4) {
+				this.plateauDeJeu[cpt1][cpt2]=new Case(cpt1,cpt2,TypeCase.LETTRETRIPLE,null);
+			}
+		}
+		for (int cpt1=0;cpt1<15;cpt1=cpt1+7) {
+			for (int cpt2=3;cpt2<12;cpt2=cpt2+8) {
+				this.plateauDeJeu[cpt1][cpt2]=new Case(cpt1,cpt2,TypeCase.LETTREDOUBLE,null);
+		}
+			
+		}
+		
+	}
 	public void remplirSacDeLettre() {
 		int longueur=0;
 		//WIP
@@ -100,8 +128,13 @@ public class Jeu {
 			System.out.print("|");
 			for (int compteur2 = 0; compteur2<15; compteur2++) {
 				if ((plateauDeJeu[compteur][compteur2]!=null)){
-					System.out.print(plateauDeJeu[compteur][compteur2].affichageTypeCase()+" "+ "|"+" ");
-				}
+					if (plateauDeJeu[compteur][compteur2].getTypeCase()==TypeCase.DEPART) {
+						System.out.print(plateauDeJeu[compteur][compteur2].affichageTypeCase()+" "+ "|"+" ");
+					}
+					else {
+					System.out.print(plateauDeJeu[compteur][compteur2].affichageTypeCase()+""+ "|"+" ");
+					}
+					}
 				//TODO affichage des lettres qaund nécessaire et non du type de case
 
 				else {
@@ -133,6 +166,10 @@ public class Jeu {
 		}
 		System.out.println();
 
+	}
+	
+	public void placerLettreJoue(int posX,int posY,ValeurLettre lettre) {
+		//plateauDeJeu[posX][posY].setContenu(lettre);
 	}
 	public String finPartie() {
 		return null;
