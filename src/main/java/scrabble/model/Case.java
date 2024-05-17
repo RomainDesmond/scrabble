@@ -4,9 +4,9 @@ public class Case {
 	private int posX;
 	private int posY;
 	private TypeCase typeCase;
-	private Lettre contenu;
+	private ValeurLettre contenu;
 	
-	public Case(int posX, int posY, TypeCase typeCase, Lettre contenu) {
+	public Case(int posX, int posY, TypeCase typeCase, ValeurLettre contenu) {
 		this.posX=posX;
 		this.posY=posY;
 		this.typeCase=typeCase;
@@ -39,12 +39,12 @@ public class Case {
 		this.typeCase = typeCase;
 	}
 
-	public Lettre getContenu() {
+	public ValeurLettre getContenu() {
 		return contenu;
 	}
 
 
-	public void setContenu(Lettre contenu) {
+	public void setContenu(ValeurLettre contenu) {
 		this.contenu = contenu;
 	}
 
