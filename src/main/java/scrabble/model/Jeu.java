@@ -33,7 +33,7 @@ public class Jeu {
 	}
 	
 	public void ajouteCaseSpecifique() {
-		//WIP
+		
 		for (int cpt1=1;cpt1<5;cpt1++) {
 			this.plateauDeJeu[cpt1][cpt1]=new Case(cpt1,cpt1,TypeCase.MOTDOUBLE,null);
 			this.plateauDeJeu[cpt1][14-cpt1]=new Case(cpt1,cpt1,TypeCase.MOTDOUBLE,null);
@@ -50,13 +50,28 @@ public class Jeu {
 		for (int cpt1=5;cpt1<10;cpt1=cpt1+4) {
 			for (int cpt2=1;cpt2<14;cpt2=cpt2+4) {
 				this.plateauDeJeu[cpt1][cpt2]=new Case(cpt1,cpt2,TypeCase.LETTRETRIPLE,null);
+				this.plateauDeJeu[cpt2][cpt1]=new Case(cpt1,cpt2,TypeCase.LETTRETRIPLE,null);
 			}
 		}
 		for (int cpt1=0;cpt1<15;cpt1=cpt1+7) {
 			for (int cpt2=3;cpt2<12;cpt2=cpt2+8) {
 				this.plateauDeJeu[cpt1][cpt2]=new Case(cpt1,cpt2,TypeCase.LETTREDOUBLE,null);
-		}
+				this.plateauDeJeu[cpt2][cpt1]=new Case(cpt2,cpt1,TypeCase.LETTREDOUBLE,null);
+			}
+		
 			
+		}
+		for (int cpt1=6;cpt1<9;cpt1=cpt1+2) {
+			for (int cpt2=2;cpt2<7;cpt2=cpt2+4) {
+				this.plateauDeJeu[cpt1][cpt2]=new Case (cpt1,cpt2,TypeCase.LETTREDOUBLE,null);
+				this.plateauDeJeu[cpt1][cpt2+6]=new Case (cpt1+6,cpt2+6,TypeCase.LETTREDOUBLE,null);
+				this.plateauDeJeu[cpt2][cpt1]=new Case (cpt2,cpt1,TypeCase.LETTREDOUBLE,null);
+				this.plateauDeJeu[cpt2+6][cpt1]=new Case (cpt2+6,cpt1+6,TypeCase.LETTREDOUBLE,null);
+
+			}
+		}
+		for (int cpt1=0;cpt1<15;cpt1=cpt1+14) {
+			this.plateauDeJeu[7][cpt1]=new Case (7,cpt1,TypeCase.MOTTRIPLE,null);
 		}
 		
 	}
