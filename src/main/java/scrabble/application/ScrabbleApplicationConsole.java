@@ -146,7 +146,6 @@ public class ScrabbleApplicationConsole {
 		int positionsLettre;
 		positionsLettre=choixPosition;
 		for (int cpt=0;cpt<listeNb.length;cpt++) {
-			System.out.println(listeNb[cpt]);
 			if (listeNb[cpt]==0) {
 			
 			
@@ -198,7 +197,6 @@ public class ScrabbleApplicationConsole {
 
 			if (choix == 1) {
 				
-					System.out.println("Lettre : "+j.donnerLettre(listeDeNombre[cpt]-1));
 					plateau.placerLettreJoue(positionDeLaPremiereLettre[0], positionDeLaPremiereLettre[1]+cpt,j.donnerLettre(listeDeNombre[cpt]-1));
 			
 				}
