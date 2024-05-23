@@ -12,6 +12,9 @@ public enum ValeurLettre {
 		this.recurrence=recurrence;
 		this.point=point;
 	}
+	public void modifierAffichageJoker(String affichageLettre) {
+		this.affichageLettre=affichageLettre;
+	}
 	public String AffichageLettre() {
 		return this.affichageLettre;
 	}
