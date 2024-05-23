@@ -108,7 +108,7 @@ public class Joueur {
 		return tempValeurLettre;
 	}
 	public ValeurLettre donnerLettre(int position) {
-		
+		System.out.println("nb pos"+position);
 		ValeurLettre lettre=chevalet[position];
 
 		return lettre;
