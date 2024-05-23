@@ -47,6 +47,9 @@ public class Case {
 	public void setContenu(ValeurLettre contenu) {
 		this.contenu = contenu;
 	}
+	public String AffichageLettre() {
+		return this.contenu.AffichageLettre();
+	}
 
 	
 }
