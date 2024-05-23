@@ -5,12 +5,21 @@ public class Case {
 	private int posY;
 	private TypeCase typeCase;
 	private ValeurLettre contenu;
+	private Boolean CaseUtilisable;
 	
 	public Case(int posX, int posY, TypeCase typeCase, ValeurLettre contenu) {
 		this.posX=posX;
 		this.posY=posY;
 		this.typeCase=typeCase;
 		this.contenu=contenu;		
+		this.CaseUtilisable=false;
+	}
+	public Case(int posX, int posY, TypeCase typeCase, ValeurLettre contenu,Boolean CaseUtilisable) {
+		this.posX=posX;
+		this.posY=posY;
+		this.typeCase=typeCase;
+		this.contenu=contenu;		
+		this.CaseUtilisable=CaseUtilisable;
 	}
 	public String affichageTypeCase() {
 		return this.typeCase.AffichageCase();
@@ -50,6 +59,13 @@ public class Case {
 	public String AffichageLettre() {
 		return this.contenu.AffichageLettre();
 	}
+	public boolean estUtilisable() {
+		return this.CaseUtilisable;
+	}
+	public void setCaseUtilisable(boolean CaseUtilisable) {
+		this.CaseUtilisable=CaseUtilisable;
+	}
+	
 
 	
 }
