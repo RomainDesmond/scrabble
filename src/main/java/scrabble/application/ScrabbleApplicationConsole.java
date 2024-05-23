@@ -168,6 +168,7 @@ public class ScrabbleApplicationConsole {
 		int[] listeDeNombre= new int[7];  //à modifier
 		int nombreLettreAPlacer=0;
 		int choix;
+		String choixJoker;
 		
 		System.out.println("1:ajout en ligne");
 		System.out.println("2:ajout en colonne");
@@ -180,9 +181,7 @@ public class ScrabbleApplicationConsole {
 		for (int compteur=0;compteur<nombreLettreAPlacer;compteur++) {
 			jouerLettre(listeDeNombre);
 		}
-		//for qui met les lettres dans l'ordre dans la liste
 		
-		//positionner le mot
 		System.out.println("Donnez la ligne de la première lettre du mot :");
 		positionDeLaPremiereLettre[0]=demanderNombre();
 		System.out.println("Donnez la colonne de la première lettre du mot :");
@@ -191,13 +190,18 @@ public class ScrabbleApplicationConsole {
 		for(int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
 			System.out.println();
 			plateau.afficherPlateau();
-
-			//System.out.println("Liste des positions :"+listeDeNombre[cpt]+j.donnerLettre(listeDeNombre[cpt]));
+			if (j.donnerLettre(listeDeNombre[cpt]-1)==ValeurLettre.JOKER) {
+				
+				System.out.println("Donnez la lettre sur le joker");
+				j.donnerLettre(listeDeNombre[cpt]-1).modifierAffichageJoker(demanderLettre());
+			}
 
 			if (choix == 1) {
+				
 					System.out.println("Lettre : "+j.donnerLettre(listeDeNombre[cpt]-1));
 					plateau.placerLettreJoue(positionDeLaPremiereLettre[0], positionDeLaPremiereLettre[1]+cpt,j.donnerLettre(listeDeNombre[cpt]-1));
-			}
+			
+				}
 			else {
 				
 					System.out.println("test"+choix);
@@ -210,6 +214,15 @@ public class ScrabbleApplicationConsole {
 		//supprimer le mot dans le jeu du joueur et appeler une fonction qui remplit le sac du joueur
 		
 		
+	}
+	
+	public static String demanderLettre() {
+		//donnez des instructions avant cette méthode
+		Scanner inputChaîneCaractere = new Scanner(System.in);
+		String choixPosition=inputChaîneCaractere.nextLine();
+		String lettre;
+		lettre=choixPosition;
+		return choixPosition;
 	}
 	
 	public static int demanderNombre() {
