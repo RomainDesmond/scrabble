@@ -79,7 +79,7 @@ public class Jeu {
 		for (int cpt1=0;cpt1<15;cpt1=cpt1+14) {
 			this.plateauDeJeu[7][cpt1]=new Case (7,cpt1,TypeCase.MOTTRIPLE,null);
 		}
-		plateauDeJeu[caseMilieuXY][caseMilieuXY]=new Case(caseMilieuXY,caseMilieuXY,TypeCase.DEPART,null);
+		plateauDeJeu[caseMilieuXY][caseMilieuXY]=new Case(caseMilieuXY,caseMilieuXY,TypeCase.DEPART,null,true);
 
 
 		
@@ -120,6 +120,7 @@ public class Jeu {
 		//	}
 		//}
 	}
+	
 	
 	public Boolean verifierMot() {
 		return null;
@@ -205,5 +206,28 @@ public class Jeu {
 		return null;
 		//TODO
 	}
+	public Boolean motEstPlacable(int positionLigne,int positionColonne,int nombreLettreAPlacer,int choixLigneColonne) {
+		//WIP
+		Boolean estPlacable=false;
+		if (choixLigneColonne==1) {
+			for (int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
+				if (this.plateauDeJeu[positionLigne][positionColonne+cpt].estUtilisable()==true) {
+					estPlacable=true;
+					break;
+				}
+			}
+		}
+		else {
+			for (int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
+				if (this.plateauDeJeu[positionLigne+cpt][positionColonne].estUtilisable()==true) {
+					estPlacable=true;
+					break;
+				}
+			}
+			
+		}
+		return estPlacable;
+	}
+
 	
 }
