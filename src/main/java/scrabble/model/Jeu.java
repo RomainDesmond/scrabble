@@ -29,10 +29,16 @@ public class Jeu {
 	public Jeu(){
 		this.sacDeLettre = new ValeurLettre[longueur];
 		this.plateauDeJeu = new Case[tailleXY][tailleXY];
-		plateauDeJeu[caseMilieuXY][caseMilieuXY]=new Case(caseMilieuXY,caseMilieuXY,TypeCase.DEPART,null);
 	}
 	
-	public void ajouteCaseSpecifique() {
+	public void ajouteTypeCase() {
+		for (int cpt1=0;cpt1<15;cpt1++) {
+			System.out.println(cpt1);
+			for (int cpt2 = 0;cpt2<15;cpt2++) {
+					this.plateauDeJeu[cpt1][cpt2]=new Case(cpt1,cpt2,TypeCase.VIDE,null);
+			}
+		}
+		
 		
 		for (int cpt1=1;cpt1<5;cpt1++) {
 			this.plateauDeJeu[cpt1][cpt1]=new Case(cpt1,cpt1,TypeCase.MOTDOUBLE,null);
@@ -73,6 +79,9 @@ public class Jeu {
 		for (int cpt1=0;cpt1<15;cpt1=cpt1+14) {
 			this.plateauDeJeu[7][cpt1]=new Case (7,cpt1,TypeCase.MOTTRIPLE,null);
 		}
+		plateauDeJeu[caseMilieuXY][caseMilieuXY]=new Case(caseMilieuXY,caseMilieuXY,TypeCase.DEPART,null);
+
+
 		
 	}
 	public void remplirSacDeLettre() {
@@ -143,17 +152,22 @@ public class Jeu {
 			System.out.print("|");
 			for (int compteur2 = 0; compteur2<15; compteur2++) {
 				if ((plateauDeJeu[compteur][compteur2]!=null)){
-					if (plateauDeJeu[compteur][compteur2].getTypeCase()==TypeCase.DEPART) {
-						System.out.print(plateauDeJeu[compteur][compteur2].affichageTypeCase()+" "+ "|"+" ");
+					if (plateauDeJeu[compteur][compteur2].getContenu()!=null) {
+						System.out.print(plateauDeJeu[compteur][compteur2].AffichageLettre()+" "+ "|"+" ");
 					}
 					else {
-					System.out.print(plateauDeJeu[compteur][compteur2].affichageTypeCase()+""+ "|"+" ");
-					}
-					}
-				//TODO affichage des lettres qaund nécessaire et non du type de case
+						if (plateauDeJeu[compteur][compteur2].getTypeCase()==TypeCase.DEPART) {
+							System.out.print(plateauDeJeu[compteur][compteur2].affichageTypeCase()+" "+ "|"+" ");
+						}
+						else if(plateauDeJeu[compteur][compteur2].getTypeCase()==TypeCase.VIDE) {
+							System.out.print(plateauDeJeu[compteur][compteur2].affichageTypeCase()+"  "+ "|"+" ");
+						}
+						else {
+						System.out.print(plateauDeJeu[compteur][compteur2].affichageTypeCase()+""+ "|"+" ");
+						}
+						}}
 
 				else {
-				//System.out.print(plateauDeJeu[compteur][compteur2]+" "+"|");
 				System.out.print("  "+ "|"+ " ");
 				}
 			}
@@ -184,7 +198,8 @@ public class Jeu {
 	}
 	
 	public void placerLettreJoue(int posX,int posY,ValeurLettre lettre) {
-		//plateauDeJeu[posX][posY].setContenu(lettre);
+		
+		plateauDeJeu[posX][posY].setContenu(lettre);
 	}
 	public String finPartie() {
 		return null;
