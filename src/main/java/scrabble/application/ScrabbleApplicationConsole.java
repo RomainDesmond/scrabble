@@ -28,7 +28,7 @@ public class ScrabbleApplicationConsole {
 		Jeu plateau = new Jeu();
 		Joueur j1 = new Joueur("test");
 		Scanner testInput = new Scanner(System.in);
-		
+		Boolean joue=true;
 		plateau.afficherPlateau();
 		plateau.ajouteTypeCase();
 		plateau.afficherPlateau();
@@ -45,6 +45,7 @@ public class ScrabbleApplicationConsole {
 		System.out.println("affichage du Chevalet :");
 		j1.afficherChevalet();
 		
+		while (joue) {
 		affichageMenu();
 		int choix=testInput.nextShort();
 		System.out.println(choix);
@@ -64,13 +65,14 @@ public class ScrabbleApplicationConsole {
 			break;
 
 		case 4:
-
+			joue=false;
 			break;
 			//TODO
 		}
-		plateau.afficherSacDeLettre();
+		//plateau.afficherSacDeLettre();
 		plateau.afficherPlateau();
 		j1.afficherChevalet();
+		}
 
 
 
