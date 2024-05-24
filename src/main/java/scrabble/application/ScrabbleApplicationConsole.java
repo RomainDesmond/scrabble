@@ -60,6 +60,7 @@ public class ScrabbleApplicationConsole {
 		case 3:
 			
 			jouerMot(plateau,j1);
+			distribution(plateau,j1);
 			break;
 
 		case 4:
@@ -108,18 +109,14 @@ public class ScrabbleApplicationConsole {
 					
 				}
 			}
-			
-		
-			
-		
-
-
 
 	
 	public static void distribution(Jeu plateau,Joueur j) {
-		for (int i=0;i<8;i++) {
-
-			distribuerUneLettre(plateau,j);
+		for (int i=0;i<7;i++) {
+			if (j.donnerLettre(i)==null){
+				distribuerUneLettre(plateau,j);
+			}
+			
 
 		}
 	}
@@ -185,7 +182,8 @@ public class ScrabbleApplicationConsole {
 		positionDeLaPremiereLettre[0]=demanderNombre();
 		System.out.println("Donnez la colonne de la première lettre du mot :");
 		positionDeLaPremiereLettre[1]=demanderNombre();
-
+		boolean motEstPlacable=plateau.motEstPlacable(positionDeLaPremiereLettre[0], positionDeLaPremiereLettre[1],nombreLettreAPlacer,choix);
+		System.out.println(motEstPlacable);
 		for(int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
 			System.out.println();
 			plateau.afficherPlateau();
@@ -205,9 +203,13 @@ public class ScrabbleApplicationConsole {
 					System.out.println("test"+choix);
 					plateau.placerLettreJoue(positionDeLaPremiereLettre[0]+cpt, positionDeLaPremiereLettre[1], j.donnerLettre(listeDeNombre[cpt]-1));
 
-
+		
 
 		}
+			
+		}
+		for (int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
+			j.supprimerLettre(cpt);
 		}
 		//supprimer le mot dans le jeu du joueur et appeler une fonction qui remplit le sac du joueur
 		
