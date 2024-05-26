@@ -228,6 +228,25 @@ public class Jeu {
 		}
 		return estPlacable;
 	}
+	public void modificationCasePlacable() {
+		for (int cpt=0;cpt<15;cpt++) {
+			for(int cpt1=0;cpt1<15;cpt1++) {
+				if(this.plateauDeJeu[cpt][cpt1].getContenu()!=null) {
+					plateauDeJeu[cpt+1][cpt1].setCaseUtilisable(true);
+					plateauDeJeu[cpt-1][cpt1].setCaseUtilisable(true);
+					plateauDeJeu[cpt][cpt1+1].setCaseUtilisable(true);
+					plateauDeJeu[cpt][cpt1-1].setCaseUtilisable(true);
+				}
+			}
+		}
+		for (int cpt=0;cpt<15;cpt++) {
+			for(int cpt1=0;cpt1<15;cpt1++) {
+				if(this.plateauDeJeu[cpt][cpt1].getContenu()!=null) {
+					plateauDeJeu[cpt][cpt1].setCaseUtilisable(false);
+				}
+			}
+		}
+	}
 
 	
 }
