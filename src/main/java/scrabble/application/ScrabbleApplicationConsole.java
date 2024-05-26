@@ -62,6 +62,7 @@ public class ScrabbleApplicationConsole {
 			
 			jouerMot(plateau,j1);
 			distribution(plateau,j1);
+			plateau.modificationCasePlacable();
 			break;
 
 		case 4:
