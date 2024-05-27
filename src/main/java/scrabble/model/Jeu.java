@@ -224,10 +224,46 @@ public class Jeu {
 					break;
 				}
 			}
-			
 		}
 		return estPlacable;
 	}
+	
+	public Boolean motEstPlacableLigne(int positionLigne,int[] positionColonne,int nombreLettreAPlacer) {
+		//WIP
+		Boolean estPlacable=false;
+			for (int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
+				System.out.println();
+				if (this.plateauDeJeu[positionLigne][positionColonne[cpt]].estUtilisable()==true) {
+					
+					estPlacable=true;
+					break;
+				}
+			}
+
+		return estPlacable;
+	}
+	public Boolean motEstPlacableColonne(int positionLigne,int positionColonne,int nombreLettreAPlacer,int choixLigneColonne) {
+		//WIP
+		Boolean estPlacable=false;
+		if (choixLigneColonne==1) {
+			for (int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
+				if (this.plateauDeJeu[positionLigne][positionColonne+cpt].estUtilisable()==true) {
+					estPlacable=true;
+					break;
+				}
+			}
+		}
+		else {
+			for (int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
+				if (this.plateauDeJeu[positionLigne+cpt][positionColonne].estUtilisable()==true) {
+					estPlacable=true;
+					break;
+				}
+			}
+		}
+		return estPlacable;
+	}
+	
 	public void modificationCasePlacable() {
 		for (int cpt=0;cpt<15;cpt++) {
 			for(int cpt1=0;cpt1<15;cpt1++) {
@@ -246,6 +282,9 @@ public class Jeu {
 				}
 			}
 		}
+	}
+	public TypeCase typeCasePosition(int positionLigne, int positionColonne) {
+		return this.plateauDeJeu[positionLigne][positionColonne].getTypeCase();
 	}
 
 	
