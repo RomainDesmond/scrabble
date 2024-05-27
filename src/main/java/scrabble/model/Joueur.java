@@ -17,9 +17,9 @@ public class Joueur {
 	
 	Console console;
 	
-	public Joueur(String nom, int score, List<Lettre> chevalet) {
+	public Joueur(String nom, List<Lettre> chevalet) {
 		this.nom=nom;
-		this.score=score;
+		this.score=0;
 		this.chevalet = new ValeurLettre[7];
 	}
 	public Joueur(String nom) {
