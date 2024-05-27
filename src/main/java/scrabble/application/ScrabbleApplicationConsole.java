@@ -6,6 +6,7 @@ import scrabble.console.Console;
 import scrabble.model.Jeu;
 import scrabble.model.Joueur;
 import scrabble.model.Lettre;
+import scrabble.model.TypeCase;
 import scrabble.model.ValeurLettre;
 
 public class ScrabbleApplicationConsole {
@@ -73,6 +74,7 @@ public class ScrabbleApplicationConsole {
 		//plateau.afficherSacDeLettre();
 		plateau.afficherPlateau();
 		j1.afficherChevalet();
+		System.out.println("Score:"+j1.getScore());
 		}
 
 
@@ -145,82 +147,95 @@ public class ScrabbleApplicationConsole {
 		int choixPosition=inputNombreEchange.nextShort();
 		int positionsLettre;
 		positionsLettre=choixPosition;
-		for (int cpt=0;cpt<listeNb.length;cpt++) {
-			if (listeNb[cpt]==0) {
-			
-			
-				if (listeNb[cpt]==positionsLettre) {
-					break;
+		if (positionsLettre>0 && positionsLettre<8){
+			for (int cpt=0;cpt<listeNb.length;cpt++) {
+				if (listeNb[cpt]==0) {
+				
+				
+					if (listeNb[cpt]==positionsLettre) {
+						//System.out.println("Mot invalide");
+						break;
+					}
+					else {
+						listeNb[cpt]=positionsLettre;
+	
+						break;
+					}
 				}
-				else {
-					listeNb[cpt]=positionsLettre;
-
-					break;
-				}
+				
 			}
-			
 		}
-		
 	}
 	public static void jouerMot(Jeu plateau,Joueur j) {
-		int[] positionDeLaPremiereLettre=new int[2];
+		int[] positionLigneMot=new int[2];
 		int[] listeDeNombre= new int[7];  //à modifier
+		int[] listePosition= new int[7];
 		int nombreLettreAPlacer=0;
 		int choix;
 		String choixJoker;
 		
 		System.out.println("1:ajout en ligne");
 		System.out.println("2:ajout en colonne");
-		choix=demanderNombre();
+		choix=demanderNombre("");
 
 		
-		System.out.println("Donnez le nombre de lettre que vouz voulez placer : ");
-		nombreLettreAPlacer=demanderNombre();
+		nombreLettreAPlacer=demanderNombre("Donnez le nombre de lettre que vouz voulez placer : ");
 		
 		for (int compteur=0;compteur<nombreLettreAPlacer;compteur++) {
 			jouerLettre(listeDeNombre);
 		}
 		
-		System.out.println("Donnez la ligne de la première lettre du mot :");
-		positionDeLaPremiereLettre[0]=demanderNombre();
-		System.out.println("Donnez la colonne de la première lettre du mot :");
-		positionDeLaPremiereLettre[1]=demanderNombre();
-		boolean motEstPlacable=plateau.motEstPlacable(positionDeLaPremiereLettre[0], positionDeLaPremiereLettre[1],nombreLettreAPlacer,choix);
-		System.out.println(motEstPlacable);
-		for(int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
-			System.out.println();
-			plateau.afficherPlateau();
-			if (j.donnerLettre(listeDeNombre[cpt]-1)==ValeurLettre.JOKER) {
-				
-				System.out.println("Donnez la lettre sur le joker");
-				j.donnerLettre(listeDeNombre[cpt]-1).modifierAffichageJoker(demanderLettre());
-			}
 
-			if (choix == 1) {
-				
-					plateau.placerLettreJoue(positionDeLaPremiereLettre[0], positionDeLaPremiereLettre[1]+cpt,j.donnerLettre(listeDeNombre[cpt]-1));
-			
+	
+				if (choix == 1) {
+					positionLigneMot[0]=demanderNombre("Donnez la ligne du mot :");
+					
+					for(int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
+
+
+						if (j.donnerLettre(listeDeNombre[cpt]-1)==ValeurLettre.JOKER) {
+							choixJoker(j,listeDeNombre,cpt);
+						}
+						
+
+						positionLigneMot[1]=demanderNombre("Donnez la colonne de la lettre à placer :");
+						plateau.placerLettreJoue(positionLigneMot[0], positionLigneMot[1],j.donnerLettre(listeDeNombre[cpt]-1));
+						listePosition[cpt]=positionLigneMot[1];
+					}
+					if (plateau.motEstPlacableLigne(positionLigneMot[0], listePosition,nombreLettreAPlacer)) {
+						System.out.println("Oui");
+						compterLesPointsLigne(j,plateau,nombreLettreAPlacer,listeDeNombre,positionLigneMot[0],listePosition);
+							//TODO
+					}
+					else {
+						System.out.println("Non");
+						for(int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
+						plateau.placerLettreJoue(positionLigneMot[0], listePosition[cpt],null);
+						}
+					}
+						//for (int compteurVerification=0;compteurVerification<nombreLettreAPlacer;compteurVerification++) {
+							
+						//}
+					
 				}
-			else {
-				
-					System.out.println("test"+choix);
-					plateau.placerLettreJoue(positionDeLaPremiereLettre[0]+cpt, positionDeLaPremiereLettre[1], j.donnerLettre(listeDeNombre[cpt]-1));
+				else {
+					for(int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
+						positionLigneMot[1]=demanderNombre("Donnez la colonne du mot :");
+						if (j.donnerLettre(listeDeNombre[cpt]-1)==ValeurLettre.JOKER) {
+							choixJoker(j,listeDeNombre,cpt);
 
-		
+						}
+						positionLigneMot[0]=demanderNombre("Donnez la ligne du mot :");
 
-		}
-			
-		}
-		for (int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
-			j.supprimerLettre(cpt);
-		}
-		//supprimer le mot dans le jeu du joueur et appeler une fonction qui remplit le sac du joueur
-		
+						plateau.placerLettreJoue(positionLigneMot[0], positionLigneMot[1], j.donnerLettre(listeDeNombre[cpt]-1));
+						listePosition[cpt]=positionLigneMot[0];
+					}
+				}
 		
 	}
 	
-	public static String demanderLettre() {
-		//donnez des instructions avant cette méthode
+	public static String demanderLettre(String instruction) {
+		System.out.println(instruction);
 		Scanner inputChaîneCaractere = new Scanner(System.in);
 		String choixPosition=inputChaîneCaractere.nextLine();
 		String lettre;
@@ -228,8 +243,8 @@ public class ScrabbleApplicationConsole {
 		return choixPosition;
 	}
 	
-	public static int demanderNombre() {
-		//donnez des instructions avant cette méthode
+	public static int demanderNombre(String instruction) {
+		System.out.println(instruction);
 		Scanner inputNombre = new Scanner(System.in);
 		int choixPosition=inputNombre.nextShort();
 		int entier;
@@ -237,5 +252,36 @@ public class ScrabbleApplicationConsole {
 		return choixPosition;
 	}
 
+	public static void choixJoker(Joueur j,int listeDeNombre[],int cpt) {
+		j.donnerLettre(listeDeNombre[cpt]-1).modifierAffichageJoker(demanderLettre("Donnez le nouvel affichage du joker"));
+	}
+	
+	public static void compterLesPointsLigne(Joueur j,Jeu plateau,int nombreLettreAPlacer,int positionsLettreChevalet[],int positionsLigne,int[] positionsColonne) {
+		//WIP
+		int multiplicateurMot=1;
+		int scoreMot=0;
+		
+		for (int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
+			int multiplicateurLettre=1;
+			multiplicateurMot=multiplicateurMot*plateau.typeCasePosition(positionsLigne,positionsColonne[cpt]).multiplicateurCaseMot();
+			multiplicateurLettre=multiplicateurLettre*plateau.typeCasePosition(positionsLigne, positionsColonne[cpt]).multiplicateurCaseLettre();
+			
+			scoreMot=scoreMot+j.donnerLettre(positionsLettreChevalet[cpt]-1).getPoint()*multiplicateurLettre;
+			
+			j.supprimerLettre(cpt);
+		}
+		j.setScore(j.getScore()+(scoreMot*multiplicateurMot));
+	}
+	
+	public static void compterLesPointsColonne(Joueur j,int nombreLettreAPlacer,int positionLettreChevalet) {
+		//WIP
+		for (int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
+			int score=j.getScore();
+			int multiplicateurMot=1;
+		
+			j.setScore(j.donnerLettre(cpt).getPoint());
+			j.supprimerLettre(cpt);
+		}
+	}
 	
 }
