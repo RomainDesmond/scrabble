@@ -167,7 +167,7 @@ public class ScrabbleApplicationConsole {
 		}
 	}
 	public static void jouerMot(Jeu plateau,Joueur j) {
-		int[] positionLigneMot=new int[2];
+		int[] positionLigneColonneMot=new int[2];
 		int[] listeDeNombre= new int[7];  //à modifier
 		int[] listePosition= new int[7];
 		int nombreLettreAPlacer=0;
@@ -188,7 +188,7 @@ public class ScrabbleApplicationConsole {
 
 	
 				if (choix == 1) {
-					positionLigneMot[0]=demanderNombre("Donnez la ligne du mot :");
+					positionLigneColonneMot[0]=demanderNombre("Donnez la ligne du mot :");
 					
 					for(int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
 
@@ -198,19 +198,19 @@ public class ScrabbleApplicationConsole {
 						}
 						
 
-						positionLigneMot[1]=demanderNombre("Donnez la colonne de la lettre à placer :");
-						plateau.placerLettreJoue(positionLigneMot[0], positionLigneMot[1],j.donnerLettre(listeDeNombre[cpt]-1));
-						listePosition[cpt]=positionLigneMot[1];
+						positionLigneColonneMot[1]=demanderNombre("Donnez la colonne de la lettre à placer :");
+						plateau.placerLettreJoue(positionLigneColonneMot[0], positionLigneColonneMot[1],j.donnerLettre(listeDeNombre[cpt]-1));
+						listePosition[cpt]=positionLigneColonneMot[1];
 					}
-					if (plateau.motEstPlacableLigne(positionLigneMot[0], listePosition,nombreLettreAPlacer)) {
+					if (plateau.motEstPlacableLigne(positionLigneColonneMot[0], listePosition,nombreLettreAPlacer)) {
 						System.out.println("Oui");
-						compterLesPointsLigne(j,plateau,nombreLettreAPlacer,listeDeNombre,positionLigneMot[0],listePosition);
+						compterLesPointsLigne(j,plateau,nombreLettreAPlacer,listeDeNombre,positionLigneColonneMot[0],listePosition);
 							//TODO
 					}
 					else {
 						System.out.println("Non");
 						for(int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
-						plateau.placerLettreJoue(positionLigneMot[0], listePosition[cpt],null);
+						plateau.placerLettreJoue(positionLigneColonneMot[0], listePosition[cpt],null);
 						}
 					}
 						//for (int compteurVerification=0;compteurVerification<nombreLettreAPlacer;compteurVerification++) {
@@ -219,18 +219,34 @@ public class ScrabbleApplicationConsole {
 					
 				}
 				else {
+					
+					positionLigneColonneMot[1]=demanderNombre("Donnez la colonne du mot :");
+					
 					for(int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
-						positionLigneMot[1]=demanderNombre("Donnez la colonne du mot :");
+
+
 						if (j.donnerLettre(listeDeNombre[cpt]-1)==ValeurLettre.JOKER) {
 							choixJoker(j,listeDeNombre,cpt);
-
 						}
-						positionLigneMot[0]=demanderNombre("Donnez la ligne du mot :");
+						
 
-						plateau.placerLettreJoue(positionLigneMot[0], positionLigneMot[1], j.donnerLettre(listeDeNombre[cpt]-1));
-						listePosition[cpt]=positionLigneMot[0];
+						positionLigneColonneMot[0]=demanderNombre("Donnez la ligne de la lettre à placer :");
+						plateau.placerLettreJoue(positionLigneColonneMot[0], positionLigneColonneMot[1],j.donnerLettre(listeDeNombre[cpt]-1));
+						listePosition[cpt]=positionLigneColonneMot[0];
 					}
-				}
+					if (plateau.motEstPlacableColonne( listePosition,positionLigneColonneMot[1],nombreLettreAPlacer)) {
+						System.out.println("Oui");
+						compterLesPointsColonne(j,plateau,nombreLettreAPlacer,listeDeNombre,listePosition,positionLigneColonneMot[1]);
+							//TODO
+					}
+					else {
+						System.out.println("Non");
+						for(int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
+						plateau.placerLettreJoue( listePosition[cpt],positionLigneColonneMot[1],null);
+						}
+					
+					
+				}}
 		
 	}
 	
@@ -273,15 +289,21 @@ public class ScrabbleApplicationConsole {
 		j.setScore(j.getScore()+(scoreMot*multiplicateurMot));
 	}
 	
-	public static void compterLesPointsColonne(Joueur j,int nombreLettreAPlacer,int positionLettreChevalet) {
+	public static void compterLesPointsColonne(Joueur j,Jeu plateau,int nombreLettreAPlacer,int positionsLettreChevalet[],int[] positionsLigne,int positionsColonne) {
 		//WIP
-		for (int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
-			int score=j.getScore();
-			int multiplicateurMot=1;
+		int multiplicateurMot=1;
+		int scoreMot=0;
 		
-			j.setScore(j.donnerLettre(cpt).getPoint());
+		for (int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
+			int multiplicateurLettre=1;
+			multiplicateurMot=multiplicateurMot*plateau.typeCasePosition(positionsLigne[cpt],positionsColonne).multiplicateurCaseMot();
+			multiplicateurLettre=multiplicateurLettre*plateau.typeCasePosition(positionsLigne[cpt], positionsColonne).multiplicateurCaseLettre();
+			j.afficherChevalet();
+			scoreMot=scoreMot+j.donnerLettre(positionsLettreChevalet[cpt]-1).getPoint()*multiplicateurLettre;
+			
 			j.supprimerLettre(cpt);
 		}
+		j.setScore(j.getScore()+(scoreMot*multiplicateurMot));
 	}
 	
 }
