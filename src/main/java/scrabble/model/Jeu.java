@@ -242,25 +242,18 @@ public class Jeu {
 
 		return estPlacable;
 	}
-	public Boolean motEstPlacableColonne(int positionLigne,int positionColonne,int nombreLettreAPlacer,int choixLigneColonne) {
+	public Boolean motEstPlacableColonne(int[] positionLigne,int positionColonne,int nombreLettreAPlacer) {
 		//WIP
 		Boolean estPlacable=false;
-		if (choixLigneColonne==1) {
 			for (int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
-				if (this.plateauDeJeu[positionLigne][positionColonne+cpt].estUtilisable()==true) {
+				System.out.println();
+				if (this.plateauDeJeu[positionLigne[cpt]][positionColonne].estUtilisable()==true) {
+					
 					estPlacable=true;
 					break;
 				}
 			}
-		}
-		else {
-			for (int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
-				if (this.plateauDeJeu[positionLigne+cpt][positionColonne].estUtilisable()==true) {
-					estPlacable=true;
-					break;
-				}
-			}
-		}
+
 		return estPlacable;
 	}
 	
