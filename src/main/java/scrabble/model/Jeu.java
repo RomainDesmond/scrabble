@@ -33,7 +33,6 @@ public class Jeu {
 	
 	public void ajouteTypeCase() {
 		for (int cpt1=0;cpt1<15;cpt1++) {
-			System.out.println(cpt1);
 			for (int cpt2 = 0;cpt2<15;cpt2++) {
 					this.plateauDeJeu[cpt1][cpt2]=new Case(cpt1,cpt2,TypeCase.VIDE,null);
 			}
@@ -231,14 +230,37 @@ public class Jeu {
 		return estPlacable;
 	}
 	
+	public boolean uneDesLettresEstSurCaseUtilisable(int positionLigne,int[] positionColonne,int nombreLettreAPlacer) {
+		boolean motAUneLettreSurCaseUtilisable = false;
+		for (int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
+		if (this.plateauDeJeu[positionLigne][positionColonne[cpt]].estUtilisable()==true) {
+		
+			motAUneLettreSurCaseUtilisable=true;
+			break;
+			}
+		}
+		return motAUneLettreSurCaseUtilisable;
+		
+	}
+	
 	public Boolean motEstPlacableLigne(int positionLigne,int[] positionColonne,int nombreLettreAPlacer) {
 		//WIP
 		Boolean estPlacable=true;
 			for (int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
-				if (((positionColonne[cpt]==7)&&(positionLigne==7))||(this.plateauDeJeu[positionColonne[cpt]][positionLigne-1].getContenu()!=null)||((this.plateauDeJeu[positionColonne[cpt]][positionLigne+1].getContenu()!=null))||((this.plateauDeJeu[positionColonne[cpt]+1][positionLigne].getContenu()!=null))||((this.plateauDeJeu[positionColonne[cpt]-1][positionLigne].getContenu()!=null))) {
+				
+				if ((uneDesLettresEstSurCaseUtilisable(positionLigne,positionColonne,nombreLettreAPlacer)&&(positionColonne[cpt]==7)&&(positionLigne==7))||(this.plateauDeJeu[positionLigne-1][positionColonne[cpt]].getContenu()!=null)||((this.plateauDeJeu[positionLigne+1][positionColonne[cpt]].getContenu()!=null))||((this.plateauDeJeu[positionLigne][positionColonne[cpt]+1].getContenu()!=null))||((this.plateauDeJeu[positionLigne][positionColonne[cpt]-1].getContenu()!=null))) {
+					System.out.println("Lettre"+this.plateauDeJeu[positionLigne][positionColonne[cpt]].getContenu());
+					System.out.println(positionColonne[cpt]+""+positionLigne+" "+getLettre(positionLigne,positionColonne[cpt]));
+
+
 					System.out.println("LettrePositionable");
 				}
 				else {
+					System.out.println("Lettre"+this.plateauDeJeu[positionLigne][positionColonne[cpt]].getContenu());
+					System.out.println("Lettre gauche:"+(this.plateauDeJeu[positionLigne][positionColonne[cpt]-1].getContenu()+"Lettre Droit:"+(this.plateauDeJeu[positionLigne][positionColonne[cpt]+1].getContenu())));
+
+					System.out.println(positionColonne[cpt]+""+positionLigne+" "+getLettre(positionColonne[cpt]+1,positionLigne));
+					System.out.println(""+this.plateauDeJeu[positionColonne[cpt]][positionLigne-1].getContenu()+this.plateauDeJeu[positionColonne[cpt]][positionLigne+1].getContenu()+this.plateauDeJeu[positionColonne[cpt]+1][positionLigne].getContenu()+this.plateauDeJeu[positionColonne[cpt]-1][positionLigne].getContenu());
 					System.out.println("Mot non positionnable");
 					estPlacable=false;
 				}
@@ -256,7 +278,7 @@ public class Jeu {
 		//WIP
 		Boolean estPlacable=true;
 			for (int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
-				if (((positionLigne[cpt]==7)&&(positionColonne==7))||(this.plateauDeJeu[positionLigne[cpt]][positionColonne-1].getContenu()!=null)||((this.plateauDeJeu[positionLigne[cpt]][positionColonne+1].getContenu()!=null))||((this.plateauDeJeu[positionLigne[cpt]+1][positionColonne].getContenu()!=null))||((this.plateauDeJeu[positionLigne[cpt]-1][positionColonne].getContenu()!=null))) {
+				if ((uneDesLettresEstSurCaseUtilisable(positionColonne,positionLigne,nombreLettreAPlacer)&&(positionLigne[cpt]==7)&&(positionColonne==7))||(this.plateauDeJeu[positionLigne[cpt]][positionColonne-1].getContenu()!=null)||((this.plateauDeJeu[positionLigne[cpt]][positionColonne+1].getContenu()!=null))||((this.plateauDeJeu[positionLigne[cpt]+1][positionColonne].getContenu()!=null))||((this.plateauDeJeu[positionLigne[cpt]-1][positionColonne].getContenu()!=null))) {
 					System.out.println("LettrePositionable");
 				}
 				else {
