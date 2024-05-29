@@ -284,7 +284,7 @@ public class ScrabbleApplicationConsole {
 		
 		for (int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
 			int multiplicateurLettre=1;
-			scoreMot=scoreMot+ajoutMotLigneCompleteLigne(j,plateau,positionsLigne,positionsColonne[cpt],positionsColonne,lettreCompleteCompteLigne,lettreCompleteCompteColonne);
+			scoreMot=scoreMot+ajoutMotComplete(j,plateau,positionsLigne,positionsColonne[cpt],positionsColonne,lettreCompleteCompteLigne,lettreCompleteCompteColonne);
 			multiplicateurMot=multiplicateurMot*plateau.typeCasePosition(positionsLigne,positionsColonne[cpt]).multiplicateurCaseMot();
 			multiplicateurLettre=multiplicateurLettre*plateau.typeCasePosition(positionsLigne, positionsColonne[cpt]).multiplicateurCaseLettre();
 			
@@ -294,7 +294,7 @@ public class ScrabbleApplicationConsole {
 		}
 		j.setScore(j.getScore()+(scoreMot*multiplicateurMot));
 	}
-	public static int ajoutMotLigneCompleteLigne(Joueur j,Jeu plateau,int positionsLigneDuMot,int positionColonneDuMot,int[]positionColonneAutreMot,int[]lettreCompleteCompteLigne,int[]lettreCompleteCompteColonne) {
+	public static int ajoutMotComplete(Joueur j,Jeu plateau,int positionsLigneDuMot,int positionColonneDuMot,int[]positionColonneAutreMot,int[]lettreCompleteCompteLigne,int[]lettreCompleteCompteColonne) {
 		int cpt=1;
 		int point=0;
 		int[] positionsLettreDuMotComplete;
@@ -364,9 +364,13 @@ public class ScrabbleApplicationConsole {
 		//WIP
 		int multiplicateurMot=1;
 		int scoreMot=0;
+		int[] lettreCompleteCompteColonne= new int[15];
+		int[] lettreCompleteCompteLigne= new int[15];
 		
 		for (int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
 			int multiplicateurLettre=1;
+			scoreMot=scoreMot+ajoutMotComplete(j,plateau,positionsColonne,positionsLigne[cpt],positionsLigne,lettreCompleteCompteLigne,lettreCompleteCompteColonne);
+
 			multiplicateurMot=multiplicateurMot*plateau.typeCasePosition(positionsLigne[cpt],positionsColonne).multiplicateurCaseMot();
 			multiplicateurLettre=multiplicateurLettre*plateau.typeCasePosition(positionsLigne[cpt], positionsColonne).multiplicateurCaseLettre();
 			j.afficherChevalet();
@@ -376,6 +380,9 @@ public class ScrabbleApplicationConsole {
 		}
 		j.setScore(j.getScore()+(scoreMot*multiplicateurMot));
 	}
+	
+	
+	
 	public static void ajouterFinTableauEntier(int[] tableau,int element) {
 		//AjoutElementAutreQue0
 	
