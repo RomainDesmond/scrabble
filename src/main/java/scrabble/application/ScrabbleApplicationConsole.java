@@ -30,11 +30,11 @@ public class ScrabbleApplicationConsole {
 		Joueur j1 = new Joueur("test");
 		Scanner testInput = new Scanner(System.in);
 		Boolean joue=true;
-		plateau.afficherPlateau();
+		//plateau.afficherPlateau();
 		plateau.ajouteTypeCase();
 		plateau.afficherPlateau();
 
-		System.out.println("le plateau est vide :"+plateau.sacDeLettreEstVide());
+		//System.out.println("le plateau est vide :"+plateau.sacDeLettreEstVide());
 		plateau.afficherSacDeLettre();
 		plateau.remplirSacDeLettre();
 		System.out.println("le plateau est vide :"+plateau.sacDeLettreEstVide());
@@ -213,6 +213,7 @@ public class ScrabbleApplicationConsole {
 							//TODO
 					}
 					else {
+						plateau.afficherPlateau();
 						System.out.println("Non");
 						for(int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
 						plateau.placerLettreJoue(positionLigneColonneMot[0], listePosition[cpt],null);
@@ -287,10 +288,13 @@ public class ScrabbleApplicationConsole {
 			scoreMot=scoreMot+ajoutMotComplete(j,plateau,positionsLigne,positionsColonne[cpt],positionsColonne,lettreCompleteCompteLigne,lettreCompleteCompteColonne);
 			multiplicateurMot=multiplicateurMot*plateau.typeCasePosition(positionsLigne,positionsColonne[cpt]).multiplicateurCaseMot();
 			multiplicateurLettre=multiplicateurLettre*plateau.typeCasePosition(positionsLigne, positionsColonne[cpt]).multiplicateurCaseLettre();
-			
+			j.afficherChevalet();
+			System.out.println(j.donnerLettre(positionsLettreChevalet[cpt]-1));
+			plateau.afficherPlateau();
 			scoreMot=scoreMot+j.donnerLettre(positionsLettreChevalet[cpt]-1).getPoint()*multiplicateurLettre;
 			
-			j.supprimerLettre(cpt);
+			j.supprimerLettre(positionsLettreChevalet[cpt]-1);
+			System.out.println("Score mot actuel"+scoreMot);
 		}
 		j.setScore(j.getScore()+(scoreMot*multiplicateurMot));
 	}
