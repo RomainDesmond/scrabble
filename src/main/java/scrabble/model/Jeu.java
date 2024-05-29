@@ -153,7 +153,10 @@ public class Jeu {
 			System.out.print("|");
 			for (int compteur2 = 0; compteur2<15; compteur2++) {
 				if ((plateauDeJeu[compteur][compteur2]!=null)){
+					//System.out.print(plateauDeJeu[compteur][compteur2].getContenu()!=null);
+					//System.out.print(this.getLettre(compteur, compteur2)!=null);
 					if (plateauDeJeu[compteur][compteur2].getContenu()!=null) {
+
 						System.out.print(plateauDeJeu[compteur][compteur2].AffichageLettre()+" "+ "|"+" ");
 					}
 					else {
@@ -278,6 +281,11 @@ public class Jeu {
 	}
 	public TypeCase typeCasePosition(int positionLigne, int positionColonne) {
 		return this.plateauDeJeu[positionLigne][positionColonne].getTypeCase();
+	}
+
+	public ValeurLettre getLettre(int l, int colonne) {
+		return this.plateauDeJeu[l][colonne].getContenu();
+
 	}
 
 	
