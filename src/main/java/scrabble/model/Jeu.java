@@ -233,28 +233,42 @@ public class Jeu {
 	
 	public Boolean motEstPlacableLigne(int positionLigne,int[] positionColonne,int nombreLettreAPlacer) {
 		//WIP
-		Boolean estPlacable=false;
+		Boolean estPlacable=true;
 			for (int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
-				System.out.println();
-				if (this.plateauDeJeu[positionLigne][positionColonne[cpt]].estUtilisable()==true) {
-					
-					estPlacable=true;
-					break;
+				if (((positionColonne[cpt]==7)&&(positionLigne==7))||(this.plateauDeJeu[positionColonne[cpt]][positionLigne-1].getContenu()!=null)||((this.plateauDeJeu[positionColonne[cpt]][positionLigne+1].getContenu()!=null))||((this.plateauDeJeu[positionColonne[cpt]+1][positionLigne].getContenu()!=null))||((this.plateauDeJeu[positionColonne[cpt]-1][positionLigne].getContenu()!=null))) {
+					System.out.println("LettrePositionable");
 				}
+				else {
+					System.out.println("Mot non positionnable");
+					estPlacable=false;
+				}
+				System.out.println();
+				//if (this.plateauDeJeu[positionLigne][positionColonne[cpt]].estUtilisable()==true) {
+					
+				//	estPlacable=true;
+				//	break;
+				//}
 			}
 
 		return estPlacable;
 	}
 	public Boolean motEstPlacableColonne(int[] positionLigne,int positionColonne,int nombreLettreAPlacer) {
 		//WIP
-		Boolean estPlacable=false;
+		Boolean estPlacable=true;
 			for (int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
-				System.out.println();
-				if (this.plateauDeJeu[positionLigne[cpt]][positionColonne].estUtilisable()==true) {
-					
-					estPlacable=true;
-					break;
+				if (((positionLigne[cpt]==7)&&(positionColonne==7))||(this.plateauDeJeu[positionLigne[cpt]][positionColonne-1].getContenu()!=null)||((this.plateauDeJeu[positionLigne[cpt]][positionColonne+1].getContenu()!=null))||((this.plateauDeJeu[positionLigne[cpt]+1][positionColonne].getContenu()!=null))||((this.plateauDeJeu[positionLigne[cpt]-1][positionColonne].getContenu()!=null))) {
+					System.out.println("LettrePositionable");
 				}
+				else {
+					System.out.println("Mot non positionnable");
+					estPlacable=false;
+				}
+				System.out.println();
+				//if (this.plateauDeJeu[positionLigne[cpt]][positionColonne].estUtilisable()==true) {
+					
+				//	estPlacable=true;
+				//	break;
+				//}
 			}
 
 		return estPlacable;
