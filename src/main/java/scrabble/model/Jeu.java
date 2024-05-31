@@ -37,8 +37,6 @@ public class Jeu {
 					this.plateauDeJeu[cpt1][cpt2]=new Case(cpt1,cpt2,TypeCase.VIDE,null);
 			}
 		}
-		
-		
 		for (int cpt1=1;cpt1<5;cpt1++) {
 			this.plateauDeJeu[cpt1][cpt1]=new Case(cpt1,cpt1,TypeCase.MOTDOUBLE,null);
 			this.plateauDeJeu[cpt1][14-cpt1]=new Case(cpt1,cpt1,TypeCase.MOTDOUBLE,null);
@@ -79,13 +77,10 @@ public class Jeu {
 			this.plateauDeJeu[7][cpt1]=new Case (7,cpt1,TypeCase.MOTTRIPLE,null);
 		}
 		plateauDeJeu[caseMilieuXY][caseMilieuXY]=new Case(caseMilieuXY,caseMilieuXY,TypeCase.DEPART,null,true);
-
-
-		
 	}
+	
 	public void remplirSacDeLettre() {
 		int longueur=0;
-		//WIP
 		if (sacDeLettreEstVide()) {
 			for (ValeurLettre valeur : ValeurLettre.values()) {
 				longueur=ajouterLettre(longueur,valeur,valeur.getRecurrence());
@@ -93,6 +88,7 @@ public class Jeu {
 			
 		}
 	}
+	
 	public int ajouterLettre(int longueur,ValeurLettre valeur,int nombre) {
 		int temp=longueur+nombre;
 		int ajout=0;
@@ -102,6 +98,7 @@ public class Jeu {
 		}
 		return (longueur+nombre);
 	}
+	
 	public void ajouterLettrePremierePositionDisponible(ValeurLettre lettre) {
 		for (int i=0;i<longueur;i++) {
 			if (sacDeLettre[i]==null){
@@ -111,6 +108,7 @@ public class Jeu {
 
 		}
 	}
+	
 	public void supprimerLettre(int position) {
 		sacDeLettre[position]=null;
 		//for (int i=position+1; i<103;i++) {
@@ -132,15 +130,16 @@ public class Jeu {
 	}
 	
 	public ValeurLettre distribuerLettre(int position) {
-		
 		ValeurLettre lettre=sacDeLettre[position];
 
 		return lettre;
 	}
+	
 	public int choixNombreAleatoire() {
 		int nombreAleatoire = rand.nextInt(longueur);
 		return nombreAleatoire;
 	}
+	
 	public String joueurQuiJoue() {
 		return null;
 		//TODO
@@ -180,6 +179,7 @@ public class Jeu {
 			
 		}
 	}
+	
 	public boolean sacDeLettreEstVide() {
 		boolean booleenEstVide = true;
 		for (int cpt = 0; cpt<longueur; cpt++) {
@@ -190,6 +190,7 @@ public class Jeu {
 		}
         return booleenEstVide;
 	}
+	
 	public void afficherSacDeLettre() {
 		for (int compteur=0;compteur<longueur;compteur++) {
 			if (sacDeLettre[compteur]!=null) {
@@ -197,17 +198,18 @@ public class Jeu {
 			}
 		}
 		System.out.println();
-
 	}
 	
 	public void placerLettreJoue(int posX,int posY,ValeurLettre lettre) {
 		
 		plateauDeJeu[posX][posY].setContenu(lettre);
 	}
+	
 	public String finPartie() {
 		return null;
 		//TODO
 	}
+	
 	public Boolean motEstPlacable(int positionLigne,int positionColonne,int nombreLettreAPlacer,int choixLigneColonne) {
 		//WIP
 		Boolean estPlacable=false;
@@ -263,8 +265,8 @@ public class Jeu {
 			return(this.plateauDeJeu[positionLigne-1][positionColonne].getContenu()!=null)||((this.plateauDeJeu[positionLigne+1][positionColonne].getContenu()!=null))||((this.plateauDeJeu[positionLigne][positionColonne+1].getContenu()!=null))||((this.plateauDeJeu[positionLigne][positionColonne-1].getContenu()!=null));
 		}
 	}
+	
 	public Boolean motEstPlacableLigne(int positionLigne,int[] positionColonne,int nombreLettreAPlacer) {
-		//WIP
 		Boolean estPlacable=true;
 			for (int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
 				
@@ -285,17 +287,13 @@ public class Jeu {
 					estPlacable=false;
 				}
 				System.out.println();
-				//if (this.plateauDeJeu[positionLigne][positionColonne[cpt]].estUtilisable()==true) {
-					
-				//	estPlacable=true;
-				//	break;
-				//}
+
 			}
 
 		return estPlacable;
 	}
+	
 	public Boolean motEstPlacableColonne(int[] positionLigne,int positionColonne,int nombreLettreAPlacer) {
-		//WIP
 		Boolean estPlacable=true;
 			for (int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
 				if ((uneDesLettresEstSurCaseUtilisable(positionColonne,positionLigne,nombreLettreAPlacer)&&(positionLigne[cpt]==7)&&(positionColonne==7))||(this.plateauDeJeu[positionLigne[cpt]][positionColonne-1].getContenu()!=null)||((this.plateauDeJeu[positionLigne[cpt]][positionColonne+1].getContenu()!=null))||((this.plateauDeJeu[positionLigne[cpt]+1][positionColonne].getContenu()!=null))||((this.plateauDeJeu[positionLigne[cpt]-1][positionColonne].getContenu()!=null))) {
@@ -306,11 +304,7 @@ public class Jeu {
 					estPlacable=false;
 				}
 				System.out.println();
-				//if (this.plateauDeJeu[positionLigne[cpt]][positionColonne].estUtilisable()==true) {
-					
-				//	estPlacable=true;
-				//	break;
-				//}
+
 			}
 
 		return estPlacable;
@@ -343,13 +337,13 @@ public class Jeu {
 			}
 		}
 	}
+	
 	public TypeCase typeCasePosition(int positionLigne, int positionColonne) {
 		return this.plateauDeJeu[positionLigne][positionColonne].getTypeCase();
 	}
 
 	public ValeurLettre getLettre(int l, int colonne) {
 		return this.plateauDeJeu[l][colonne].getContenu();
-
 	}
 
 	
