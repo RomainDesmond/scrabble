@@ -141,7 +141,7 @@ public class ScrabbleApplicationConsole {
 		
 	}
 	
-	public static int jouerLettre(int[] listeNb,int nbLettreJoue) {
+	public static int jouerLettre(Jeu plateau,int[] listeNb,int nbLettreJoue) {
 		System.out.println("Donnez une lettre à jouer");
 		Scanner inputNombreEchange = new Scanner(System.in);
 		int choixPosition=inputNombreEchange.nextShort();
@@ -186,7 +186,7 @@ public class ScrabbleApplicationConsole {
 		nombreLettreAPlacer=demanderNombre("Donnez le nombre de lettre que vouz voulez placer : ");
 		
 		for (int compteur=0;compteur<nombreLettreAPlacer;compteur++) {
-			nbLettreJoue=jouerLettre(listeDeNombre,nbLettreJoue);
+			nbLettreJoue=jouerLettre(plateau,listeDeNombre,nbLettreJoue);
 			
 		}
 		if(nombreLettreAPlacer==nbLettreJoue) {
@@ -194,7 +194,9 @@ public class ScrabbleApplicationConsole {
 	
 				if (choix == 1) {
 					positionLigneColonneMot[0]=demanderNombre("Donnez la ligne du mot :");
-					
+					while ((positionLigneColonneMot[0]<0) || (positionLigneColonneMot[0]>14)){
+					positionLigneColonneMot[0]=demanderNombre("Donnez la ligne du mot :");
+					}
 					for(int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
 
 
@@ -202,10 +204,18 @@ public class ScrabbleApplicationConsole {
 							choixJoker(j,listeDeNombre,cpt);
 						}
 						
-
+						
 						positionLigneColonneMot[1]=demanderNombre("Donnez la colonne de la lettre à placer :");
+						while((positionLigneColonneMot[1]<0)||(positionLigneColonneMot[1]>14)) {
+							positionLigneColonneMot[1]=demanderNombre("Erreur vos valeurs sont hors du tableau :");
+						}
+						while(plateau.getLettre( positionLigneColonneMot[0],positionLigneColonneMot[1])!=null) {
+							positionLigneColonneMot[1]=demanderNombre("Erreur redonnez une colonne non utilisé de la lettre à placer :");
+						}
+						
 						plateau.placerLettreJoue(positionLigneColonneMot[0], positionLigneColonneMot[1],j.donnerLettre(listeDeNombre[cpt]-1));
 						listePosition[cpt]=positionLigneColonneMot[1];
+						
 					}
 					if (plateau.motEstPlacableLigne(positionLigneColonneMot[0], listePosition,nombreLettreAPlacer)) {
 						System.out.println("Oui");
@@ -220,9 +230,12 @@ public class ScrabbleApplicationConsole {
 						}
 					}					
 				}
-				else {
+				else if(choix == 2){
+					positionLigneColonneMot[0]=demanderNombre("Donnez la ligne du mot :");
+					while ((positionLigneColonneMot[1]<0) || (positionLigneColonneMot[1]>14)){
+						positionLigneColonneMot[1]=demanderNombre("Donnez la colonne du mot :");
+					}
 					
-					positionLigneColonneMot[1]=demanderNombre("Donnez la colonne du mot :");
 					
 					for(int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
 
@@ -233,6 +246,13 @@ public class ScrabbleApplicationConsole {
 						
 
 						positionLigneColonneMot[0]=demanderNombre("Donnez la ligne de la lettre à placer :");
+						while((positionLigneColonneMot[0]<0)||(positionLigneColonneMot[0]>14)) {
+							positionLigneColonneMot[0]=demanderNombre("Erreur vos valeurs sont hors du tableau :");
+						}
+						while(plateau.getLettre( positionLigneColonneMot[0],positionLigneColonneMot[1])!=null) {
+							positionLigneColonneMot[0]=demanderNombre("Erreur redonnez une ligne non utilisé de la lettre à placer :");
+						}
+						
 						plateau.placerLettreJoue(positionLigneColonneMot[0], positionLigneColonneMot[1],j.donnerLettre(listeDeNombre[cpt]-1));
 						listePosition[cpt]=positionLigneColonneMot[0];
 					}
@@ -245,6 +265,9 @@ public class ScrabbleApplicationConsole {
 						plateau.placerLettreJoue( listePosition[cpt],positionLigneColonneMot[1],null);
 						}
 					}	
+				}
+				else {
+					System.out.println("Erreur");
 				}
 		}
 		else {
@@ -294,7 +317,6 @@ public class ScrabbleApplicationConsole {
 			scoreMot=scoreMot+j.donnerLettre(positionsLettreChevalet[cpt]-1).getPoint()*multiplicateurLettre;
 			
 			j.supprimerLettre(positionsLettreChevalet[cpt]-1);
-			System.out.println("Score mot actuel"+scoreMot);
 		}
 		j.setScore(j.getScore()+(scoreMot*multiplicateurMot));
 	}
@@ -303,49 +325,46 @@ public class ScrabbleApplicationConsole {
 		int point=0;
 		int[] positionsLettreDuMotComplete;
 		boolean estPasEgal=true;
+		if (positionsLigneDuMot>0) {
+			while((plateau.getLettre(positionsLigneDuMot-cpt, positionColonneDuMot)!=null)) {
+				if (estPasEgal(positionsLigneDuMot-cpt,lettreCompleteCompteLigne)){
+					point=point+plateau.getLettre(positionsLigneDuMot-cpt,positionColonneDuMot).getPoint();
+					ajouterFinTableauEntier(lettreCompleteCompteLigne,positionsLigneDuMot-cpt);
+				}
+				cpt++;
+			}
+		}
+		cpt=1;
+		if (positionsLigneDuMot<14) {
+			while(plateau.getLettre(positionsLigneDuMot+cpt, positionColonneDuMot)!=null) {
+				if (estPasEgal(positionsLigneDuMot+cpt,lettreCompleteCompteLigne)){
+					point=point+plateau.getLettre(positionsLigneDuMot+cpt,positionColonneDuMot).getPoint();
+					ajouterFinTableauEntier(lettreCompleteCompteLigne,positionsLigneDuMot+cpt);
 	
-		while((plateau.getLettre(positionsLigneDuMot-cpt, positionColonneDuMot)!=null)) {
-			if (estPasEgal(positionsLigneDuMot-cpt,lettreCompleteCompteLigne)){
-				System.out.println("Ligne Moins"+plateau.getLettre(positionsLigneDuMot-cpt,positionColonneDuMot).getPoint());
-				point=point+plateau.getLettre(positionsLigneDuMot-cpt,positionColonneDuMot).getPoint();
-				ajouterFinTableauEntier(lettreCompleteCompteLigne,positionsLigneDuMot-cpt);
-
+				}
+				cpt++;
 			}
-			cpt++;
 		}
 		cpt=1;
 		
-		while(plateau.getLettre(positionsLigneDuMot+cpt, positionColonneDuMot)!=null) {
-			if (estPasEgal(positionsLigneDuMot+cpt,lettreCompleteCompteLigne)){
-				System.out.println("Ligne Plus"+plateau.getLettre(positionsLigneDuMot+cpt,positionColonneDuMot).getPoint());
-				point=point+plateau.getLettre(positionsLigneDuMot+cpt,positionColonneDuMot).getPoint();
-				ajouterFinTableauEntier(lettreCompleteCompteLigne,positionsLigneDuMot+cpt);
-
+		if (positionColonneDuMot<14) {
+			while((plateau.getLettre(positionsLigneDuMot, positionColonneDuMot+cpt)!=null)) {
+				if (estPasEgal(positionColonneDuMot+cpt,positionColonneAutreMot)&&(estPasEgal(positionColonneDuMot+cpt,lettreCompleteCompteColonne))) {
+					point=point+plateau.getLettre(positionsLigneDuMot, positionColonneDuMot+cpt).getPoint();
+					ajouterFinTableauEntier(lettreCompleteCompteColonne,positionColonneDuMot+cpt);
+				}
+				cpt++;
 			}
-			cpt++;
 		}
 		cpt=1;
-		
-		while((plateau.getLettre(positionsLigneDuMot, positionColonneDuMot+cpt)!=null)) {
-			if (estPasEgal(positionColonneDuMot+cpt,positionColonneAutreMot)&&(estPasEgal(positionColonneDuMot+cpt,lettreCompleteCompteColonne))) {
-				System.out.println("Colonne Plus"+plateau.getLettre(positionsLigneDuMot, positionColonneDuMot+cpt).getPoint());
-				point=point+plateau.getLettre(positionsLigneDuMot, positionColonneDuMot+cpt).getPoint();
-				ajouterFinTableauEntier(lettreCompleteCompteColonne,positionColonneDuMot+cpt);
+		if (positionColonneDuMot>0) {
+			while(plateau.getLettre(positionsLigneDuMot, positionColonneDuMot-cpt)!=null) {
+				if((estPasEgal(positionColonneDuMot-cpt,positionColonneAutreMot))&&(estPasEgal(positionColonneDuMot-cpt,lettreCompleteCompteColonne))) {
+					point=point+plateau.getLettre(positionsLigneDuMot, positionColonneDuMot-cpt).getPoint();
+					ajouterFinTableauEntier(lettreCompleteCompteColonne,positionColonneDuMot-cpt);
+				}
+				cpt++;
 			}
-			cpt++;
-		}
-		cpt=1;
-		
-		while(plateau.getLettre(positionsLigneDuMot, positionColonneDuMot-cpt)!=null) {
-			if((estPasEgal(positionColonneDuMot-cpt,positionColonneAutreMot))&&(estPasEgal(positionColonneDuMot-cpt,lettreCompleteCompteColonne))) {
-				
-				System.out.println("Colonne moins"+plateau.getLettre(positionsLigneDuMot, positionColonneDuMot-cpt).getPoint());
-				point=point+plateau.getLettre(positionsLigneDuMot, positionColonneDuMot-cpt).getPoint();
-				ajouterFinTableauEntier(lettreCompleteCompteColonne,positionColonneDuMot-cpt);
-
-			}
-			
-			cpt++;
 		}
 		
 		
@@ -389,7 +408,6 @@ public class ScrabbleApplicationConsole {
 	
 	public static void ajouterFinTableauEntier(int[] tableau,int element) {
 		//AjoutElementAutreQue0
-	
 		for (int cpt=0;cpt<tableau.length;cpt++) {
 			System.out.println(tableau[cpt]);
 			if (tableau[cpt]==0) {
