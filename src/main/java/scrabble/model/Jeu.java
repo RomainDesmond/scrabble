@@ -243,12 +243,32 @@ public class Jeu {
 		
 	}
 	
+	public Boolean CaseAutourSontNull(int positionLigne,int positionColonne) {
+		if (positionLigne==0) {
+			return((this.plateauDeJeu[positionLigne+1][positionColonne].getContenu()!=null))||((this.plateauDeJeu[positionLigne][positionColonne+1].getContenu()!=null))||((this.plateauDeJeu[positionLigne][positionColonne-1].getContenu()!=null));
+
+		}
+		else if (positionLigne==14) {
+			return(this.plateauDeJeu[positionLigne-1][positionColonne].getContenu()!=null)||((this.plateauDeJeu[positionLigne][positionColonne+1].getContenu()!=null))||((this.plateauDeJeu[positionLigne][positionColonne-1].getContenu()!=null));
+
+		}
+		else if (positionColonne==0) {
+			return(this.plateauDeJeu[positionLigne-1][positionColonne].getContenu()!=null)||((this.plateauDeJeu[positionLigne+1][positionColonne].getContenu()!=null))||((this.plateauDeJeu[positionLigne][positionColonne+1].getContenu()!=null));
+
+		}
+		else if (positionColonne==14) {
+			return(this.plateauDeJeu[positionLigne-1][positionColonne].getContenu()!=null)||((this.plateauDeJeu[positionLigne+1][positionColonne].getContenu()!=null))||((this.plateauDeJeu[positionLigne][positionColonne-1].getContenu()!=null));
+		}
+		else {
+			return(this.plateauDeJeu[positionLigne-1][positionColonne].getContenu()!=null)||((this.plateauDeJeu[positionLigne+1][positionColonne].getContenu()!=null))||((this.plateauDeJeu[positionLigne][positionColonne+1].getContenu()!=null))||((this.plateauDeJeu[positionLigne][positionColonne-1].getContenu()!=null));
+		}
+	}
 	public Boolean motEstPlacableLigne(int positionLigne,int[] positionColonne,int nombreLettreAPlacer) {
 		//WIP
 		Boolean estPlacable=true;
 			for (int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
 				
-				if ((uneDesLettresEstSurCaseUtilisable(positionLigne,positionColonne,nombreLettreAPlacer)&&(positionColonne[cpt]==7)&&(positionLigne==7))||(this.plateauDeJeu[positionLigne-1][positionColonne[cpt]].getContenu()!=null)||((this.plateauDeJeu[positionLigne+1][positionColonne[cpt]].getContenu()!=null))||((this.plateauDeJeu[positionLigne][positionColonne[cpt]+1].getContenu()!=null))||((this.plateauDeJeu[positionLigne][positionColonne[cpt]-1].getContenu()!=null))) {
+				if ((uneDesLettresEstSurCaseUtilisable(positionLigne,positionColonne,nombreLettreAPlacer)&&(positionColonne[cpt]==7)&&(positionLigne==7))||CaseAutourSontNull(positionLigne,positionColonne[cpt])) {
 					System.out.println("Lettre"+this.plateauDeJeu[positionLigne][positionColonne[cpt]].getContenu());
 					System.out.println(positionColonne[cpt]+""+positionLigne+" "+getLettre(positionLigne,positionColonne[cpt]));
 
@@ -300,10 +320,18 @@ public class Jeu {
 		for (int cpt=0;cpt<15;cpt++) {
 			for(int cpt1=0;cpt1<15;cpt1++) {
 				if(this.plateauDeJeu[cpt][cpt1].getContenu()!=null) {
-					plateauDeJeu[cpt+1][cpt1].setCaseUtilisable(true);
-					plateauDeJeu[cpt-1][cpt1].setCaseUtilisable(true);
-					plateauDeJeu[cpt][cpt1+1].setCaseUtilisable(true);
-					plateauDeJeu[cpt][cpt1-1].setCaseUtilisable(true);
+					if (cpt<14) {
+						plateauDeJeu[cpt+1][cpt1].setCaseUtilisable(true);
+					}
+					if (cpt>0) {
+						plateauDeJeu[cpt-1][cpt1].setCaseUtilisable(true);
+					}
+					if (cpt1<14) {
+						plateauDeJeu[cpt][cpt1+1].setCaseUtilisable(true);
+					}
+					if (cpt1>0) {
+						plateauDeJeu[cpt][cpt1-1].setCaseUtilisable(true);
+					}
 				}
 			}
 		}
