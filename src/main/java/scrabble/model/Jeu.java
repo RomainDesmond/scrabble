@@ -201,7 +201,6 @@ public class Jeu {
 	}
 	
 	public void placerLettreJoue(int posX,int posY,ValeurLettre lettre) {
-		
 		plateauDeJeu[posX][posY].setContenu(lettre);
 	}
 	
@@ -216,6 +215,7 @@ public class Jeu {
 		if (choixLigneColonne==1) {
 			for (int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
 				if (this.plateauDeJeu[positionLigne][positionColonne+cpt].estUtilisable()==true) {
+					System.out.println("estplacable: "+positionLigne+" "+positionColonne+cpt+"estutilisable:"+this.plateauDeJeu[positionLigne][positionColonne+cpt].estUtilisable() );
 					estPlacable=true;
 					break;
 				}
@@ -235,10 +235,10 @@ public class Jeu {
 	public boolean uneDesLettresEstSurCaseUtilisable(int positionLigne,int[] positionColonne,int nombreLettreAPlacer) {
 		boolean motAUneLettreSurCaseUtilisable = false;
 		for (int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
-		if (this.plateauDeJeu[positionLigne][positionColonne[cpt]].estUtilisable()==true) {
-		
-			motAUneLettreSurCaseUtilisable=true;
-			break;
+			if (this.plateauDeJeu[positionLigne][positionColonne[cpt]].estUtilisable()==true) {
+
+				motAUneLettreSurCaseUtilisable=true;
+				break;
 			}
 		}
 		return motAUneLettreSurCaseUtilisable;
@@ -270,20 +270,12 @@ public class Jeu {
 		Boolean estPlacable=true;
 			for (int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
 				
-				if ((uneDesLettresEstSurCaseUtilisable(positionLigne,positionColonne,nombreLettreAPlacer)&&(positionColonne[cpt]==7)&&(positionLigne==7))||CaseAutourSontNull(positionLigne,positionColonne[cpt])) {
-					System.out.println("Lettre"+this.plateauDeJeu[positionLigne][positionColonne[cpt]].getContenu());
-					System.out.println(positionColonne[cpt]+""+positionLigne+" "+getLettre(positionLigne,positionColonne[cpt]));
-
+				if ((uneDesLettresEstSurCaseUtilisable(positionLigne,positionColonne,nombreLettreAPlacer)||((positionColonne[cpt]==7)&&(positionLigne==7)))){//||CaseAutourSontNull(positionLigne,positionColonne[cpt])) {
 
 					System.out.println("LettrePositionable");
 				}
 				else {
-					System.out.println("Lettre"+this.plateauDeJeu[positionLigne][positionColonne[cpt]].getContenu());
-					System.out.println("Lettre gauche:"+(this.plateauDeJeu[positionLigne][positionColonne[cpt]-1].getContenu()+"Lettre Droit:"+(this.plateauDeJeu[positionLigne][positionColonne[cpt]+1].getContenu())));
 
-					System.out.println(positionColonne[cpt]+""+positionLigne+" "+getLettre(positionColonne[cpt]+1,positionLigne));
-					System.out.println(""+this.plateauDeJeu[positionColonne[cpt]][positionLigne-1].getContenu()+this.plateauDeJeu[positionColonne[cpt]][positionLigne+1].getContenu()+this.plateauDeJeu[positionColonne[cpt]+1][positionLigne].getContenu()+this.plateauDeJeu[positionColonne[cpt]-1][positionLigne].getContenu());
-					System.out.println("Mot non positionnable");
 					estPlacable=false;
 				}
 				System.out.println();
@@ -296,7 +288,7 @@ public class Jeu {
 	public Boolean motEstPlacableColonne(int[] positionLigne,int positionColonne,int nombreLettreAPlacer) {
 		Boolean estPlacable=true;
 			for (int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
-				if ((uneDesLettresEstSurCaseUtilisable(positionColonne,positionLigne,nombreLettreAPlacer)&&(positionLigne[cpt]==7)&&(positionColonne==7))||(this.plateauDeJeu[positionLigne[cpt]][positionColonne-1].getContenu()!=null)||((this.plateauDeJeu[positionLigne[cpt]][positionColonne+1].getContenu()!=null))||((this.plateauDeJeu[positionLigne[cpt]+1][positionColonne].getContenu()!=null))||((this.plateauDeJeu[positionLigne[cpt]-1][positionColonne].getContenu()!=null))) {
+				if ((uneDesLettresEstSurCaseUtilisable(positionColonne,positionLigne,nombreLettreAPlacer)&&(positionLigne[cpt]==7)&&(positionColonne==7))){//||(this.plateauDeJeu[positionLigne[cpt]][positionColonne-1].getContenu()!=null)||((this.plateauDeJeu[positionLigne[cpt]][positionColonne+1].getContenu()!=null))||((this.plateauDeJeu[positionLigne[cpt]+1][positionColonne].getContenu()!=null))||((this.plateauDeJeu[positionLigne[cpt]-1][positionColonne].getContenu()!=null))) {
 					System.out.println("LettrePositionable");
 				}
 				else {
