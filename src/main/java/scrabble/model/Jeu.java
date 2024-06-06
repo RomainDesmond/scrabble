@@ -180,8 +180,13 @@ public class Jeu {
 		System.out.println();
 	}
 	
-	public void placerLettreJoue(int posX,int posY,ValeurLettre lettre) {
-		plateauDeJeu[posX][posY].setContenu(lettre);
+	public boolean placerLettreJoue(int posX,int posY,ValeurLettre lettre) {
+		if (plateauDeJeu[posX][posY].getContenu()==null) {
+			plateauDeJeu[posX][posY].setContenu(lettre);
+			return true;
+		}
+		return false;
+		
 	}
 	
 	public String finPartie() {
@@ -230,7 +235,7 @@ public class Jeu {
 			}
 		return estPlacable;
 	}
-	
+		
 	public Boolean motEstPlacableColonne(int[] positionLigne,int positionColonne,int nombreLettreAPlacer) {
 		Boolean estPlacable=true;
 			for (int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
