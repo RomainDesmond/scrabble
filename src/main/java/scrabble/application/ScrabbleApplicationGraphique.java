@@ -37,7 +37,7 @@ public class ScrabbleApplicationGraphique extends Application {
 
 
 		
-		Scene scene = new Scene (root,900,900);
+		Scene scene = new Scene (root,1000,900);
 		primaryStage.setScene(scene);
 		primaryStage.show();	
 		System.out.println("fin");

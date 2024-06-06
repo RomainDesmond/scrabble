@@ -60,7 +60,7 @@ public class ScrabbleApplicationGraphiqueController {
 		for(int cpt1=0;cpt1<15;cpt1++) {
 			for(int cpt2=0;cpt2<15;cpt2++) {
                 Rectangle tile = new Rectangle(50, 50);
-                Text text = new Text(plateau.casePosition(cpt1,cpt2).affichageCase());
+                Text text = new Text(plateau.casePosition(cpt2,cpt1).affichageCase());
                 
                 text.setFont(Font.font(20));
                 tile.setFill(Color.BURLYWOOD);
