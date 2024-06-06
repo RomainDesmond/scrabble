@@ -282,6 +282,10 @@ public class Jeu {
 	public TypeCase typeCasePosition(int positionLigne, int positionColonne) {
 		return this.plateauDeJeu[positionLigne][positionColonne].getTypeCase();
 	}
+	
+	public Case casePosition(int positionLigne, int positionColonne) {
+		return this.plateauDeJeu[positionLigne][positionColonne];
+	}
 
 	public ValeurLettre getLettre(int l, int colonne) {
 		return this.plateauDeJeu[l][colonne].getContenu();
