@@ -455,6 +455,9 @@ public class ScrabbleApplicationConsole {
 			j.supprimerLettre(positionsLettreChevalet[cpt]-1);
 
 		}
+		if (nombreLettreAPlacer==7){
+			scoreMot=scoreMot+50;
+		}
 		j.setScore(j.getScore()+(scoreMot*multiplicateurMot));
 	}
 	public static int ajoutMotComplete(Joueur j,Jeu plateau,int positionsLigneDuMot,int positionColonneDuMot,int[]positionColonneAutreMot,int[]lettreCompleteCompteLigne,int[]lettreCompleteCompteColonne) {
@@ -594,6 +597,9 @@ public class ScrabbleApplicationConsole {
 			j.afficherChevalet();
 			scoreMot=scoreMot+j.donnerLettre(positionsLettreChevalet[cpt]-1).getPoint()*multiplicateurLettre;
 			j.supprimerLettre(cpt);
+		}
+		if (nombreLettreAPlacer==7){
+			scoreMot=scoreMot+50;
 		}
 		j.setScore(j.getScore()+(scoreMot*multiplicateurMot));
 	}
