@@ -227,15 +227,33 @@ public class ScrabbleTest {
 		assertTrue(ScrabbleApplicationConsole.jouerMot(plateau,jTest,positionLigneColonneMot,listeDeNbPosChevaletPosChevalet,listePositionLettreAPlacer,1,1));
 		assertEquals(5, jTest.getScore());
 	}
-	 @Test
-	    public void testGetUserInputOther() {
-	        String simulatedUserInput = "3";
+	@Test
+    public void testGetUserInputOther() {
+	       	String simulatedUserInput = "3";
 	        ByteArrayInputStream testIn = new ByteArrayInputStream(simulatedUserInput.getBytes());
 	        System.setIn(testIn);
-
+	    
 	        String result = ScrabbleApplicationConsole.demanderLettre("Entrez votre choix");
 
 	        assertEquals(simulatedUserInput, result);
 	    }
+	@Test
+	 public void testSacEstVide() {
+		assertFalse(jTest.sacDeLettreEstVide());
+		for (int cpt=0;cpt<7;cpt++) {
+			listeDeNbPosChevaletPosChevalet[0+cpt]=1+cpt;
+			listePositionLettreAPlacer[0+cpt]=7+cpt;
+		}
+		positionLigneColonneMot[0]=7;
+        String simulatedUserInput = "X";
+        ByteArrayInputStream testIn = new ByteArrayInputStream(simulatedUserInput.getBytes());
+        System.setIn(testIn);
+		assertTrue(ScrabbleApplicationConsole.jouerMot(plateau,jTest,positionLigneColonneMot,listeDeNbPosChevaletPosChevalet,listePositionLettreAPlacer,7,1));
+
+		System.out.println("sacVide:");
+		jTest.afficherChevalet();
+		assertTrue(jTest.sacDeLettreEstVide());
+
+	 }
 
 }
