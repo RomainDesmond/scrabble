@@ -188,28 +188,7 @@ public class Jeu {
 		return null;
 		//TODO
 	}
-	
-	public Boolean motEstPlacable(int positionLigne,int positionColonne,int nombreLettreAPlacer,int choixLigneColonne) {
-		Boolean estPlacable=false;
-		if (choixLigneColonne==1) {
-			for (int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
-				if (this.plateauDeJeu[positionLigne][positionColonne+cpt].estUtilisable()==true) {
-					System.out.println("estplacable: "+positionLigne+" "+positionColonne+cpt+"estutilisable:"+this.plateauDeJeu[positionLigne][positionColonne+cpt].estUtilisable() );
-					estPlacable=true;
-					break;
-				}
-			}
-		}
-		else {
-			for (int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
-				if (this.plateauDeJeu[positionLigne+cpt][positionColonne].estUtilisable()==true) {
-					estPlacable=true;
-					break;
-				}
-			}
-		}
-		return estPlacable;
-	}
+
 	
 	public boolean uneDesLettresEstSurCaseUtilisable(int positionLigne,int[] positionColonne,int nombreLettreAPlacer) {
 		boolean motAUneLettreSurCaseUtilisable = false;
@@ -233,23 +212,7 @@ public class Jeu {
 		return motAUneLettreSurCaseUtilisable;
 	}
 	
-	public Boolean CaseAutourSontNull(int positionLigne,int positionColonne) {
-		if (positionLigne==0) {
-			return((this.plateauDeJeu[positionLigne+1][positionColonne].getContenu()!=null))||((this.plateauDeJeu[positionLigne][positionColonne+1].getContenu()!=null))||((this.plateauDeJeu[positionLigne][positionColonne-1].getContenu()!=null));
-		}
-		else if (positionLigne==14) {
-			return(this.plateauDeJeu[positionLigne-1][positionColonne].getContenu()!=null)||((this.plateauDeJeu[positionLigne][positionColonne+1].getContenu()!=null))||((this.plateauDeJeu[positionLigne][positionColonne-1].getContenu()!=null));
-		}
-		else if (positionColonne==0) {
-			return(this.plateauDeJeu[positionLigne-1][positionColonne].getContenu()!=null)||((this.plateauDeJeu[positionLigne+1][positionColonne].getContenu()!=null))||((this.plateauDeJeu[positionLigne][positionColonne+1].getContenu()!=null));
-		}
-		else if (positionColonne==14) {
-			return(this.plateauDeJeu[positionLigne-1][positionColonne].getContenu()!=null)||((this.plateauDeJeu[positionLigne+1][positionColonne].getContenu()!=null))||((this.plateauDeJeu[positionLigne][positionColonne-1].getContenu()!=null));
-		}
-		else {
-			return(this.plateauDeJeu[positionLigne-1][positionColonne].getContenu()!=null)||((this.plateauDeJeu[positionLigne+1][positionColonne].getContenu()!=null))||((this.plateauDeJeu[positionLigne][positionColonne+1].getContenu()!=null))||((this.plateauDeJeu[positionLigne][positionColonne-1].getContenu()!=null));
-		}
-	}
+
 	
 	public Boolean motEstPlacableLigne(int positionLigne,int[] positionColonne,int nombreLettreAPlacer) {
 		Boolean estPlacable=true;
