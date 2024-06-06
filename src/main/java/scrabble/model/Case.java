@@ -21,6 +21,16 @@ public class Case {
 		this.contenu=contenu;		
 		this.CaseUtilisable=CaseUtilisable;
 	}
+	
+	
+	public String affichageCase(){
+		
+		if (this.contenu==null) {
+			return this.typeCase.AffichageCase();
+		}
+		return this.contenu.AffichageLettre();
+		
+	}
 	public String affichageTypeCase() {
 		return this.typeCase.AffichageCase();
 	}
