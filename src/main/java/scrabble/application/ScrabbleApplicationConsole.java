@@ -253,7 +253,6 @@ public class ScrabbleApplicationConsole {
 					choixJoker(j,listeDeNombre,cpt);
 				}
 				plateau.placerLettreJoue(positionLigneColonneMot[0], listePosition[cpt],j.donnerLettre(listeDeNombre[cpt]-1));
-
 			}
 			if (plateau.motEstPlacableLigne(positionLigneColonneMot[0], listePosition,nombreLettreAPlacer)) {
 			
@@ -457,25 +456,19 @@ public class ScrabbleApplicationConsole {
 		boolean estPasEgal=true;
 
 		if (positionsLigneDuMot>0) {
-			while((plateau.getLettre(positionsLigneDuMot-cpt, positionColonneDuMot)!=null)) {
-				
-				if (estPasEgal(positionsLigneDuMot-cpt,positionColonneAutreMot)&&(estPasEgal(positionsLigneDuMot-cpt,lettreCompleteCompteLigne))){
-
+			while((plateau.getLettre((positionsLigneDuMot-cpt), positionColonneDuMot)!=null)) {
+				if (estPasEgal(positionsLigneDuMot-cpt,lettreCompleteCompteLigne)){
 					point=point+plateau.getLettre(positionsLigneDuMot-cpt,positionColonneDuMot).getPoint();
 					ajouterFinTableauEntier(lettreCompleteCompteLigne,positionsLigneDuMot-cpt);
 				}
-				cpt++;
 			}
 		}
 		cpt=1;
 		if (positionsLigneDuMot<14) {
 			while (plateau.getLettre(positionsLigneDuMot+cpt, positionColonneDuMot)!=null) {
-				if (estPasEgal(positionsLigneDuMot+cpt,positionColonneAutreMot)&&(estPasEgal(positionsLigneDuMot+cpt,lettreCompleteCompteLigne))){
-
-
+				if (estPasEgal(positionsLigneDuMot+cpt,lettreCompleteCompteLigne)){
 					point=point+plateau.getLettre(positionsLigneDuMot+cpt,positionColonneDuMot).getPoint();
 					ajouterFinTableauEntier(lettreCompleteCompteLigne,positionsLigneDuMot+cpt);
-	
 				}
 				cpt++;
 			}
@@ -485,7 +478,6 @@ public class ScrabbleApplicationConsole {
 		if (positionColonneDuMot<14) {
 			while((plateau.getLettre(positionsLigneDuMot, positionColonneDuMot+cpt)!=null)) {
 				if (estPasEgal(positionColonneDuMot+cpt,positionColonneAutreMot)&&(estPasEgal(positionColonneDuMot+cpt,lettreCompleteCompteColonne))) {
-
 					point=point+plateau.getLettre(positionsLigneDuMot, positionColonneDuMot+cpt).getPoint();
 					ajouterFinTableauEntier(lettreCompleteCompteColonne,positionColonneDuMot+cpt);
 				}
@@ -506,7 +498,53 @@ public class ScrabbleApplicationConsole {
 		return point;
 	}
 	
-	
+	public static int ajoutMotCompleteColonne(Joueur j,Jeu plateau,int positionsLigneDuMot,int positionColonneDuMot,int[]positionColonneAutreMot,int[]lettreCompleteCompteLigne,int[]lettreCompleteCompteColonne) {
+		int cpt=1;
+		int point=0;
+		int[] positionsLettreDuMotComplete;
+		boolean estPasEgal=true;
+		if (positionsLigneDuMot>0) {
+			while((plateau.getLettre((positionsLigneDuMot-cpt), positionColonneDuMot)!=null)) {		
+				if (estPasEgal(positionsLigneDuMot-cpt,positionColonneAutreMot)&&(estPasEgal(positionsLigneDuMot-cpt,lettreCompleteCompteLigne))){
+					point=point+plateau.getLettre(positionsLigneDuMot-cpt,positionColonneDuMot).getPoint();
+					ajouterFinTableauEntier(lettreCompleteCompteLigne,positionsLigneDuMot-cpt);
+				}
+				cpt++;
+			}
+		}
+		cpt=1;
+		if (positionsLigneDuMot<14) {
+			while (plateau.getLettre(positionsLigneDuMot+cpt, positionColonneDuMot)!=null) {
+				/*(estPasEgal(positionsLigneDuMot+cpt,positionColonneAutreMot)&&*/
+				if (estPasEgal(positionsLigneDuMot+cpt,positionColonneAutreMot)&&(estPasEgal(positionsLigneDuMot+cpt,lettreCompleteCompteLigne))){
+					point=point+plateau.getLettre(positionsLigneDuMot+cpt,positionColonneDuMot).getPoint();
+					ajouterFinTableauEntier(lettreCompleteCompteLigne,positionsLigneDuMot+cpt);
+				}
+				cpt++;
+			}
+		}
+		cpt=1;
+		if (positionColonneDuMot<14) {
+			while((plateau.getLettre(positionsLigneDuMot, positionColonneDuMot+cpt)!=null)) {
+				if ((estPasEgal(positionColonneDuMot+cpt,lettreCompleteCompteColonne))) {
+					point=point+plateau.getLettre(positionsLigneDuMot, positionColonneDuMot+cpt).getPoint();
+					ajouterFinTableauEntier(lettreCompleteCompteColonne,positionColonneDuMot+cpt);
+				}
+				cpt++;
+			}
+		}
+		cpt=1;
+		if (positionColonneDuMot>0) {
+			while(plateau.getLettre(positionsLigneDuMot, positionColonneDuMot-cpt)!=null) {
+				if((estPasEgal(positionColonneDuMot-cpt,lettreCompleteCompteColonne))) {
+					point=point+plateau.getLettre(positionsLigneDuMot, positionColonneDuMot-cpt).getPoint();
+					ajouterFinTableauEntier(lettreCompleteCompteColonne,positionColonneDuMot-cpt);
+				}
+				cpt++;
+			}
+		}
+		return point;
+	}
 	
 	public static boolean estPasEgal(int nombre,int[] listeDeNombre) {
 		boolean estPasEgal=true;
@@ -515,8 +553,6 @@ public class ScrabbleApplicationConsole {
 		}
 		return estPasEgal;
 	}
-	
-	
 	
 	public static void compterLesPointsColonne(Joueur j,Jeu plateau,int nombreLettreAPlacer,int positionsLettreChevalet[],int[] positionsLigne,int positionsColonne) {
 		//WIP
@@ -527,8 +563,7 @@ public class ScrabbleApplicationConsole {
 		
 		for (int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
 			int multiplicateurLettre=1;
-			scoreMot=scoreMot+ajoutMotComplete(j,plateau,positionsColonne,positionsLigne[cpt],positionsLigne,lettreCompleteCompteLigne,lettreCompleteCompteColonne);
-
+			scoreMot=scoreMot+ajoutMotCompleteColonne(j,plateau,positionsLigne[cpt],positionsColonne,positionsLigne,lettreCompleteCompteLigne,lettreCompleteCompteColonne);
 			multiplicateurMot=multiplicateurMot*plateau.typeCasePosition(positionsLigne[cpt],positionsColonne).multiplicateurCaseMot();
 			multiplicateurLettre=multiplicateurLettre*plateau.typeCasePosition(positionsLigne[cpt], positionsColonne).multiplicateurCaseLettre();
 			j.afficherChevalet();
