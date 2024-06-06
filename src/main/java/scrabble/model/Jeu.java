@@ -17,9 +17,6 @@ public class Jeu {
 	private List<String> motsValides;
 	private ArrayList<Case> plateau;
 	private List<Joueur> listeJoueur;
-	
-
-
 	private static Random rand = new Random();
 
 
@@ -61,8 +58,6 @@ public class Jeu {
 				this.plateauDeJeu[cpt1][cpt2]=new Case(cpt1,cpt2,TypeCase.LETTREDOUBLE,null);
 				this.plateauDeJeu[cpt2][cpt1]=new Case(cpt2,cpt1,TypeCase.LETTREDOUBLE,null);
 			}
-		
-			
 		}
 		for (int cpt1=6;cpt1<9;cpt1=cpt1+2) {
 			for (int cpt2=2;cpt2<7;cpt2=cpt2+4) {
@@ -70,7 +65,6 @@ public class Jeu {
 				this.plateauDeJeu[cpt1][cpt2+6]=new Case (cpt1+6,cpt2+6,TypeCase.LETTREDOUBLE,null);
 				this.plateauDeJeu[cpt2][cpt1]=new Case (cpt2,cpt1,TypeCase.LETTREDOUBLE,null);
 				this.plateauDeJeu[cpt2+6][cpt1]=new Case (cpt2+6,cpt1+6,TypeCase.LETTREDOUBLE,null);
-
 			}
 		}
 		for (int cpt1=0;cpt1<15;cpt1=cpt1+14) {
@@ -85,7 +79,6 @@ public class Jeu {
 			for (ValeurLettre valeur : ValeurLettre.values()) {
 				longueur=ajouterLettre(longueur,valeur,valeur.getRecurrence());
 			}
-			
 		}
 	}
 	
@@ -105,17 +98,11 @@ public class Jeu {
 			sacDeLettre[i]=lettre;
 			break;
 			}
-
 		}
 	}
 	
 	public void supprimerLettre(int position) {
 		sacDeLettre[position]=null;
-		//for (int i=position+1; i<103;i++) {
-		//	if (sacDeLettre[i-1]==null) {
-		//		sacDeLettre[i-1]=sacDeLettre[i];
-		//	}
-		//}
 	}
 	
 	
@@ -131,7 +118,6 @@ public class Jeu {
 	
 	public ValeurLettre distribuerLettre(int position) {
 		ValeurLettre lettre=sacDeLettre[position];
-
 		return lettre;
 	}
 	
@@ -142,7 +128,6 @@ public class Jeu {
 	
 	public String joueurQuiJoue() {
 		return null;
-		//TODO
 	}
 	
 	public void afficherPlateau() {
@@ -151,10 +136,7 @@ public class Jeu {
 			System.out.print("|");
 			for (int compteur2 = 0; compteur2<15; compteur2++) {
 				if ((plateauDeJeu[compteur][compteur2]!=null)){
-					//System.out.print(plateauDeJeu[compteur][compteur2].getContenu()!=null);
-					//System.out.print(this.getLettre(compteur, compteur2)!=null);
 					if (plateauDeJeu[compteur][compteur2].getContenu()!=null) {
-
 						System.out.print(plateauDeJeu[compteur][compteur2].AffichageLettre()+" "+ "|"+" ");
 					}
 					else {
@@ -174,9 +156,7 @@ public class Jeu {
 				}
 			}
 			System.out.println("");
-			System.out.println("------------------------------------------------------------");
-			
-			
+			System.out.println("------------------------------------------------------------");		
 		}
 	}
 	
@@ -210,7 +190,6 @@ public class Jeu {
 	}
 	
 	public Boolean motEstPlacable(int positionLigne,int positionColonne,int nombreLettreAPlacer,int choixLigneColonne) {
-		//WIP
 		Boolean estPlacable=false;
 		if (choixLigneColonne==1) {
 			for (int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
@@ -236,27 +215,33 @@ public class Jeu {
 		boolean motAUneLettreSurCaseUtilisable = false;
 		for (int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
 			if (this.plateauDeJeu[positionLigne][positionColonne[cpt]].estUtilisable()==true) {
-
 				motAUneLettreSurCaseUtilisable=true;
 				break;
 			}
 		}
 		return motAUneLettreSurCaseUtilisable;
-		
+	}
+	
+	public boolean uneDesLettresEstSurCaseUtilisableColonne(int[] positionLigne,int positionColonne,int nombreLettreAPlacer) {
+		boolean motAUneLettreSurCaseUtilisable = false;
+		for (int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
+			if (this.plateauDeJeu[positionLigne[cpt]][positionColonne].estUtilisable()==true) {
+				motAUneLettreSurCaseUtilisable=true;
+				break;
+			}
+		}
+		return motAUneLettreSurCaseUtilisable;
 	}
 	
 	public Boolean CaseAutourSontNull(int positionLigne,int positionColonne) {
 		if (positionLigne==0) {
 			return((this.plateauDeJeu[positionLigne+1][positionColonne].getContenu()!=null))||((this.plateauDeJeu[positionLigne][positionColonne+1].getContenu()!=null))||((this.plateauDeJeu[positionLigne][positionColonne-1].getContenu()!=null));
-
 		}
 		else if (positionLigne==14) {
 			return(this.plateauDeJeu[positionLigne-1][positionColonne].getContenu()!=null)||((this.plateauDeJeu[positionLigne][positionColonne+1].getContenu()!=null))||((this.plateauDeJeu[positionLigne][positionColonne-1].getContenu()!=null));
-
 		}
 		else if (positionColonne==0) {
 			return(this.plateauDeJeu[positionLigne-1][positionColonne].getContenu()!=null)||((this.plateauDeJeu[positionLigne+1][positionColonne].getContenu()!=null))||((this.plateauDeJeu[positionLigne][positionColonne+1].getContenu()!=null));
-
 		}
 		else if (positionColonne==14) {
 			return(this.plateauDeJeu[positionLigne-1][positionColonne].getContenu()!=null)||((this.plateauDeJeu[positionLigne+1][positionColonne].getContenu()!=null))||((this.plateauDeJeu[positionLigne][positionColonne-1].getContenu()!=null));
@@ -279,16 +264,14 @@ public class Jeu {
 					estPlacable=false;
 				}
 				System.out.println();
-
 			}
-
 		return estPlacable;
 	}
 	
 	public Boolean motEstPlacableColonne(int[] positionLigne,int positionColonne,int nombreLettreAPlacer) {
 		Boolean estPlacable=true;
 			for (int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
-				if ((uneDesLettresEstSurCaseUtilisable(positionColonne,positionLigne,nombreLettreAPlacer)&&(positionLigne[cpt]==7)&&(positionColonne==7))){//||(this.plateauDeJeu[positionLigne[cpt]][positionColonne-1].getContenu()!=null)||((this.plateauDeJeu[positionLigne[cpt]][positionColonne+1].getContenu()!=null))||((this.plateauDeJeu[positionLigne[cpt]+1][positionColonne].getContenu()!=null))||((this.plateauDeJeu[positionLigne[cpt]-1][positionColonne].getContenu()!=null))) {
+				if ((uneDesLettresEstSurCaseUtilisableColonne(positionLigne,positionColonne,nombreLettreAPlacer)||((positionLigne[cpt]==7)&&(positionColonne==7)))){//||(this.plateauDeJeu[positionLigne[cpt]][positionColonne-1].getContenu()!=null)||((this.plateauDeJeu[positionLigne[cpt]][positionColonne+1].getContenu()!=null))||((this.plateauDeJeu[positionLigne[cpt]+1][positionColonne].getContenu()!=null))||((this.plateauDeJeu[positionLigne[cpt]-1][positionColonne].getContenu()!=null))) {
 					System.out.println("LettrePositionable");
 				}
 				else {
@@ -296,9 +279,7 @@ public class Jeu {
 					estPlacable=false;
 				}
 				System.out.println();
-
 			}
-
 		return estPlacable;
 	}
 	
@@ -337,6 +318,5 @@ public class Jeu {
 	public ValeurLettre getLettre(int l, int colonne) {
 		return this.plateauDeJeu[l][colonne].getContenu();
 	}
-
 	
 }
