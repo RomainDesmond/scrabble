@@ -17,10 +17,10 @@ public class Joueur {
 	
 	Console console;
 	
-	public Joueur(String nom, List<Lettre> chevalet) {
+	public Joueur(String nom,ValeurLettre[] chevalet) {
 		this.nom=nom;
 		this.score=0;
-		this.chevalet = new ValeurLettre[7];
+		this.chevalet = chevalet;
 	}
 	public Joueur(String nom) {
 		this.nom=nom;
