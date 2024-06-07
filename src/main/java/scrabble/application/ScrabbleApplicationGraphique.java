@@ -43,7 +43,7 @@ public class ScrabbleApplicationGraphique extends Application {
 		plateau.ajouteTypeCase();
 		ScrabbleApplicationGraphiqueController.actualiserAffichage(j,plateau,idGrilleScrabble,idGrilleChevaletJ1,idLbScore,idLbTour);
 		
-		Scene scene = new Scene (root,1000,900);
+		Scene scene = new Scene (root,1250,900);
 		primaryStage.setTitle("Application scrabble");
 		primaryStage.setScene(scene);
 		primaryStage.show();	
