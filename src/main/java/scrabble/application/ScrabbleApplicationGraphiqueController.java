@@ -47,18 +47,30 @@ public class ScrabbleApplicationGraphiqueController {
 	
 	@FXML
 	private BorderPane idBorderPane;
-
+	
+	@FXML
+	private Button idBtnEchanger;
+	
+	@FXML
+	private Button idBtnPasserSonTour;
 	
 	@FXML
 	private void btnValiderAppuyer() {
-        System.out.println("Bouton 'Valider' pressé");
-		ScrabbleApplicationGraphiqueController.menuChoixJeu(j, plateau,idGrilleScrabble,idGrilleChevaletJ1,idLbScore,idLbTour);
+		menuChoixJeu(j, plateau,idGrilleScrabble,idGrilleChevaletJ1,idLbScore,idLbTour);
+	}
+	
+	@FXML
+	private void btnEchanger() {
+		echanger(plateau,j);
+		actualiserAffichage(j, plateau, idGrilleScrabble, idGrilleChevaletJ1, idLbScore, idLbTour);
+	}
+	
+	@FXML
+	private void btnPasserSonTour() {
+		
 	}
 	
 	@FXML void initialize() {
-	    //BackgroundFill backgroundFill = new BackgroundFill(Color.LIGHTBLUE, CornerRadii.EMPTY, Insets.EMPTY);
-	    //Background background = new Background(backgroundFill);
-		//Background background = new Background(new BackgroundFill(Color.SANDYBROWN, CornerRadii.EMPTY, Insets.EMPTY));
 		Background background = new Background(new BackgroundFill(Color.web("#F5DEB3"), CornerRadii.EMPTY, Insets.EMPTY));
 
 		idBorderPane.setBackground(background);
@@ -305,7 +317,35 @@ public class ScrabbleApplicationGraphiqueController {
         
         
         
-    }/*
+    }
+    
+    
+    
+	public static void echanger(Jeu plateau,Joueur j) {
+		
+		ValeurLettre lettreTemp=null;
+		int nombreTemporaire=-1;
+		int[] positionsEchanger=new int[7];
+		//System.out.println("Combien de lettre voulez vous échanger : ");
+		//Scanner inputNombreEchange = new Scanner(System.in);
+		//int choix=inputNombreEchange.nextShort();
+		int choix=demandeJoueurAffichage("Nombre lettre à échanger","Donnez le nombre de lettre à échanger","Nombre de lettre à échanger :");
+		
+		int compteur=0;
+		if (choix>0 && choix<8) {
+			for (compteur=0;compteur<choix;compteur++) {
+				//System.out.println("Position de la lettre à échanger :");
+				//int choixPosition=inputNombreEchange.nextShort();
+				int choixPosition=demandeJoueurAffichage("Position de la lettre à échanger","Donnez la position de la lettre à échanger","Lettre : "+compteur);
+				positionsEchanger[compteur]=choixPosition;}			
+
+		}
+			for (compteur=0;compteur<choix;compteur++) {
+				plateau.ajouterLettrePremierePositionDisponible(j.supprimerLettre(positionsEchanger[compteur]-1));
+				ScrabbleApplicationConsole.distribuerUneLettre(plateau,j);
+			}
+	}
+	/*
 	public static int choixLigneColonne() {
 		System.out.println("1:ajout en ligne");
 		System.out.println("2:ajout en colonne");
