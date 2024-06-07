@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="scrabble.application.ScrabbleApplicationGraphiqueController">
+<BorderPane fx:id="idBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="scrabble.application.ScrabbleApplicationGraphiqueController">
    <center>
       <GridPane fx:id="idGrilleScrabble" BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -97,7 +97,7 @@
             <Label fx:id="idLbScore" text="0" />
             <Button mnemonicParsing="false" text="Echanger" />
             <Button mnemonicParsing="false" text="Passer son tour" />
-            <Button mnemonicParsing="false" text="Valider" />
+            <Button fx:id="idBtnValider" mnemonicParsing="false" onAction="#btnValiderAppuyer" text="Valider" />
          </children>
       </VBox>
    </right>
