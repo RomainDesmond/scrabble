@@ -94,7 +94,7 @@
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
             <Label text="Score : " />
-            <Label fx:id="lbScore" text="0" />
+            <Label fx:id="idLbScore" text="0" />
             <Button mnemonicParsing="false" text="Echanger" />
             <Button mnemonicParsing="false" text="Passer son tour" />
             <Button mnemonicParsing="false" text="Valider" />
@@ -112,7 +112,7 @@
                   <Insets />
                </VBox.margin>
             </Label>
-            <Label fx:id="lbTour" text="0" />
+            <Label fx:id="idLbTour" text="0" />
          </children>
       </VBox>
    </top>
