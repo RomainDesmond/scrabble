@@ -30,10 +30,10 @@ public class ScrabbleApplicationGraphiqueController {
 	private GridPane idGrilleChevaletJ2;
 	
 	@FXML
-	private Label lbScore;
+	private Label idLbScore;
 	
 	@FXML
-	private Label lbTour;
+	private Label idLbTour;
 	
 	@FXML void initialize() {
 		Joueur j=new Joueur("J1");
@@ -42,9 +42,7 @@ public class ScrabbleApplicationGraphiqueController {
 		
 		plateau.remplirSacDeLettre();
 		plateau.afficherPlateau();
-		ScrabbleApplicationConsole.distribution(plateau, j);
-
-		
+		ScrabbleApplicationConsole.distribution(plateau, j);		
 	}
 
 	
@@ -57,7 +55,17 @@ public class ScrabbleApplicationGraphiqueController {
 	    return idGrilleChevaletJ1;
 	}
 	
-	public static void actualiserAffichage(Joueur j,Jeu plateau, GridPane idGrilleScrabble,GridPane idGrilleChevaletJ1) {
+	public Label getIdLbScore() {
+	    return idLbScore;
+	}
+	
+	public Label getIdLbTour() {
+		return idLbTour;
+	}
+	
+	public static void actualiserAffichage(Joueur j,Jeu plateau, GridPane idGrilleScrabble,GridPane idGrilleChevaletJ1,Label lbScore,Label lbTour) {
+		lbScore.setText(""+j.getScore());
+		lbTour.setText(""+plateau.getTour());
 
 		for(int cpt1=0;cpt1<15;cpt1++) {
 			for(int cpt2=0;cpt2<15;cpt2++) {
@@ -69,7 +77,6 @@ public class ScrabbleApplicationGraphiqueController {
                 tile.setStroke(Color.BLACK);
 
 				idGrilleScrabble.add(new StackPane(tile, text),cpt1,cpt2);
-
 			}
 		}
 		for(int cpt=0;cpt<7;cpt++) {
@@ -84,9 +91,7 @@ public class ScrabbleApplicationGraphiqueController {
 		}
 	}
 	
-	
-	
-	public static void menuChoixJeu(Joueur j1,Jeu plateau,GridPane GP,GridPane idGrilleChevaletJ1) {
+	public static void menuChoixJeu(Joueur j1,Jeu plateau,GridPane GP,GridPane idGrilleChevaletJ1,Label idLbScore,Label idLbTour) {
 		boolean joue = true;
 
 		System.out.println("oui");
@@ -117,17 +122,12 @@ public class ScrabbleApplicationGraphiqueController {
     					nombreLettreAPlacer=ScrabbleApplicationConsole.demanderNBLettre();
     					
     		
-    					ScrabbleApplicationConsole.demanderMot(plateau,j1,listeDeNombre,nombreLettreAPlacer,positionLigneColonneMot,listePosition,choixLigneColonne);
-    					System.out.println("??");
-    					
+    					ScrabbleApplicationConsole.demanderMot(plateau,j1,listeDeNombre,nombreLettreAPlacer,positionLigneColonneMot,listePosition,choixLigneColonne);    					
     					ScrabbleApplicationConsole.jouerMot(plateau,j1,positionLigneColonneMot,listeDeNombre,listePosition,nombreLettreAPlacer,choixLigneColonne);
-    					System.out.println("??");
     					ScrabbleApplicationConsole.distribution(plateau,j1);
-    					System.out.println("??");
     					plateau.modificationCasePlacable();
-    					System.out.println("??");
 
-    					ScrabbleApplicationGraphiqueController.actualiserAffichage(j1,plateau, GP,idGrilleChevaletJ1);
+    					ScrabbleApplicationGraphiqueController.actualiserAffichage(j1,plateau, GP,idGrilleChevaletJ1,idLbScore,idLbTour);
     					break;
                     case 4:
     					joue=false;
@@ -137,6 +137,8 @@ public class ScrabbleApplicationGraphiqueController {
                 plateau.afficherPlateau();
                 j1.afficherChevalet();
                 System.out.println("Score:" + j1.getScore());
+                System.out.println("Tour :" + plateau.getTour());
+
             }
         }
 	}
