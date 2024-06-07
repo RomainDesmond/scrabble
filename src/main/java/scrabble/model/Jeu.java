@@ -290,5 +290,11 @@ public class Jeu {
 	public ValeurLettre getLettre(int l, int colonne) {
 		return this.plateauDeJeu[l][colonne].getContenu();
 	}
+	public void ajouterUnTour() {
+		this.tour=this.tour+1;
+	}
+	public int getTour() {
+		return this.tour;
+	}
 	
 }
