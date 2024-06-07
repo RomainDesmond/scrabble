@@ -20,15 +20,9 @@ public class ScrabbleApplicationGraphique extends Application {
 		Joueur j=new Joueur("J1");
 		Jeu plateau = new Jeu();
 		plateau.ajouteTypeCase();
-
-		
-		//Parent root;
-		//FXMLLoader loader = new FXMLLoader( );
-		//loader.setLocation(getClass().getResource("ScrabbleAffichage.fxml"));
 		
         FXMLLoader loader = new FXMLLoader(getClass().getResource("ScrabbleAffichage.fxml"));
         Parent root = loader.load();
-
 		
         ScrabbleApplicationGraphiqueController controller = loader.getController();
         GridPane idGrilleScrabble = controller.getIdGrilleScrabble();
@@ -37,16 +31,12 @@ public class ScrabbleApplicationGraphique extends Application {
         Label idLbTour = controller.getIdLbTour();
         
 		ScrabbleApplicationGraphiqueController.actualiserAffichage(j,plateau,idGrilleScrabble,idGrilleChevaletJ1,idLbScore,idLbTour);
-
-
 		
 		Scene scene = new Scene (root,1000,900);
 		primaryStage.setScene(scene);
 		primaryStage.show();	
-		System.out.println("fin");
 		ScrabbleApplicationGraphiqueController.menuChoixJeu(j, plateau,idGrilleScrabble,idGrilleChevaletJ1,idLbScore,idLbTour);
-		//menuChoix(j,plateau);
-		//ScrabbleApplicationGraphiqueController.actualiserAffichage(plateau);
+
 	}
 
 	public static void main(String[] args) {
