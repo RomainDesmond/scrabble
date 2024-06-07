@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -32,9 +33,10 @@ public class ScrabbleApplicationGraphique extends Application {
         ScrabbleApplicationGraphiqueController controller = loader.getController();
         GridPane idGrilleScrabble = controller.getIdGrilleScrabble();
         GridPane idGrilleChevaletJ1 = controller.getIdGrilleChevaletJ1();
-
+        Label idLbScore = controller.getIdLbScore();
+        Label idLbTour = controller.getIdLbTour();
         
-		ScrabbleApplicationGraphiqueController.actualiserAffichage(j,plateau,idGrilleScrabble,idGrilleChevaletJ1);
+		ScrabbleApplicationGraphiqueController.actualiserAffichage(j,plateau,idGrilleScrabble,idGrilleChevaletJ1,idLbScore,idLbTour);
 
 
 		
@@ -42,7 +44,7 @@ public class ScrabbleApplicationGraphique extends Application {
 		primaryStage.setScene(scene);
 		primaryStage.show();	
 		System.out.println("fin");
-		ScrabbleApplicationGraphiqueController.menuChoixJeu(j, plateau,idGrilleScrabble,idGrilleChevaletJ1);
+		ScrabbleApplicationGraphiqueController.menuChoixJeu(j, plateau,idGrilleScrabble,idGrilleChevaletJ1,idLbScore,idLbTour);
 		//menuChoix(j,plateau);
 		//ScrabbleApplicationGraphiqueController.actualiserAffichage(plateau);
 	}
