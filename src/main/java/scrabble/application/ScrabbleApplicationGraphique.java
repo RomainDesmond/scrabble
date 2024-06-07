@@ -31,9 +31,10 @@ public class ScrabbleApplicationGraphique extends Application {
 		
         ScrabbleApplicationGraphiqueController controller = loader.getController();
         GridPane idGrilleScrabble = controller.getIdGrilleScrabble();
+        GridPane idGrilleChevaletJ1 = controller.getIdGrilleChevaletJ1();
+
         
-        
-		ScrabbleApplicationGraphiqueController.actualiserAffichage(plateau,idGrilleScrabble);
+		ScrabbleApplicationGraphiqueController.actualiserAffichage(j,plateau,idGrilleScrabble,idGrilleChevaletJ1);
 
 
 		
@@ -41,7 +42,7 @@ public class ScrabbleApplicationGraphique extends Application {
 		primaryStage.setScene(scene);
 		primaryStage.show();	
 		System.out.println("fin");
-		ScrabbleApplicationGraphiqueController.menuChoixJeu(j, plateau,idGrilleScrabble);
+		ScrabbleApplicationGraphiqueController.menuChoixJeu(j, plateau,idGrilleScrabble,idGrilleChevaletJ1);
 		//menuChoix(j,plateau);
 		//ScrabbleApplicationGraphiqueController.actualiserAffichage(plateau);
 	}
