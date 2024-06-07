@@ -100,8 +100,8 @@
          <children>
             <Label text="Score : " />
             <Label fx:id="idLbScore" text="0" />
-            <Button mnemonicParsing="false" text="Echanger" />
-            <Button mnemonicParsing="false" text="Passer son tour" />
+            <Button fx:id="idBtnEchanger" mnemonicParsing="false" onAction="#btnEchanger" text="Echanger" />
+            <Button fx:id="idBtnPasserSonTour" mnemonicParsing="false" onAction="#btnPasserSonTour" text="Passer son tour" />
             <Button fx:id="idBtnValider" mnemonicParsing="false" onAction="#btnValiderAppuyer" text="Valider" />
          </children>
       </VBox>
