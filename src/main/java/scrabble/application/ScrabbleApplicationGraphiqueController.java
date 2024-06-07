@@ -9,9 +9,15 @@ import java.util.Optional;
 import java.util.Scanner;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import scrabble.model.Jeu;
@@ -19,7 +25,8 @@ import scrabble.model.Joueur;
 import scrabble.model.ValeurLettre;
 
 public class ScrabbleApplicationGraphiqueController {
-
+	Joueur j;
+	Jeu plateau;
 	@FXML
 	private GridPane idGrilleScrabble;
 
@@ -35,9 +42,20 @@ public class ScrabbleApplicationGraphiqueController {
 	@FXML
 	private Label idLbTour;
 	
+	@FXML
+	private Button idBtnValider;
+
+	
+	@FXML
+	private void btnValiderAppuyer() {
+        System.out.println("Bouton 'Valider' pressé");
+		ScrabbleApplicationGraphiqueController.menuChoixJeu(j, plateau,idGrilleScrabble,idGrilleChevaletJ1,idLbScore,idLbTour);
+	}
+	
 	@FXML void initialize() {
-		Joueur j=new Joueur("J1");
-		Jeu plateau = new Jeu();
+
+		j=new Joueur("J1");
+		plateau = new Jeu();
 		plateau.ajouteTypeCase();
 		
 		plateau.remplirSacDeLettre();
@@ -45,8 +63,14 @@ public class ScrabbleApplicationGraphiqueController {
 		ScrabbleApplicationConsole.distribution(plateau, j);		
 	}
 
-	
+	public Joueur getJoueur() {
+		return this.j;
+	}
 
+	public Jeu getPlateau() {
+		return this.plateau;
+	}
+	
 	public GridPane getIdGrilleScrabble() {
 	    return idGrilleScrabble;
 	}
@@ -61,6 +85,9 @@ public class ScrabbleApplicationGraphiqueController {
 	
 	public Label getIdLbTour() {
 		return idLbTour;
+	}
+	public Button getIdBtnValider() {
+		return idBtnValider;
 	}
 	
 	public static void actualiserAffichage(Joueur j,Jeu plateau, GridPane idGrilleScrabble,GridPane idGrilleChevaletJ1,Label lbScore,Label lbTour) {
