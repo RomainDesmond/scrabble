@@ -44,6 +44,9 @@ public class ScrabbleApplicationGraphiqueController {
 	
 	@FXML
 	private Button idBtnValider;
+	
+	@FXML
+	private BorderPane idBorderPane;
 
 	
 	@FXML
@@ -53,7 +56,12 @@ public class ScrabbleApplicationGraphiqueController {
 	}
 	
 	@FXML void initialize() {
+	    //BackgroundFill backgroundFill = new BackgroundFill(Color.LIGHTBLUE, CornerRadii.EMPTY, Insets.EMPTY);
+	    //Background background = new Background(backgroundFill);
+		//Background background = new Background(new BackgroundFill(Color.SANDYBROWN, CornerRadii.EMPTY, Insets.EMPTY));
+		Background background = new Background(new BackgroundFill(Color.web("#F5DEB3"), CornerRadii.EMPTY, Insets.EMPTY));
 
+		idBorderPane.setBackground(background);
 		j=new Joueur("J1");
 		plateau = new Jeu();
 		plateau.ajouteTypeCase();
@@ -144,12 +152,16 @@ public class ScrabbleApplicationGraphiqueController {
     					int nombreLettreAPlacer;
     					int choixLigneColonne;
     		
-    					choixLigneColonne=ScrabbleApplicationConsole.choixLigneColonne();
+    					
+    					choixLigneColonne=demandeJoueurAffichage("ChoixLigneColonne","Choisissez si vous voulez jouer en ligne ou en colonne","1 - Ajout en ligne\n2 - Ajout en colonne");
+    					//choixLigneColonne=ScrabbleApplicationConsole.choixLigneColonne();
     		
-    					nombreLettreAPlacer=ScrabbleApplicationConsole.demanderNBLettre();
+    					nombreLettreAPlacer=demandeJoueurAffichage("NombreLettre","Donnez le nombre de lettre que vous voulez jouer","Nombre de lettre (entre 1 et 7)");
+    					//nombreLettreAPlacer=ScrabbleApplicationConsole.demanderNBLettre();
     					
     		
-    					ScrabbleApplicationConsole.demanderMot(plateau,j1,listeDeNombre,nombreLettreAPlacer,positionLigneColonneMot,listePosition,choixLigneColonne);    					
+    					//ScrabbleApplicationConsole.demanderMot(plateau,j1,listeDeNombre,nombreLettreAPlacer,positionLigneColonneMot,listePosition,choixLigneColonne);    					
+    					demanderMotFX(plateau,j1,listeDeNombre,nombreLettreAPlacer,positionLigneColonneMot,listePosition,choixLigneColonne);
     					ScrabbleApplicationConsole.jouerMot(plateau,j1,positionLigneColonneMot,listeDeNombre,listePosition,nombreLettreAPlacer,choixLigneColonne);
     					ScrabbleApplicationConsole.distribution(plateau,j1);
     					plateau.modificationCasePlacable();
@@ -188,10 +200,116 @@ public class ScrabbleApplicationGraphiqueController {
         }
     }
 
+    
     private static void showAlert(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
         alert.setContentText(content);
         alert.showAndWait();
     }
+    
+    
+    public static void demanderMotFX(Jeu plateau,Joueur jeu,int[] listeDeNombre,int nombreLettreAPlacer,int[] positionLigneColonneMot,int[] listePosition,int choix) {
+		int nbLettreJoue=0;
+		
+		for (int compteur=0;compteur<nombreLettreAPlacer;compteur++) {
+			nbLettreJoue=jouerLettre(plateau,listeDeNombre,nbLettreJoue);
+		}
+		if(nombreLettreAPlacer==nbLettreJoue) {
+				if (choix == 1) {
+					//positionLigneColonneMot[0]=demanderNombre("Donnez la ligne du mot :");
+					positionLigneColonneMot[0]=demandeJoueurAffichage("Ligne du mot","Donnez la ligne du mot :","");
+					while ((positionLigneColonneMot[0]<0) || (positionLigneColonneMot[0]>14)){
+						positionLigneColonneMot[0]=demandeJoueurAffichage("Ligne du mot","Erreur ","Donnez la ligne du mot");
+						//positionLigneColonneMot[0]=demanderNombre("Donnez la ligne du mot :");
+					}
+					for (int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
+						positionLigneColonneMot[1]=demandeJoueurAffichage("Colonne du mot","Donnez la Colonne du mot :","");
+						//positionLigneColonneMot[1]=demanderNombre("Donnez la colonne de la lettre à placer :");
+						while((positionLigneColonneMot[1]<0)||(positionLigneColonneMot[1]>14)) {
+							positionLigneColonneMot[1]=demandeJoueurAffichage("Colonne du mot","Erreur ","Donnez la Colonne du mot");
+							//positionLigneColonneMot[1]=demanderNombre("Erreur vos valeurs sont hors du tableau :");
+						}
+						listePosition[cpt]=positionLigneColonneMot[1];
+					}
+				}
+				else if (choix == 2) {
+					positionLigneColonneMot[1]=demandeJoueurAffichage("Colonne du mot","Donnez la Colonne du mot :","");
+					//positionLigneColonneMot[1]=demanderNombre("Donnez la colonne du mot :");
+					while ((positionLigneColonneMot[1]<0) || (positionLigneColonneMot[1]>14)){
+						positionLigneColonneMot[1]=demandeJoueurAffichage("Ligne du mot","Erreur ","Donnez la Colonne du mot");
+						//positionLigneColonneMot[1]=demanderNombre("Donnez la colonne du mot :");
+					}
+					for (int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
+						//positionLigneColonneMot[0]=demanderNombre("Donnez la ligne de la lettre à placer :");
+						positionLigneColonneMot[0]=demandeJoueurAffichage("Ligne du mot","Donnez la ligne du mot :","");
+
+						while((positionLigneColonneMot[0]<0)||(positionLigneColonneMot[1]>14)) {
+							//positionLigneColonneMot[0]=demanderNombre("Erreur vos valeurs sont hors du tableau :");
+							positionLigneColonneMot[0]=demandeJoueurAffichage("Ligne du mot","Erreur ","Donnez la ligne du mot");
+
+						}
+						listePosition[cpt]=positionLigneColonneMot[0];
+					}
+				}
+		}
+		//return true;
+	}
+    
+	public static int jouerLettre(Jeu plateau,int[] listeNb,int nbLettreJoue) {
+		//System.out.println("Donnez une lettre à jouer");
+		//Scanner inputNombreEchange = new Scanner(System.in);
+		//int choixPosition=inputNombreEchange.nextShort();
+		int choixPosition=demandeJoueurAffichage("lettre à jouer","Donnez une leetre à jouer :","");
+		int positionsLettre;
+		positionsLettre=choixPosition;
+		if (positionsLettre>0 && positionsLettre<8){
+			for (int cpt=0;cpt<listeNb.length;cpt++) {
+				System.out.println(listeNb[cpt]==(positionsLettre));
+				if (listeNb[cpt]==positionsLettre) {
+					
+					System.out.println("lettre invalide");
+					break;
+				}
+				else {
+					
+					if (listeNb[cpt]==0) {
+						listeNb[cpt]=positionsLettre;
+						nbLettreJoue++;
+						break;
+					}
+				}
+				
+			}
+		}
+		return nbLettreJoue;
+	}
+    
+    private static int demandeJoueurAffichage(String demande,String nomFenetre,String contenu) {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle(nomFenetre);
+        dialog.setHeaderText(demande);
+        dialog.setContentText(contenu);
+
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()) {
+            try {
+                return Integer.parseInt(result.get());
+            } catch (NumberFormatException e) {
+                showAlert("Erreur", "Veuillez entrer un numéro valide.");
+                return -1;
+            }
+        } else {
+            return -1;
+        }
+        
+        
+        
+    }/*
+	public static int choixLigneColonne() {
+		System.out.println("1:ajout en ligne");
+		System.out.println("2:ajout en colonne");
+		return demanderNombre("");
+	}*/
+
 }
