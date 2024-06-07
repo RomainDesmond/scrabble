@@ -107,9 +107,7 @@ public class ScrabbleApplicationConsole {
 		System.out.println("---------------------------------------------------------");
 	}
 	public static void echanger(Jeu plateau,Joueur j) {
-		
-		//ajouter une vérification pour ne pas porcéder à l'échange si le sacDeLettre est vide
-		
+				
 		ValeurLettre lettreTemp=null;
 		int nombreTemporaire=-1;
 		int[] positionsEchanger=new int[7];
@@ -129,8 +127,8 @@ public class ScrabbleApplicationConsole {
 				
 				distribuerUneLettre(plateau,j);
 					
-				}
 			}
+	}
 
 	
 	public static void distribution(Jeu plateau,Joueur j) {
@@ -201,12 +199,7 @@ public class ScrabbleApplicationConsole {
 	}
 
 	public static void demanderMot(Jeu plateau,Joueur jeu,int[] listeDeNombre,int nombreLettreAPlacer,int[] positionLigneColonneMot,int[] listePosition,int choix) {
-		//int choix;
 		int nbLettreJoue=0;
-		//System.out.println("1:ajout en ligne");
-		//System.out.println("2:ajout en colonne");
-		//choix=demanderNombre("");
-		//nombreLettreAPlacer=demanderNombre("Donnez le nombre de lettre que vouz voulez placer : ");
 		
 		for (int compteur=0;compteur<nombreLettreAPlacer;compteur++) {
 			nbLettreJoue=jouerLettre(plateau,listeDeNombre,nbLettreJoue);
@@ -255,13 +248,11 @@ public class ScrabbleApplicationConsole {
 					break;
 				}
 			}
-			System.out.println(motEstJoue);
 			if ((plateau.motEstPlacableLigne(positionLigneColonneMot[0], listePosition,nombreLettreAPlacer))&&(motEstJoue)) {
 				compterLesPointsLigne(j,plateau,nombreLettreAPlacer,listeDeNombre,positionLigneColonneMot[0],listePosition);
 			}					
 			else {
 				motEstJoue=false;
-				//plateau.afficherPlateau();
 				for(int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
 					plateau.placerLettreJoue(positionLigneColonneMot[0], listePosition[cpt],null);
 				}
@@ -282,137 +273,18 @@ public class ScrabbleApplicationConsole {
 				compterLesPointsColonne(j,plateau,nombreLettreAPlacer,listeDeNombre,listePosition,positionLigneColonneMot[1]);
 			}					
 			else {
-				//plateau.afficherPlateau();
 				motEstJoue=false;
 				for(int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
 					plateau.placerLettreJoue(listePosition[cpt],positionLigneColonneMot[1],null);
 				}
-				
-				/* 					plateau.placerLettreJoue(positionLigneColonneMot[0], positionLigneColonneMot[1],j.donnerLettre(listeDeNombre[cpt]-1));
-						listePosition[cpt]=positionLigneColonneMot[0];
-					}
-					if (plateau.motEstPlacableColonne( listePosition,positionLigneColonneMot[1],nombreLettreAPlacer)) {
-						compterLesPointsColonne(j,plateau,nombreLettreAPlacer,listeDeNombre,listePosition,positionLigneColonneMot[0]);
-							//TODO
-					}
-					else {
-						for(int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
-						plateau.placerLettreJoue( listePosition[cpt],positionLigneColonneMot[1],null);
-						}
-					}	*/
 			}
-			//TODO
+		}
+		if (motEstJoue) {
+			plateau.ajouterUnTour();
 		}
 		return motEstJoue;
 	}
-	/*
-	public static void jouerMot(Jeu plateau,Joueur j) {
-		int[] positionLigneColonneMot=new int[2];
-		int[] listeDeNombre= new int[7];  //à modifier
-		int[] listePosition= new int[7];
-		int nombreLettreAPlacer=0;
-		int choix;
-		int nbLettreJoue=0;
-		String choixJoker;
-		
-		
-		System.out.println("1:ajout en ligne");
-		System.out.println("2:ajout en colonne");
-		choix=demanderNombre("");
 
-		
-		nombreLettreAPlacer=demanderNombre("Donnez le nombre de lettre que vouz voulez placer : ");
-		
-		for (int compteur=0;compteur<nombreLettreAPlacer;compteur++) {
-			nbLettreJoue=jouerLettre(plateau,listeDeNombre,nbLettreJoue);
-			
-		}
-		if(nombreLettreAPlacer==nbLettreJoue) {
-
-	
-				if (choix == 1) {
-					positionLigneColonneMot[0]=demanderNombre("Donnez la ligne du mot :");
-					while ((positionLigneColonneMot[0]<0) || (positionLigneColonneMot[0]>14)){
-						positionLigneColonneMot[0]=demanderNombre("Donnez la ligne du mot :");
-					}
-					for(int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
-
-
-						if (j.donnerLettre(listeDeNombre[cpt]-1)==ValeurLettre.JOKER) {
-							choixJoker(j,listeDeNombre,cpt);
-						}
-						
-						positionLigneColonneMot[1]=demanderNombre("Donnez la colonne de la lettre à placer :");
-						while((positionLigneColonneMot[1]<0)||(positionLigneColonneMot[1]>14)) {
-							positionLigneColonneMot[1]=demanderNombre("Erreur vos valeurs sont hors du tableau :");
-						}
-						while(plateau.getLettre( positionLigneColonneMot[0],positionLigneColonneMot[1])!=null) {
-							positionLigneColonneMot[1]=demanderNombre("Erreur redonnez une colonne non utilisé de la lettre à placer :");
-						}
-						
-						plateau.placerLettreJoue(positionLigneColonneMot[0], positionLigneColonneMot[1],j.donnerLettre(listeDeNombre[cpt]-1));
-						listePosition[cpt]=positionLigneColonneMot[1];
-						
-					}
-					if (plateau.motEstPlacableLigne(positionLigneColonneMot[0], listePosition,nombreLettreAPlacer)) {
-						System.out.println("Oui");
-						compterLesPointsLigne(j,plateau,nombreLettreAPlacer,listeDeNombre,positionLigneColonneMot[0],listePosition);
-							//TODO
-					}
-					else {
-						plateau.afficherPlateau();
-						System.out.println("Non");
-						for(int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
-						plateau.placerLettreJoue(positionLigneColonneMot[0], listePosition[cpt],null);
-						}
-					}					
-				}
-				else if(choix == 2){
-					positionLigneColonneMot[0]=demanderNombre("Donnez la ligne du mot :");
-					while ((positionLigneColonneMot[1]<0) || (positionLigneColonneMot[1]>14)){
-						positionLigneColonneMot[1]=demanderNombre("Donnez la colonne du mot :");
-					}
-					
-					
-					for(int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
-
-
-						if (j.donnerLettre(listeDeNombre[cpt]-1)==ValeurLettre.JOKER) {
-							choixJoker(j,listeDeNombre,cpt);
-						}
-						
-
-						positionLigneColonneMot[0]=demanderNombre("Donnez la ligne de la lettre à placer :");
-						while((positionLigneColonneMot[0]<0)||(positionLigneColonneMot[0]>14)) {
-							positionLigneColonneMot[0]=demanderNombre("Erreur vos valeurs sont hors du tableau :");
-						}
-						while(plateau.getLettre( positionLigneColonneMot[0],positionLigneColonneMot[1])!=null) {
-							positionLigneColonneMot[0]=demanderNombre("Erreur redonnez une ligne non utilisé de la lettre à placer :");
-						}
-						
-						plateau.placerLettreJoue(positionLigneColonneMot[0], positionLigneColonneMot[1],j.donnerLettre(listeDeNombre[cpt]-1));
-						listePosition[cpt]=positionLigneColonneMot[0];
-					}
-					if (plateau.motEstPlacableColonne( listePosition,positionLigneColonneMot[1],nombreLettreAPlacer)) {
-						compterLesPointsColonne(j,plateau,nombreLettreAPlacer,listeDeNombre,listePosition,positionLigneColonneMot[0]);
-							//TODO
-					}
-					else {
-						for(int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
-						plateau.placerLettreJoue( listePosition[cpt],positionLigneColonneMot[1],null);
-						}
-					}	
-				}
-				else {
-					System.out.println("Erreur");
-				}
-		}
-		else {
-			System.out.println("Erreur, vous avez joué plusieurs fois la même lettre");
-		}
-		
-	}*/
-	
 	public static String demanderLettre(String instruction) {
 		System.out.println(instruction);
 		Scanner inputChaîneCaractere = new Scanner(System.in);
