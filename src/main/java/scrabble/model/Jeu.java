@@ -179,7 +179,9 @@ public class Jeu {
 		}
 		System.out.println();
 	}
-	
+	public void supprimerLettreEmplacement(int posX,int posY) {
+		plateauDeJeu[posX][posY].setContenu(null);
+	}
 	public boolean placerLettreJoue(int posX,int posY,ValeurLettre lettre) {
 		if (plateauDeJeu[posX][posY].getContenu()==null) {
 			plateauDeJeu[posX][posY].setContenu(lettre);
@@ -228,7 +230,7 @@ public class Jeu {
 					System.out.println("LettrePositionable");
 				}
 				else {
-
+					System.out.println("Non positionnable");
 					estPlacable=false;
 				}
 				System.out.println();
