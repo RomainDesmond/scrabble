@@ -254,7 +254,8 @@ public class ScrabbleApplicationConsole {
 			else {
 				motEstJoue=false;
 				for(int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
-					plateau.placerLettreJoue(positionLigneColonneMot[0], listePosition[cpt],null);
+					plateau.supprimerLettreEmplacement(positionLigneColonneMot[0], listePosition[cpt]);
+					
 				}
 			}
 		}
@@ -275,7 +276,9 @@ public class ScrabbleApplicationConsole {
 			else {
 				motEstJoue=false;
 				for(int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
-					plateau.placerLettreJoue(listePosition[cpt],positionLigneColonneMot[1],null);
+					plateau.supprimerLettreEmplacement(positionLigneColonneMot[0], listePosition[cpt]);
+
+					//plateau.placerLettreJoue(listePosition[cpt],positionLigneColonneMot[1],null);
 				}
 			}
 		}
