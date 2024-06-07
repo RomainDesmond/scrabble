@@ -53,7 +53,7 @@
    <bottom>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <GridPane>
+            <GridPane fx:id="idGrilleChevaletJ1">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                	<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -66,8 +66,14 @@
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
+               <HBox.margin>
+                  <Insets right="100.0" />
+               </HBox.margin>
+               <padding>
+                  <Insets right="100.0" />
+               </padding>
             </GridPane>
-            <GridPane>
+            <GridPane fx:id="idGrilleChevaletJ2">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                	<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -88,7 +94,7 @@
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
             <Label text="Score : " />
-            <Label text="0" />
+            <Label fx:id="lbScore" text="0" />
             <Button mnemonicParsing="false" text="Echanger" />
             <Button mnemonicParsing="false" text="Passer son tour" />
             <Button mnemonicParsing="false" text="Valider" />
@@ -106,7 +112,7 @@
                   <Insets />
                </VBox.margin>
             </Label>
-            <Label text="0" />
+            <Label fx:id="lbTour" text="0" />
          </children>
       </VBox>
    </top>
