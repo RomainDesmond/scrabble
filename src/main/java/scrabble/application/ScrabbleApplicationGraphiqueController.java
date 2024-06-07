@@ -62,6 +62,7 @@ public class ScrabbleApplicationGraphiqueController {
 	@FXML
 	private void btnEchanger() {
 		echanger(plateau,j);
+		plateau.ajouterUnTour();
 		actualiserAffichage(j, plateau, idGrilleScrabble, idGrilleChevaletJ1, idLbScore, idLbTour);
 	}
 	
@@ -326,19 +327,15 @@ public class ScrabbleApplicationGraphiqueController {
 		ValeurLettre lettreTemp=null;
 		int nombreTemporaire=-1;
 		int[] positionsEchanger=new int[7];
-		//System.out.println("Combien de lettre voulez vous échanger : ");
-		//Scanner inputNombreEchange = new Scanner(System.in);
-		//int choix=inputNombreEchange.nextShort();
+
 		int choix=demandeJoueurAffichage("Nombre lettre à échanger","Donnez le nombre de lettre à échanger","Nombre de lettre à échanger :");
 		
 		int compteur=0;
 		if (choix>0 && choix<8) {
 			for (compteur=0;compteur<choix;compteur++) {
-				//System.out.println("Position de la lettre à échanger :");
-				//int choixPosition=inputNombreEchange.nextShort();
 				int choixPosition=demandeJoueurAffichage("Position de la lettre à échanger","Donnez la position de la lettre à échanger","Lettre : "+compteur);
-				positionsEchanger[compteur]=choixPosition;}			
-
+				positionsEchanger[compteur]=choixPosition;
+				}			
 		}
 			for (compteur=0;compteur<choix;compteur++) {
 				plateau.ajouterLettrePremierePositionDisponible(j.supprimerLettre(positionsEchanger[compteur]-1));
