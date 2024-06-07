@@ -23,31 +23,28 @@ public class ScrabbleApplicationGraphiqueController {
 	@FXML
 	private GridPane idGrilleScrabble;
 
+	@FXML
+	private GridPane idGrilleChevaletJ1;
+	
+	@FXML
+	private GridPane idGrilleChevaletJ2;
+	
+	@FXML
+	private Label lbScore;
+	
+	@FXML
+	private Label lbTour;
+	
 	@FXML void initialize() {
 		Joueur j=new Joueur("J1");
 		Jeu plateau = new Jeu();
 		plateau.ajouteTypeCase();
-		/*
-		for(int cpt1=0;cpt1<15;cpt1++) {
-			for(int cpt2=0;cpt2<15;cpt2++) {
-                Rectangle tile = new Rectangle(50, 50);
-                Text text = new Text(plateau.casePosition(cpt1,cpt2).affichageCase());
-
-                
-                
-                text.setFont(Font.font(20));
-                tile.setFill(Color.BURLYWOOD);
-                tile.setStroke(Color.BLACK);
-                
-				idGrilleScrabble.add(new StackPane(tile, text),cpt1,cpt2);
-			}
-		}*/
+		
 		plateau.remplirSacDeLettre();
 		plateau.afficherPlateau();
 		ScrabbleApplicationConsole.distribution(plateau, j);
-		//actualiserAffichage(plateau)
-		//menuChoix(j,plateau);
-		System.out.println("test0");
+
+		
 	}
 
 	
@@ -55,7 +52,12 @@ public class ScrabbleApplicationGraphiqueController {
 	public GridPane getIdGrilleScrabble() {
 	    return idGrilleScrabble;
 	}
-	public static void actualiserAffichage(Jeu plateau, GridPane idGrilleScrabble) {
+	
+	public GridPane getIdGrilleChevaletJ1() {
+	    return idGrilleChevaletJ1;
+	}
+	
+	public static void actualiserAffichage(Joueur j,Jeu plateau, GridPane idGrilleScrabble,GridPane idGrilleChevaletJ1) {
 
 		for(int cpt1=0;cpt1<15;cpt1++) {
 			for(int cpt2=0;cpt2<15;cpt2++) {
@@ -70,21 +72,29 @@ public class ScrabbleApplicationGraphiqueController {
 
 			}
 		}
+		for(int cpt=0;cpt<7;cpt++) {
+            Rectangle tile = new Rectangle(55, 55);
+            Text text = new Text(j.donnerLettre(cpt).AffichageLettre());
+
+            text.setFont(Font.font(20));
+            tile.setFill(Color.BURLYWOOD);
+            tile.setStroke(Color.BLACK);
+            
+            idGrilleChevaletJ1.add(new StackPane(tile, text),cpt,0);
+		}
 	}
 	
 	
 	
-	public static void menuChoixJeu(Joueur j1,Jeu plateau,GridPane GP) {
+	public static void menuChoixJeu(Joueur j1,Jeu plateau,GridPane GP,GridPane idGrilleChevaletJ1) {
 		boolean joue = true;
 
 		System.out.println("oui");
 		System.out.println((j1.sacDeLettreEstVide()));
 		while (joue) {
-			//System.out.println("oui");
             if (!(j1.sacDeLettreEstVide())) {
                 ScrabbleApplicationConsole.affichageMenu();
 
-                // Demander à l'utilisateur de faire un choix
                 int choix = demanderChoixUtilisateur();
 
                 switch (choix) {
@@ -94,9 +104,7 @@ public class ScrabbleApplicationGraphiqueController {
                     case 2:
     					joue=false;
 
-                        // Quitter le jeu
                         break;
-                    // Continuer avec les autres cas...
             		case 3:
     					int[] positionLigneColonneMot=new int[2];
     					int[] listeDeNombre= new int[7];  
@@ -119,15 +127,13 @@ public class ScrabbleApplicationGraphiqueController {
     					plateau.modificationCasePlacable();
     					System.out.println("??");
 
-    					ScrabbleApplicationGraphiqueController.actualiserAffichage(plateau, GP);
+    					ScrabbleApplicationGraphiqueController.actualiserAffichage(j1,plateau, GP,idGrilleChevaletJ1);
     					break;
                     case 4:
     					joue=false;
                 		System.exit(0);
-                	
                 }
 
-                // Afficher les éléments de l'interface utilisateur
                 plateau.afficherPlateau();
                 j1.afficherChevalet();
                 System.out.println("Score:" + j1.getScore());
@@ -146,10 +152,10 @@ public class ScrabbleApplicationGraphiqueController {
                 return Integer.parseInt(result.get());
             } catch (NumberFormatException e) {
                 showAlert("Erreur", "Veuillez entrer un numéro valide.");
-                return -1; // Valeur invalide pour gérer l'erreur
+                return -1;
             }
         } else {
-            return -1; // L'utilisateur a annulé la saisie
+            return -1;
         }
     }
 
