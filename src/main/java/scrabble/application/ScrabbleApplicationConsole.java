@@ -5,7 +5,6 @@ import java.util.Scanner;
 import scrabble.console.Console;
 import scrabble.model.Jeu;
 import scrabble.model.Joueur;
-import scrabble.model.Lettre;
 import scrabble.model.TypeCase;
 import scrabble.model.ValeurLettre;
 
@@ -248,10 +247,11 @@ public class ScrabbleApplicationConsole {
 					break;
 				}
 			}
+			plateau.afficherPlateau();
 			if ((plateau.motEstPlacableLigne(positionLigneColonneMot[0], listePosition,nombreLettreAPlacer))&&(motEstJoue)) {
 				compterLesPointsLigne(j,plateau,nombreLettreAPlacer,listeDeNombre,positionLigneColonneMot[0],listePosition);
 			}					
-			else {
+			else if (motEstJoue){
 				motEstJoue=false;
 				for(int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
 					plateau.supprimerLettreEmplacement(positionLigneColonneMot[0], listePosition[cpt]);
@@ -273,7 +273,7 @@ public class ScrabbleApplicationConsole {
 			if ((plateau.motEstPlacableColonne(listePosition,positionLigneColonneMot[1],nombreLettreAPlacer))&&(motEstJoue)) {
 				compterLesPointsColonne(j,plateau,nombreLettreAPlacer,listeDeNombre,listePosition,positionLigneColonneMot[1]);
 			}					
-			else {
+			else if (motEstJoue){
 				motEstJoue=false;
 				for(int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
 					plateau.supprimerLettreEmplacement(positionLigneColonneMot[0], listePosition[cpt]);
