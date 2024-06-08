@@ -14,6 +14,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
@@ -112,8 +115,13 @@ public class ScrabbleApplicationGraphiqueController {
 	}
 	
 	public static void actualiserAffichage(Joueur j,Jeu plateau, GridPane idGrilleScrabble,GridPane idGrilleChevaletJ1,Label lbScore,Label lbTour) {
+		System.out.println("Afficher Chevalet");
+		j.afficherChevalet();
 		lbScore.setText(""+j.getScore());
 		lbTour.setText(""+plateau.getTour());
+	    idGrilleScrabble.getChildren().clear();
+	    idGrilleChevaletJ1.getChildren().clear();
+
 
 		for(int cpt1=0;cpt1<15;cpt1++) {
 			for(int cpt2=0;cpt2<15;cpt2++) {
@@ -122,7 +130,6 @@ public class ScrabbleApplicationGraphiqueController {
                 
                 text.setFont(Font.font(20));
                 if (plateau.casePosition(cpt2, cpt1).affichageTypeCase()!="") {
-                	System.out.println("type case : "+plateau.casePosition(cpt2, cpt1).affichageTypeCase());
                 	if (plateau.casePosition(cpt2, cpt1).affichageTypeCase()=="MT"){
     	                tile.setFill(Color.RED);
                 	}
@@ -140,32 +147,86 @@ public class ScrabbleApplicationGraphiqueController {
                 	}
                 }
                 else {
-                	System.out.println("test couleur lettre");
 	                tile.setFill(Color.BURLYWOOD);
                 }
+                
 
   
                 tile.setStroke(Color.BLACK);
+                StackPane sP=new StackPane (tile,text);
+                sP.setOnDragOver(event -> {
+                    if (event.getGestureSource() != sP && event.getDragboard().hasString()) {
+                    	//System.out.println("oui");
+                        event.acceptTransferModes(TransferMode.MOVE);
+                    }
+                    event.consume();
+                });
+                int i1=cpt2;
+                int i2=cpt1;
 
-				idGrilleScrabble.add(new StackPane(tile, text),cpt1,cpt2);
+                sP.setOnDragDropped(event -> {
+                    Dragboard db = event.getDragboard();
+                    boolean success = false;
+                    if (db.hasString()) {
+                        String[] parts = db.getString().split(",");
+                        int fromRow = Integer.parseInt(parts[0]);
+                        int fromCol = Integer.parseInt(parts[1]);
+                        
+                        plateau.placerLettreJoue(i1, i2, j.donnerLettre(fromCol));
+                        
+                        plateau.afficherPlateau();
+                        j.supprimerLettre(fromCol);
+                        System.out.println("allo");
+                        j.afficherChevalet();
+                        actualiserAffichage(j, plateau, idGrilleScrabble, idGrilleChevaletJ1, lbScore, lbTour);
+
+
+                        success = true;
+                    }
+                    event.setDropCompleted(success);
+                    event.consume();
+                });
+				idGrilleScrabble.add(sP,cpt1,cpt2);
+
+			
 			}
 		}
-		for(int cpt=0;cpt<7;cpt++) {
-            Rectangle tile = new Rectangle(55, 55);
-            Text text = new Text(j.donnerLettre(cpt).AffichageLettre());
+		
+	    for (int cpt = 0; cpt < 7; cpt++) {
+	        ValeurLettre lettre = j.donnerLettre(cpt);
+	        Rectangle tile = new Rectangle(55, 55);
+	        Text text;
+	        if (lettre != null) {
+	            text = new Text(lettre.AffichageLettre());
+	        } else {
+	            text = new Text("");
+	        }
+	        text.setFont(Font.font(20));
+	        tile.setFill(Color.BURLYWOOD);
+	        tile.setStroke(Color.BLACK);
+	        StackPane sP = new StackPane(tile, text);
+	        idGrilleChevaletJ1.add(sP, cpt, 0);
 
-            text.setFont(Font.font(20));
-            tile.setFill(Color.BURLYWOOD);
-            tile.setStroke(Color.BLACK);
+	        final int i = cpt;
+	        sP.setOnDragDetected(event -> {
+	            if (lettre != null) {
+	                Dragboard db = sP.startDragAndDrop(TransferMode.MOVE);
+	                ClipboardContent content = new ClipboardContent();
+	                content.putString("1," + i);
+	                db.setContent(content);
+	                event.consume();
+	            }
+	        });
+		
             
-            idGrilleChevaletJ1.add(new StackPane(tile, text),cpt,0);
+
 		}
 	}
 	
 	public static void menuChoixJeu(Joueur j1,Jeu plateau,GridPane GP,GridPane idGrilleChevaletJ1,Label idLbScore,Label idLbTour) {
 		boolean joue = true;
 
-		System.out.println("oui");
+		//System.out.println("oui");
 		System.out.println((j1.sacDeLettreEstVide()));
 		while (joue) {
             if (!(j1.sacDeLettreEstVide())) {
