@@ -111,10 +111,6 @@ public class Jeu {
 		//TODO
 	}
 	
-	public int compterPoint() {
-		return tour;
-		//TODO
-	}
 	
 	public ValeurLettre distribuerLettre(int position) {
 		ValeurLettre lettre=sacDeLettre[position];
@@ -189,12 +185,8 @@ public class Jeu {
 		}
 		return false;
 		
-	}
-	
-	public String finPartie() {
-		return null;
-		//TODO
-	}
+	}	
+
 
 	
 	public boolean uneDesLettresEstSurCaseUtilisable(int positionLigne,int[] positionColonne,int nombreLettreAPlacer) {
