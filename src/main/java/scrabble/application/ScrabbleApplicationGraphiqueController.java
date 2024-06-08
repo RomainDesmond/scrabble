@@ -28,6 +28,9 @@ import scrabble.model.Joueur;
 import scrabble.model.ValeurLettre;
 
 public class ScrabbleApplicationGraphiqueController {
+	int[]positionsX =new int[7];
+	int[]positionsY = new int[7];
+	int nombreLettrePose=0;
 	Joueur j;
 	Jeu plateau;
 	@FXML
@@ -113,6 +116,37 @@ public class ScrabbleApplicationGraphiqueController {
 	public Button getIdBtnValider() {
 		return idBtnValider;
 	}
+	public void ajouterPositionX(int nombreX) {
+		nombreX++;
+		for (int i = 0; i<7;i++) {
+			if (positionsX[i]==0) {
+				positionsX[i]=nombreX;
+				break;
+			}
+		}
+	}
+	public void ajouterPositionY(int nombreY) {
+		nombreY++;
+		for (int i = 0; i<7;i++) {
+			if (positionsY[i]==0) {
+				positionsY[i]=nombreY;
+				break;
+			}
+		}
+	}
+	public Boolean verificationSiAuMinimumDeuxValeurSontSimilairesX() {
+		if(positionsX[0]==positionsX[1]) {
+			return true;
+		}
+		return false;
+	}
+	
+	public Boolean verificationSiAuMinimumDeuxValeurSontSimilairesY() {
+		if(positionsY[0]==positionsY[1]) {
+			return true;
+		}
+		return false;
+	}
 	
 	public static void actualiserAffichage(Joueur j,Jeu plateau, GridPane idGrilleScrabble,GridPane idGrilleChevaletJ1,Label lbScore,Label lbTour) {
 		System.out.println("Afficher Chevalet");
@@ -172,14 +206,14 @@ public class ScrabbleApplicationGraphiqueController {
                         int fromRow = Integer.parseInt(parts[0]);
                         int fromCol = Integer.parseInt(parts[1]);
                         
-                        plateau.placerLettreJoue(i1, i2, j.donnerLettre(fromCol));
+                        if(plateau.placerLettreJoue(i1, i2, j.donnerLettre(fromCol))) {
                         
-                        plateau.afficherPlateau();
-                        j.supprimerLettre(fromCol);
-                        System.out.println("allo");
-                        j.afficherChevalet();
-                        actualiserAffichage(j, plateau, idGrilleScrabble, idGrilleChevaletJ1, lbScore, lbTour);
-
+                        	//plateau.afficherPlateau();
+                        	j.supprimerLettre(fromCol);
+                        	System.out.println("allo");
+                        	j.afficherChevalet();
+                        	actualiserAffichage(j, plateau, idGrilleScrabble, idGrilleChevaletJ1, lbScore, lbTour);
+                        }
 
                         success = true;
                     }
