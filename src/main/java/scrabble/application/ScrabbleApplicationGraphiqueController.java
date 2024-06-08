@@ -121,7 +121,30 @@ public class ScrabbleApplicationGraphiqueController {
                 Text text = new Text(plateau.casePosition(cpt2,cpt1).affichageCase());
                 
                 text.setFont(Font.font(20));
-                tile.setFill(Color.BURLYWOOD);
+                if (plateau.casePosition(cpt2, cpt1).affichageTypeCase()!="") {
+                	System.out.println("type case : "+plateau.casePosition(cpt2, cpt1).affichageTypeCase());
+                	if (plateau.casePosition(cpt2, cpt1).affichageTypeCase()=="MT"){
+    	                tile.setFill(Color.RED);
+                	}
+                	else if (plateau.casePosition(cpt2, cpt1).affichageTypeCase()=="MD") {
+    	                tile.setFill(Color.PINK);
+                	}
+                	else if (plateau.casePosition(cpt2, cpt1).affichageTypeCase()=="LT") {
+    	                tile.setFill(Color.BLUE);
+                	}
+                	else if (plateau.casePosition(cpt2, cpt1).affichageTypeCase()=="LD") {
+    	                tile.setFill(Color.LIGHTBLUE);
+                	}
+                	else if (plateau.casePosition(cpt2, cpt1).affichageTypeCase()=="*") {
+    	                tile.setFill(Color.PINK);
+                	}
+                }
+                else {
+                	System.out.println("test couleur lettre");
+	                tile.setFill(Color.BURLYWOOD);
+                }
+
+  
                 tile.setStroke(Color.BLACK);
 
 				idGrilleScrabble.add(new StackPane(tile, text),cpt1,cpt2);
@@ -230,37 +253,28 @@ public class ScrabbleApplicationGraphiqueController {
 		}
 		if(nombreLettreAPlacer==nbLettreJoue) {
 				if (choix == 1) {
-					//positionLigneColonneMot[0]=demanderNombre("Donnez la ligne du mot :");
 					positionLigneColonneMot[0]=demandeJoueurAffichage("Ligne du mot","Donnez la ligne du mot :","");
 					while ((positionLigneColonneMot[0]<0) || (positionLigneColonneMot[0]>14)){
 						positionLigneColonneMot[0]=demandeJoueurAffichage("Ligne du mot","Erreur ","Donnez la ligne du mot");
-						//positionLigneColonneMot[0]=demanderNombre("Donnez la ligne du mot :");
 					}
 					for (int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
 						positionLigneColonneMot[1]=demandeJoueurAffichage("Colonne du mot","Donnez la Colonne du mot :","");
-						//positionLigneColonneMot[1]=demanderNombre("Donnez la colonne de la lettre à placer :");
 						while((positionLigneColonneMot[1]<0)||(positionLigneColonneMot[1]>14)) {
 							positionLigneColonneMot[1]=demandeJoueurAffichage("Colonne du mot","Erreur ","Donnez la Colonne du mot");
-							//positionLigneColonneMot[1]=demanderNombre("Erreur vos valeurs sont hors du tableau :");
 						}
 						listePosition[cpt]=positionLigneColonneMot[1];
 					}
 				}
 				else if (choix == 2) {
 					positionLigneColonneMot[1]=demandeJoueurAffichage("Colonne du mot","Donnez la Colonne du mot :","");
-					//positionLigneColonneMot[1]=demanderNombre("Donnez la colonne du mot :");
 					while ((positionLigneColonneMot[1]<0) || (positionLigneColonneMot[1]>14)){
 						positionLigneColonneMot[1]=demandeJoueurAffichage("Ligne du mot","Erreur ","Donnez la Colonne du mot");
-						//positionLigneColonneMot[1]=demanderNombre("Donnez la colonne du mot :");
 					}
 					for (int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
-						//positionLigneColonneMot[0]=demanderNombre("Donnez la ligne de la lettre à placer :");
 						positionLigneColonneMot[0]=demandeJoueurAffichage("Ligne du mot","Donnez la ligne du mot :","");
 
 						while((positionLigneColonneMot[0]<0)||(positionLigneColonneMot[1]>14)) {
-							//positionLigneColonneMot[0]=demanderNombre("Erreur vos valeurs sont hors du tableau :");
 							positionLigneColonneMot[0]=demandeJoueurAffichage("Ligne du mot","Erreur ","Donnez la ligne du mot");
-
 						}
 						listePosition[cpt]=positionLigneColonneMot[0];
 					}
