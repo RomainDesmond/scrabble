@@ -342,48 +342,68 @@ public class ScrabbleApplicationConsole {
 		boolean ajoutLigne=false;
 		boolean ajoutColonne=false;
 		if (positionsLigneDuMot>0) {
+			System.out.println("positions0:"+positionsLigneDuMot+(positionColonneDuMot-cpt));
 			while((plateau.getLettre((positionsLigneDuMot-cpt), positionColonneDuMot)!=null)) {
+				System.out.println("positions:"+positionsLigneDuMot+(positionColonneDuMot-cpt+1));
 				if (estPasEgal(positionsLigneDuMot-cpt,lettreCompleteCompteLigne)){
 					point=point+plateau.getLettre(positionsLigneDuMot-cpt,positionColonneDuMot).getPoint();
 					ajouterFinTableauEntier(lettreCompleteCompteLigne,positionsLigneDuMot-cpt);
 					ajoutLigne=true;
 				}
 				cpt++;
+				if (positionsLigneDuMot-cpt<0) {
+					break;
+				}
 			}
 		}
 		cpt=1;
 		if (positionsLigneDuMot<14) {
+			System.out.println("positions1:"+positionsLigneDuMot+(positionColonneDuMot-cpt));
 			while (plateau.getLettre(positionsLigneDuMot+cpt, positionColonneDuMot)!=null) {
+				System.out.println("positions:"+positionsLigneDuMot+(positionColonneDuMot-cpt+1));
 				if (estPasEgal(positionsLigneDuMot+cpt,lettreCompleteCompteLigne)){
 					point=point+plateau.getLettre(positionsLigneDuMot+cpt,positionColonneDuMot).getPoint();
 					ajouterFinTableauEntier(lettreCompleteCompteLigne,positionsLigneDuMot+cpt);
 					ajoutLigne=true;
 				}
 				cpt++;
+				if (positionsLigneDuMot+cpt>14) {
+					break;
+				}
 			}
 		}
 		cpt=1;
 
 		if (positionColonneDuMot<14) {
+			System.out.println("positions2:"+positionsLigneDuMot+(positionColonneDuMot-cpt));
 			while((plateau.getLettre(positionsLigneDuMot, positionColonneDuMot+cpt)!=null)) {
+				System.out.println("positions:"+positionsLigneDuMot+(positionColonneDuMot-cpt+1));
 				if (estPasEgal(positionColonneDuMot+cpt,positionColonneAutreMot)&&(estPasEgal(positionColonneDuMot+cpt,lettreCompleteCompteColonne))) {
 					point=point+plateau.getLettre(positionsLigneDuMot, positionColonneDuMot+cpt).getPoint();
 					ajouterFinTableauEntier(lettreCompleteCompteColonne,positionColonneDuMot+cpt);
 					ajoutColonne=true;
 				}
 				cpt++;
+				if (positionColonneDuMot+cpt>14) {
+					break;
+				}
 			}
 		}
 		cpt=1;
 
 		if (positionColonneDuMot>0) {
+			System.out.println("positions:"+positionsLigneDuMot+(positionColonneDuMot-cpt));
 			while(plateau.getLettre(positionsLigneDuMot, positionColonneDuMot-cpt)!=null) {
+				System.out.println("positions:"+positionsLigneDuMot+(positionColonneDuMot-cpt));
 				if((estPasEgal(positionColonneDuMot-cpt,positionColonneAutreMot))&&(estPasEgal(positionColonneDuMot-cpt,lettreCompleteCompteColonne))) {
 					point=point+plateau.getLettre(positionsLigneDuMot, positionColonneDuMot-cpt).getPoint();
 					ajouterFinTableauEntier(lettreCompleteCompteColonne,positionColonneDuMot-cpt);
 					ajoutColonne=true;
 				}
 				cpt++;
+				if (positionColonneDuMot-cpt<0) {
+					break;
+				}
 			}
 		}
 		if(ajoutColonne && ajoutLigne) {
@@ -407,6 +427,9 @@ public class ScrabbleApplicationConsole {
 					ajoutLigne=true;
 				}
 				cpt++;
+				if (positionsLigneDuMot-cpt<0) {
+					break;
+				}
 			}
 		}
 		cpt=1;
@@ -419,6 +442,9 @@ public class ScrabbleApplicationConsole {
 					ajoutLigne=true;
 				}
 				cpt++;
+				if (positionsLigneDuMot+cpt>14) {
+					break;
+				}
 			}
 		}
 		cpt=1;
@@ -430,6 +456,9 @@ public class ScrabbleApplicationConsole {
 					ajoutColonne=true;
 				}
 				cpt++;
+				if (positionColonneDuMot+cpt>14) {
+					break;
+				}
 			}
 		}
 		cpt=1;
@@ -441,6 +470,9 @@ public class ScrabbleApplicationConsole {
 					ajoutColonne=true;
 				}
 				cpt++;
+				if (positionColonneDuMot-cpt<0) {
+					break;
+				}
 			}
 		}
 		if(ajoutColonne && ajoutLigne) {
