@@ -6,7 +6,7 @@ public enum TypeCase {
 	MOTDOUBLE("MD",1,2),
 	MOTTRIPLE("MT",1,3),
 	VIDE("",1,1),
-	DEPART("*",2,1);
+	DEPART("*",1,2);
 	private String affichageCase;
 	private int multiplicateurLettre;
 	private int multiplicateurMot;
