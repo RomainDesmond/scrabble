@@ -509,9 +509,6 @@ public class ScrabbleApplicationGraphiqueController {
 	}
     
 	public static int jouerLettre(Jeu plateau,int[] listeNb,int nbLettreJoue) {
-		//System.out.println("Donnez une lettre à jouer");
-		//Scanner inputNombreEchange = new Scanner(System.in);
-		//int choixPosition=inputNombreEchange.nextShort();
 		int choixPosition=demandeJoueurAffichage("lettre à jouer","Donnez une leetre à jouer :","");
 		int positionsLettre;
 		positionsLettre=choixPosition;
@@ -571,15 +568,31 @@ public class ScrabbleApplicationGraphiqueController {
 		
 		int compteur=0;
 		if (choix>0 && choix<8) {
-			for (compteur=0;compteur<choix;compteur++) {
-				int choixPosition=demandeJoueurAffichage("Position de la lettre à échanger","Donnez la position de la lettre à échanger","Lettre : "+compteur);
-				positionsEchanger[compteur]=choixPosition;
-				}			
-		}
-			for (compteur=0;compteur<choix;compteur++) {
-				plateau.ajouterLettrePremierePositionDisponible(j.supprimerLettre(positionsEchanger[compteur]-1));
-				ScrabbleApplicationConsole.distribuerUneLettre(plateau,j);
+			if (choix<7) {
+				for (compteur=0;compteur<choix;compteur++) {
+					int choixPosition=demandeJoueurAffichage("Position de la lettre à échanger","Donnez la position de la lettre à échanger","Lettre : "+compteur);
+					positionsEchanger[compteur]=choixPosition;
+					}			
+			
+				for (compteur=0;compteur<choix;compteur++) {
+					plateau.ajouterLettrePremierePositionDisponible(j.supprimerLettre(positionsEchanger[compteur]-1));
+					ScrabbleApplicationConsole.distribuerUneLettre(plateau,j);
+				}
 			}
+			else {
+				for (compteur=0;compteur<choix;compteur++) {
+					int choixPosition=compteur;
+					positionsEchanger[compteur]=(choixPosition+1);
+					}			
+			
+				for (compteur=0;compteur<choix;compteur++) {
+					plateau.ajouterLettrePremierePositionDisponible(j.supprimerLettre(positionsEchanger[compteur]-1));
+					ScrabbleApplicationConsole.distribuerUneLettre(plateau,j);
+				}
+			}
+		}
+	
+		
 	}
 	
 	public static boolean jouerMotFX(Jeu plateau,Joueur j,int[] positionLigneColonneMot,ValeurLettre[] listeValeurLettre,int[] listePosition,int nombreLettreAPlacer,int choix) {
@@ -595,13 +608,10 @@ public class ScrabbleApplicationGraphiqueController {
 				//}
 			}
 			plateau.afficherPlateau();
-			System.out.println("Mot Placable ???");
 			if ((plateau.motEstPlacableLigne(positionLigneColonneMot[0], listePosition,nombreLettreAPlacer))&&(motEstJoue)) {
 				compterLesPointsLigneFX(j,plateau,nombreLettreAPlacer,listeValeurLettre,positionLigneColonneMot[0],listePosition);
-				System.out.println("Mot Placable ");
 			}					
 			else if (motEstJoue){
-				System.out.println("Mot non Placable ");
 				motEstJoue=false;
 				for(int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
 					plateau.supprimerLettreEmplacement(positionLigneColonneMot[0], listePosition[cpt]);
@@ -683,8 +693,31 @@ public class ScrabbleApplicationGraphiqueController {
 		}
 		j.setScore(j.getScore()+(scoreMot*multiplicateurMot));
 	}
+	
+    private static String demandeJoueurAffichageString(String demande,String nomFenetre,String contenu) {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle(nomFenetre);
+        dialog.setHeaderText(demande);
+        dialog.setContentText(contenu);
+
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()) {
+            try {
+                return result.get();
+            } catch (NumberFormatException e) {
+                showAlert("Erreur", "Veuillez entrer un numéro valide.");
+                return "Erreur";
+            }
+        } else {
+            return "Erreur";
+        }
+        
+        
+        
+    }
 
 	private static void choixJoker(Joueur j2, ValeurLettre[] listeValeurLettre, int cpt) {
+		demandeJoueurAffichageString("donnezlettre joker","donnezlettre joker","donnezlettre joker");
 		// TODO Auto-generated method stub
 		
 	}
