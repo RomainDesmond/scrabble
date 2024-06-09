@@ -31,6 +31,7 @@ public class ScrabbleApplicationGraphiqueController {
 	int[]positionsX =new int[7];
 	int[]positionsY = new int[7];
 	int nombreLettrePose=0;
+	ValeurLettre[] listeValeurLettre=new ValeurLettre[7];
 	Joueur j;
 	Jeu plateau;
 	@FXML
@@ -62,7 +63,34 @@ public class ScrabbleApplicationGraphiqueController {
 	
 	@FXML
 	private void btnValiderAppuyer() {
-		menuChoixJeu(j, plateau,idGrilleScrabble,idGrilleChevaletJ1,idLbScore,idLbTour);
+		int[] positionLigneColonneMot= new int[2];
+		if(toutesValeursSontEgalsX()) {
+			System.out.println("ligne");
+			positionLigneColonneMot[0]=positionsX[0];
+			jouerMotFX(plateau,j,positionLigneColonneMot,listeValeurLettre,positionsY,nombreLettrePose,1);
+			System.out.println("score:"+j.getScore());
+		}
+		else if (toutesValeursSontEgalsY()) {
+			System.out.println("colonne");
+			positionLigneColonneMot[1]=positionsY[0];
+			jouerMotFX(plateau,j,positionLigneColonneMot,listeValeurLettre,positionsX,nombreLettrePose,2);
+			
+		}
+		else {
+			System.out.println("autre");
+			for (int cpt=0;cpt<nombreLettrePose;cpt++){
+				plateau.supprimerLettreEmplacement(positionsX[cpt],positionsY[cpt]);
+			}
+			
+	}
+		positionsX =new int[7];
+		positionsY=new int[7];
+		nombreLettrePose=0;
+		listeValeurLettre=new ValeurLettre[7];
+		plateau.modificationCasePlacable();
+		ScrabbleApplicationConsole.distribution(plateau, j);
+		actualiserAffichage(j, plateau, idGrilleScrabble, idGrilleChevaletJ1, idLbScore, idLbTour);
+		
 	}
 	
 	@FXML
@@ -74,7 +102,7 @@ public class ScrabbleApplicationGraphiqueController {
 	
 	@FXML
 	private void btnPasserSonTour() {
-		
+		menuChoixJeu(j, plateau,idGrilleScrabble,idGrilleChevaletJ1,idLbScore,idLbTour);
 	}
 	
 	@FXML void initialize() {
@@ -116,6 +144,7 @@ public class ScrabbleApplicationGraphiqueController {
 	public Button getIdBtnValider() {
 		return idBtnValider;
 	}
+	
 	public void ajouterPositionX(int nombreX) {
 		nombreX++;
 		for (int i = 0; i<7;i++) {
@@ -134,21 +163,48 @@ public class ScrabbleApplicationGraphiqueController {
 			}
 		}
 	}
-	public Boolean verificationSiAuMinimumDeuxValeurSontSimilairesX() {
-		if(positionsX[0]==positionsX[1]) {
-			return true;
+	
+	public void ajouterListeValeurLettre(ValeurLettre valeurLettre) {
+		System.out.println(valeurLettre.AffichageLettre());
+		for (int i = 0; i<7;i++) {
+			if (listeValeurLettre[i]==null) {
+				System.out.println("Ajout");
+				listeValeurLettre[i]=valeurLettre;
+				break;
+			}
 		}
-		return false;
+	}
+	public void afficher() {
+		System.out.println("afficheeee");
+		for (int i = 0; i<7;i++) {
+			System.out.println("affichage:"+listeValeurLettre[i].AffichageLettre());
+				//listeValeurLettre[i]=valeurLettre;
+		}
+	}
+	public Boolean toutesValeursSontEgalsX() {
+		for(int i=0;i<7;i++) {
+			if((positionsX[0]!=positionsX[i])&&(positionsX[i]!=0)){
+				System.out.println(positionsX[0]+" "+positionsX[1]);
+				return false;
+			}
+		}
+		return true;
 	}
 	
-	public Boolean verificationSiAuMinimumDeuxValeurSontSimilairesY() {
-		if(positionsY[0]==positionsY[1]) {
-			return true;
-		}
-		return false;
-	}
 	
-	public static void actualiserAffichage(Joueur j,Jeu plateau, GridPane idGrilleScrabble,GridPane idGrilleChevaletJ1,Label lbScore,Label lbTour) {
+	public Boolean toutesValeursSontEgalsY() {
+		for(int i=0;i<7;i++) {
+			if((positionsY[0]!=positionsY[i])&&(positionsX[i]!=0)) {
+				System.out.println(positionsY[0]+" "+positionsY[1]);
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	
+	public void actualiserAffichage(Joueur j,Jeu plateau, GridPane idGrilleScrabble,GridPane idGrilleChevaletJ1,Label lbScore,Label lbTour) {
 		System.out.println("Afficher Chevalet");
 		j.afficherChevalet();
 		lbScore.setText(""+j.getScore());
@@ -203,23 +259,28 @@ public class ScrabbleApplicationGraphiqueController {
                     boolean success = false;
                     if (db.hasString()) {
                         String[] parts = db.getString().split(",");
-                        int fromRow = Integer.parseInt(parts[0]);
-                        int fromCol = Integer.parseInt(parts[1]);
+                        int ligne = Integer.parseInt(parts[0]);
+                        int colonne = Integer.parseInt(parts[1]);
                         
-                        if(plateau.placerLettreJoue(i1, i2, j.donnerLettre(fromCol))) {
-                        
-                        	//plateau.afficherPlateau();
-                        	j.supprimerLettre(fromCol);
-                        	System.out.println("allo");
+                        if(plateau.placerLettreJoue(i1, i2, j.donnerLettre(colonne))) {
+                        	ajouterPositionX(i1-1);
+                        	ajouterPositionY(i2-1);
+                        	ajouterListeValeurLettre(j.donnerLettre(colonne));
                         	j.afficherChevalet();
+                        	nombreLettrePose++;
+                        	//afficher();
+                        	j.supprimerLettre(colonne);
                         	actualiserAffichage(j, plateau, idGrilleScrabble, idGrilleChevaletJ1, lbScore, lbTour);
                         }
 
                         success = true;
                     }
+
+
                     event.setDropCompleted(success);
                     event.consume();
                 });
+
 				idGrilleScrabble.add(sP,cpt1,cpt2);
 
 			
@@ -257,7 +318,7 @@ public class ScrabbleApplicationGraphiqueController {
 		}
 	}
 	
-	public static void menuChoixJeu(Joueur j1,Jeu plateau,GridPane GP,GridPane idGrilleChevaletJ1,Label idLbScore,Label idLbTour) {
+	public void menuChoixJeu(Joueur j1,Jeu plateau,GridPane GP,GridPane idGrilleChevaletJ1,Label idLbScore,Label idLbTour) {
 		boolean joue = true;
 
 		//System.out.println("oui");
@@ -297,7 +358,7 @@ public class ScrabbleApplicationGraphiqueController {
     					ScrabbleApplicationConsole.distribution(plateau,j1);
     					plateau.modificationCasePlacable();
 
-    					ScrabbleApplicationGraphiqueController.actualiserAffichage(j1,plateau, GP,idGrilleChevaletJ1,idLbScore,idLbTour);
+    					actualiserAffichage(j1,plateau, GP,idGrilleChevaletJ1,idLbScore,idLbTour);
     					break;
                     case 4:
     					joue=false;
@@ -451,11 +512,112 @@ public class ScrabbleApplicationGraphiqueController {
 				ScrabbleApplicationConsole.distribuerUneLettre(plateau,j);
 			}
 	}
-	/*
-	public static int choixLigneColonne() {
-		System.out.println("1:ajout en ligne");
-		System.out.println("2:ajout en colonne");
-		return demanderNombre("");
-	}*/
+	
+	public static boolean jouerMotFX(Jeu plateau,Joueur j,int[] positionLigneColonneMot,ValeurLettre[] listeValeurLettre,int[] listePosition,int nombreLettreAPlacer,int choix) {
+		boolean motEstJoue=true;
+		if (choix == 1) {
+			for(int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
+				if (listeValeurLettre[cpt]==ValeurLettre.JOKER) {
+					choixJoker(j,listeValeurLettre,cpt);
+				}
+				//if(!(plateau.placerLettreJoue(positionLigneColonneMot[0], listePosition[cpt],j.donnerLettre(listeDeNombre[cpt]-1)))) {
+					//motEstJoue=false;
+					//break;
+				//}
+			}
+			plateau.afficherPlateau();
+			System.out.println("Mot Placable ???");
+			if ((plateau.motEstPlacableLigne(positionLigneColonneMot[0], listePosition,nombreLettreAPlacer))&&(motEstJoue)) {
+				compterLesPointsLigneFX(j,plateau,nombreLettreAPlacer,listeValeurLettre,positionLigneColonneMot[0],listePosition);
+				System.out.println("Mot Placable ");
+			}					
+			else if (motEstJoue){
+				System.out.println("Mot non Placable ");
+				motEstJoue=false;
+				for(int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
+					plateau.supprimerLettreEmplacement(positionLigneColonneMot[0], listePosition[cpt]);
+					
+				}
+			}
+		}
+		else if(choix == 2) {
+			for(int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
+				if (listeValeurLettre[cpt]==ValeurLettre.JOKER) {
+					choixJoker(j,listeValeurLettre,cpt);
+				}
+				//if (!(plateau.placerLettreJoue(listePosition[cpt], positionLigneColonneMot[1],j.donnerLettre(listeDeNombre[cpt]-1)))) {
+					//motEstJoue=false;
+				//	break;
+				//}
+				}
+
+			if ((plateau.motEstPlacableColonne(listePosition,positionLigneColonneMot[1],nombreLettreAPlacer))&&(motEstJoue)) {
+				compterLesPointsColonneFX(j,plateau,nombreLettreAPlacer,listeValeurLettre,listePosition,positionLigneColonneMot[1]);
+			}					
+			else if (motEstJoue){
+				motEstJoue=false;
+				for(int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
+					plateau.supprimerLettreEmplacement(positionLigneColonneMot[0], listePosition[cpt]);
+
+					//plateau.placerLettreJoue(listePosition[cpt],positionLigneColonneMot[1],null);
+				}
+			}
+		}
+		if (motEstJoue) {
+			plateau.ajouterUnTour();
+		}
+		return motEstJoue;
+	}
+	
+	public static void compterLesPointsLigneFX(Joueur j,Jeu plateau,int nombreLettreAPlacer,ValeurLettre[] listeValeurLettre,int positionsLigne,int[] positionsColonne) {
+		//WIP
+		int multiplicateurMot=1;
+		int scoreMot=0;
+		int[] lettreCompleteCompteColonne= new int[15];
+		int[] lettreCompleteCompteLigne= new int[15];
+		System.out.println(nombreLettreAPlacer);
+
+		for (int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
+
+			int multiplicateurLettre=1;
+			scoreMot=scoreMot+ScrabbleApplicationConsole.ajoutMotComplete(j,plateau,positionsLigne,positionsColonne[cpt],positionsColonne,lettreCompleteCompteLigne,lettreCompleteCompteColonne);
+			multiplicateurMot=multiplicateurMot*plateau.typeCasePosition(positionsLigne,positionsColonne[cpt]).multiplicateurCaseMot();
+			multiplicateurLettre=multiplicateurLettre*plateau.typeCasePosition(positionsLigne, positionsColonne[cpt]).multiplicateurCaseLettre();
+			j.afficherChevalet();
+			System.out.println("cpt"+cpt);
+			System.out.println(listeValeurLettre[cpt]);
+			scoreMot=scoreMot+listeValeurLettre[cpt].getPoint()*multiplicateurLettre;
+		}
+		if (nombreLettreAPlacer==7){
+			scoreMot=scoreMot+50;
+		}
+		j.setScore(j.getScore()+(scoreMot*multiplicateurMot));
+	}
+
+	
+	public static void compterLesPointsColonneFX(Joueur j,Jeu plateau,int nombreLettreAPlacer,ValeurLettre[] listeValeurLettre,int[] positionsLigne,int positionsColonne) {
+		//WIP
+		int multiplicateurMot=1;
+		int scoreMot=0;
+		int[] lettreCompleteCompteColonne= new int[15];
+		int[] lettreCompleteCompteLigne= new int[15];
+		
+		for (int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
+			int multiplicateurLettre=1;
+			scoreMot=scoreMot+ScrabbleApplicationConsole.ajoutMotCompleteColonne(j,plateau,positionsLigne[cpt],positionsColonne,positionsLigne,lettreCompleteCompteLigne,lettreCompleteCompteColonne);
+			multiplicateurMot=multiplicateurMot*plateau.typeCasePosition(positionsLigne[cpt],positionsColonne).multiplicateurCaseMot();
+			multiplicateurLettre=multiplicateurLettre*plateau.typeCasePosition(positionsLigne[cpt], positionsColonne).multiplicateurCaseLettre();
+			scoreMot=scoreMot+listeValeurLettre[cpt].getPoint()*multiplicateurLettre;
+		}
+		if (nombreLettreAPlacer==7){
+			scoreMot=scoreMot+50;
+		}
+		j.setScore(j.getScore()+(scoreMot*multiplicateurMot));
+	}
+
+	private static void choixJoker(Joueur j2, ValeurLettre[] listeValeurLettre, int cpt) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
