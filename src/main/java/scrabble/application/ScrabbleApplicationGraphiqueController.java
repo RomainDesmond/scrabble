@@ -65,16 +65,30 @@ public class ScrabbleApplicationGraphiqueController {
 	private void btnValiderAppuyer() {
 		int[] positionLigneColonneMot= new int[2];
 		if(toutesValeursSontEgalsX()) {
-			System.out.println("ligne");
 			positionLigneColonneMot[0]=positionsX[0];
-			jouerMotFX(plateau,j,positionLigneColonneMot,listeValeurLettre,positionsY,nombreLettrePose,1);
-			System.out.println("score:"+j.getScore());
+			//jouerMotFX(plateau,j,positionLigneColonneMot,listeValeurLettre,positionsY,nombreLettrePose,1);
+
+			if(verifierLigneContientPasEspace()) {
+				jouerMotFX(plateau,j,positionLigneColonneMot,listeValeurLettre,positionsY,nombreLettrePose,1);
+			}
+			else {
+				System.out.println("est pas place");
+				for (int cpt=0;cpt<nombreLettrePose;cpt++){
+					plateau.supprimerLettreEmplacement(positionsX[cpt],positionsY[cpt]);
+				}
+			}
 		}
 		else if (toutesValeursSontEgalsY()) {
-			System.out.println("colonne");
 			positionLigneColonneMot[1]=positionsY[0];
-			jouerMotFX(plateau,j,positionLigneColonneMot,listeValeurLettre,positionsX,nombreLettrePose,2);
-			
+			System.out.println("vérification : "+verifierColonneContientPasEspace());
+			if(verifierColonneContientPasEspace()) {
+				jouerMotFX(plateau,j,positionLigneColonneMot,listeValeurLettre,positionsX,nombreLettrePose,2);
+			}
+			else {
+				for (int cpt=0;cpt<nombreLettrePose;cpt++){
+					plateau.supprimerLettreEmplacement(positionsX[cpt],positionsY[cpt]);
+				}
+			}
 		}
 		else {
 			System.out.println("autre");
@@ -174,6 +188,60 @@ public class ScrabbleApplicationGraphiqueController {
 			}
 		}
 	}
+	
+	public int premiereLettreAjoute(int[] positionLettre) {
+		int minimum=100;
+		for (int i =0;i<7;i++) {
+			if ((positionLettre[i]<minimum)&&(positionLettre[i]!=0)){
+				minimum=positionLettre[i];
+			}
+		}
+		return minimum;
+	}
+	
+	public int derniereLettreAjoute(int[] positionLettre) {
+		int maximum=-1;
+		for (int i =0;i<7;i++) {
+			if (positionLettre[i]>maximum){
+				maximum=positionLettre[i];
+			}
+		}
+		return maximum;
+	}
+	
+	public Boolean verifierLigneContientPasEspace() {
+		
+		int posPremiereLettreAjoute=premiereLettreAjoute(positionsY);
+		int posDerniereLettreAjoute=derniereLettreAjoute(positionsY);
+		int cpt=0;
+		if (posPremiereLettreAjoute!=100) {
+			while (plateau.getLettre(positionsX[0],posPremiereLettreAjoute+cpt)!=null) {
+				if (posPremiereLettreAjoute+cpt==posDerniereLettreAjoute) {
+					return true;
+				}
+				cpt++;
+			}
+		}
+		return false;
+	}
+	
+	public boolean verifierColonneContientPasEspace() {
+		int posPremiereLettreAjoute=premiereLettreAjoute(positionsX);
+		int posDerniereLettreAjoute=derniereLettreAjoute(positionsX);
+		int cpt=0;
+		if (posPremiereLettreAjoute!=100) {
+			while (plateau.getLettre(posPremiereLettreAjoute+cpt,positionsY[0])!=null) {
+				if (posPremiereLettreAjoute+cpt==posDerniereLettreAjoute) {
+					return true;
+				}
+				cpt++;
+			}
+		}
+		return false;
+	}
+	
+	
+	
 	public void afficher() {
 		System.out.println("afficheeee");
 		for (int i = 0; i<7;i++) {
