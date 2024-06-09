@@ -12,6 +12,9 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.ClipboardContent;
@@ -23,6 +26,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import scrabble.model.Jeu;
 import scrabble.model.Joueur;
 import scrabble.model.ValeurLettre;
@@ -63,11 +67,15 @@ public class ScrabbleApplicationGraphiqueController {
 	
 	@FXML
 	private void btnValiderAppuyer() {
+		System.out.println(plateau.casePosition(7, 0).estUtilisable());
+		System.out.println(plateau.casePosition(7, 0).estUtilise());
+
 		int[] positionLigneColonneMot= new int[2];
 		if(toutesValeursSontEgalsX()) {
 			positionLigneColonneMot[0]=positionsX[0];
-
+			System.out.println("ligne");
 			if(verifierLigneContientPasEspace()) {
+				System.out.println("ligne2");
 				jouerMotFX(plateau,j,positionLigneColonneMot,listeValeurLettre,positionsY,nombreLettrePose,1);
 			}
 			else {
@@ -117,7 +125,8 @@ public class ScrabbleApplicationGraphiqueController {
 	
 	@FXML
 	private void btnPasserSonTour() {
-		menuChoixJeu(j, plateau,idGrilleScrabble,idGrilleChevaletJ1,idLbScore,idLbTour);
+		
+		//menuChoixJeu(j, plateau,idGrilleScrabble,idGrilleChevaletJ1,idLbScore,idLbTour);
 	}
 	
 	@FXML void initialize() {
@@ -193,7 +202,8 @@ public class ScrabbleApplicationGraphiqueController {
 	public int premiereLettreAjoute(int[] positionLettre) {
 		int minimum=100;
 		for (int i =0;i<7;i++) {
-			if ((positionLettre[i]<minimum)&&(positionLettre[i]!=0)){
+			System.out.println((positionLettre[i]));
+			if /*(*/(positionLettre[i]<minimum)/*&&(positionLettre[i]!=0))*/{
 				minimum=positionLettre[i];
 			}
 		}
@@ -215,6 +225,7 @@ public class ScrabbleApplicationGraphiqueController {
 		int posPremiereLettreAjoute=premiereLettreAjoute(positionsY);
 		int posDerniereLettreAjoute=derniereLettreAjoute(positionsY);
 		int cpt=0;
+		System.out.println(posPremiereLettreAjoute +" "+posDerniereLettreAjoute);
 		if (posPremiereLettreAjoute!=100) {
 			while (plateau.getLettre(positionsX[0],posPremiereLettreAjoute+cpt)!=null) {
 				if (posPremiereLettreAjoute+cpt==posDerniereLettreAjoute) {
@@ -330,6 +341,9 @@ public class ScrabbleApplicationGraphiqueController {
                         String[] parts = db.getString().split(",");
                         int ligne = Integer.parseInt(parts[0]);
                         int colonne = Integer.parseInt(parts[1]);
+        				if (j.donnerLettre(colonne)==ValeurLettre.JOKER) {
+        					choixJoker(j,listeValeurLettre,colonne);
+        				}
                         
                         if(plateau.placerLettreJoue(i1, i2, j.donnerLettre(colonne))) {
                         	ajouterPositionX(i1-1);
@@ -599,9 +613,10 @@ public class ScrabbleApplicationGraphiqueController {
 		boolean motEstJoue=true;
 		if (choix == 1) {
 			for(int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
+				/*
 				if (listeValeurLettre[cpt]==ValeurLettre.JOKER) {
 					choixJoker(j,listeValeurLettre,cpt);
-				}
+				}*/
 				//if(!(plateau.placerLettreJoue(positionLigneColonneMot[0], listePosition[cpt],j.donnerLettre(listeDeNombre[cpt]-1)))) {
 					//motEstJoue=false;
 					//break;
@@ -612,6 +627,7 @@ public class ScrabbleApplicationGraphiqueController {
 				compterLesPointsLigneFX(j,plateau,nombreLettreAPlacer,listeValeurLettre,positionLigneColonneMot[0],listePosition);
 			}					
 			else if (motEstJoue){
+				System.out.println("non placable");
 				motEstJoue=false;
 				for(int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
 					plateau.supprimerLettreEmplacement(positionLigneColonneMot[0], listePosition[cpt]);
@@ -693,14 +709,39 @@ public class ScrabbleApplicationGraphiqueController {
 		}
 		j.setScore(j.getScore()+(scoreMot*multiplicateurMot));
 	}
-	
+	/*
     private static String demandeJoueurAffichageString(String demande,String nomFenetre,String contenu) {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle(nomFenetre);
         dialog.setHeaderText(demande);
         dialog.setContentText(contenu);
 
+        ChoiceBox<String> choiceBox = new ChoiceBox<>();
+        choiceBox.getItems().addAll("Option 1", "Option 2", "Option 3");
+        
+        VBox vbox = new VBox();
+        vbox.getChildren().addAll(new Label(contenu), choiceBox);
+        dialog.getDialogPane().setContent(vbox);
+
+        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+
+        
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == ButtonType.OK) {
+                return choiceBox.getValue();
+            }
+            return null;
+        });
+        
         Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()) {
+            return result.get();
+        } else {
+            return "Erreur";
+        }
+    }*/
+        
+        /*
         if (result.isPresent()) {
             try {
                 return result.get();
@@ -710,16 +751,58 @@ public class ScrabbleApplicationGraphiqueController {
             }
         } else {
             return "Erreur";
-        }
+        }*/
         
         
         
-    }
+    //}
+	
+	
+	   private static String demandeJoueurAffichageString(String demande, String nomFenetre, String contenu) {
+	        Dialog<String> dialog = new Dialog<>();
+	        dialog.setTitle(nomFenetre);
+	        dialog.setHeaderText(demande);
 
-	private static void choixJoker(Joueur j2, ValeurLettre[] listeValeurLettre, int cpt) {
-		demandeJoueurAffichageString("donnezlettre joker","donnezlettre joker","donnezlettre joker");
-		// TODO Auto-generated method stub
-		
+	        ChoiceBox<String> cBoxAffichageJoker =new ChoiceBox<String>();
+	        ChoiceBox<String> choiceBox = new ChoiceBox<>();
+	        int cpt = 0;
+	        String[] listeVL = new String[30];
+	        String temp ;
+	        for (ValeurLettre valeur : ValeurLettre.values()) {
+	        	temp=valeur.AffichageLettre();
+	            if (!" ".equals(temp)) {
+	            	choiceBox.getItems().add(temp);
+	            }
+	            cpt++;
+	        }
+
+	        if (!choiceBox.getItems().isEmpty()) {
+	            choiceBox.setValue(choiceBox.getItems().get(0));
+	        }
+
+	        VBox vbox = new VBox();
+	        vbox.getChildren().addAll(new Label(contenu), choiceBox);
+	        dialog.getDialogPane().setContent(vbox);
+
+	        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+
+	        dialog.setResultConverter(dialogButton -> {
+	            if (dialogButton == ButtonType.OK) {
+	                return choiceBox.getValue();
+	            }
+	            return null;
+	        });
+
+	        Optional<String> result = dialog.showAndWait();
+	        if (result.isPresent()) {
+	            return result.get();
+	        } else {
+	            return "Erreur";
+	        }
+	    }
+	private static void choixJoker(Joueur j, ValeurLettre[] listeValeurLettre, int cpt) {
+		String affichageJoker=demandeJoueurAffichageString("donnezlettre joker","donnezlettre joker","donnezlettre joker");
+		j.donnerLettre(cpt).modifierAffichageJoker(affichageJoker);
 	}
 
 }
