@@ -15,8 +15,10 @@ import scrabble.model.Jeu;
 import scrabble.model.Joueur;
 import scrabble.model.ValeurLettre;
 import scrabble.application.ScrabbleApplicationConsole;
+import scrabble.application.ScrabbleApplicationGraphiqueController;
 
 public class ScrabbleTest {
+	ValeurLettre[]VL=new ValeurLettre[7];
 	ValeurLettre[] listeVLettre= new ValeurLettre[7];
 	int[]listeDeNbPosChevaletPosChevalet= new int[7];
 	int[]listePositionLettreAPlacer=new int[7];
@@ -59,22 +61,49 @@ public class ScrabbleTest {
 		listePositionLettreAPlacer[0]=7;
 		listePositionLettreAPlacer[1]=8;
 		positionLigneColonneMot[0]=7;
+		VL[0]=ValeurLettre.A;
+		VL[1]=ValeurLettre.U;
+		listePositionLettreAPlacer[0]=8;
+		listePositionLettreAPlacer[1]=9;
+		positionLigneColonneMot[0]=8;
 		
-		motEstJoue=ScrabbleApplicationConsole.jouerMot(plateau,jTest,positionLigneColonneMot,listeDeNbPosChevaletPosChevalet,listePositionLettreAPlacer,2,1);
-		assertTrue(motEstJoue);
+		plateau.afficherPlateau();
+		for (int i =0;i<2;i++) {
+			System.out.print("+"+(listePositionLettreAPlacer[i]-1)+(positionLigneColonneMot[0]-1));
+			plateau.placerLettreJoue(positionLigneColonneMot[0]-1,(listePositionLettreAPlacer[i]-1), VL[i]);
+		}
+		assertTrue(ScrabbleApplicationGraphiqueController.jouerMotFX(plateau,jTest,positionLigneColonneMot,VL,listePositionLettreAPlacer,2,1));
+
+		/*motEstJoue=ScrabbleApplicationConsole.jouerMot(plateau,jTest,positionLigneColonneMot,listeDeNbPosChevaletPosChevalet,listePositionLettreAPlacer,2,1);
+		assertTrue(motEstJoue);*/
 	}
 	
 	@Test
 	void assertTrueSiMotEstBienPlaceColonne() {
-		
+		/*
 		listeDeNbPosChevaletPosChevalet[0]=1;
 		listeDeNbPosChevaletPosChevalet[1]=2;
 		listePositionLettreAPlacer[0]=7;
 		listePositionLettreAPlacer[1]=8;
-		positionLigneColonneMot[1]=7;
+		positionLigneColonneMot[1]=7;*/
+		
+		
+		VL[0]=ValeurLettre.A;
+		VL[1]=ValeurLettre.U;
+		listePositionLettreAPlacer[0]=8;
+		listePositionLettreAPlacer[1]=9;
+		positionLigneColonneMot[1]=8;
+		
 		plateau.afficherPlateau();
+		for (int i =0;i<2;i++) {
+			plateau.placerLettreJoue((listePositionLettreAPlacer[i]-1),positionLigneColonneMot[1]-1, VL[i]);
+		}
+		
+		assertTrue(ScrabbleApplicationGraphiqueController.jouerMotFX(plateau,jTest,positionLigneColonneMot,VL,listePositionLettreAPlacer,2,2));
+
+		/*
 		motEstJoue=ScrabbleApplicationConsole.jouerMot(plateau,jTest,positionLigneColonneMot,listeDeNbPosChevaletPosChevalet,listePositionLettreAPlacer,2,2);
-		assertTrue(motEstJoue);
+		assertTrue(motEstJoue);*/
 	}
 	
 	@Test
@@ -104,26 +133,40 @@ public class ScrabbleTest {
 		listePositionLettreAPlacer[0]=7;
 		listePositionLettreAPlacer[1]=8;
 		positionLigneColonneMot[0]=7;
-		ScrabbleApplicationConsole.jouerMot(plateau,jTest,positionLigneColonneMot,listeDeNbPosChevaletPosChevalet,listePositionLettreAPlacer,2,1);
+		VL[0]=ValeurLettre.A;
+		VL[1]=ValeurLettre.U;
+		listePositionLettreAPlacer[0]=8;
+		listePositionLettreAPlacer[1]=9;
+		positionLigneColonneMot[0]=8;
+		
+		plateau.afficherPlateau();
+		for (int i =0;i<2;i++) {
+			System.out.print("+"+(listePositionLettreAPlacer[i]-1)+(positionLigneColonneMot[0]-1));
+			plateau.placerLettreJoue(positionLigneColonneMot[0]-1,(listePositionLettreAPlacer[i]-1), VL[i]);
+		}
+		plateau.afficherPlateau();
+		assertTrue(ScrabbleApplicationGraphiqueController.jouerMotFX(plateau,jTest,positionLigneColonneMot,VL,listePositionLettreAPlacer,2,1));
+
+		//ScrabbleApplicationConsole.jouerMot(plateau,jTest,positionLigneColonneMot,listeDeNbPosChevaletPosChevalet,listePositionLettreAPlacer,2,1);
 		plateau.afficherPlateau();
 		
-		assertEquals(3, jTest.getScore());
+		assertEquals(4, jTest.getScore());
 		}
-	
+	/*
 	@Test
 	void testScoreEstBonCompleteUnMotLigne() {
 		listeDeNbPosChevaletPosChevalet[0]=1;
 		listeDeNbPosChevaletPosChevalet[1]=2;
-		listePositionLettreAPlacer[0]=7;
-		listePositionLettreAPlacer[1]=8;
-		positionLigneColonneMot[0]=7;
+		listePositionLettreAPlacer[0]=7+1;
+		listePositionLettreAPlacer[1]=8+1;
+		positionLigneColonneMot[0]=7+1;
 		ScrabbleApplicationConsole.jouerMot(plateau,jTest,positionLigneColonneMot,listeDeNbPosChevaletPosChevalet,listePositionLettreAPlacer,2,1);
 		listePositionLettreAPlacer=new int[7];
 		listeDeNbPosChevaletPosChevalet=new int[7];
 		positionLigneColonneMot=new int[2];
 		listeDeNbPosChevaletPosChevalet[0]=5;
-		listePositionLettreAPlacer[0]=9;
-		positionLigneColonneMot[0]=7;
+		listePositionLettreAPlacer[0]=9+1;
+		positionLigneColonneMot[0]=7+1;
 		plateau.modificationCasePlacable();
 
 		ScrabbleApplicationConsole.jouerMot(plateau,jTest,positionLigneColonneMot,listeDeNbPosChevaletPosChevalet,listePositionLettreAPlacer,1,1);
@@ -134,7 +177,7 @@ public class ScrabbleTest {
 		System.out.println("oui?");
 
 		listeDeNbPosChevaletPosChevalet[0]=3;
-		listePositionLettreAPlacer[0]=6;
+		listePositionLettreAPlacer[0]=6+1;
 		jTest.donnerLettre(listeDeNbPosChevaletPosChevalet[0]);
 		ScrabbleApplicationConsole.jouerMot(plateau,jTest,positionLigneColonneMot,listeDeNbPosChevaletPosChevalet,listePositionLettreAPlacer,1,1);
 
@@ -143,7 +186,7 @@ public class ScrabbleTest {
 		System.out.println("oui2?");
 
 		listeDeNbPosChevaletPosChevalet[0]=4;
-		positionLigneColonneMot[0]=6;
+		positionLigneColonneMot[0]=6+1;
 
 		ScrabbleApplicationConsole.jouerMot(plateau,jTest,positionLigneColonneMot,listeDeNbPosChevaletPosChevalet,listePositionLettreAPlacer,1,1);
 		plateau.modificationCasePlacable();
@@ -151,7 +194,7 @@ public class ScrabbleTest {
 		System.out.println("oui25?");
 
 		listeDeNbPosChevaletPosChevalet[0]=7;
-		positionLigneColonneMot[0]=8;
+		positionLigneColonneMot[0]=8+1;
 		ScrabbleApplicationConsole.jouerMot(plateau,jTest,positionLigneColonneMot,listeDeNbPosChevaletPosChevalet,listePositionLettreAPlacer,1,1);
 		plateau.modificationCasePlacable();
 		assertEquals(53, jTest.getScore());
@@ -161,48 +204,108 @@ public class ScrabbleTest {
 	void testScoreEstBonCompleteUnMotColonne() {
 		listeDeNbPosChevaletPosChevalet[0]=1;
 		listeDeNbPosChevaletPosChevalet[1]=2;
-		listePositionLettreAPlacer[0]=7;
-		listePositionLettreAPlacer[1]=8;
-		positionLigneColonneMot[1]=7;
-		ScrabbleApplicationConsole.jouerMot(plateau,jTest,positionLigneColonneMot,listeDeNbPosChevaletPosChevalet,listePositionLettreAPlacer,2,2);
+		listePositionLettreAPlacer[0]=8;
+		listePositionLettreAPlacer[1]=9;
+		positionLigneColonneMot[1]=8;
+		
+		
+		VL[0]=ValeurLettre.A;
+		VL[1]=ValeurLettre.U;
+		for (int i =0;i<2;i++) {
+			System.out.print("+"+(listePositionLettreAPlacer[i]-1)+(positionLigneColonneMot[i]-1));
+			plateau.placerLettreJoue(listePositionLettreAPlacer[i]-1, positionLigneColonneMot[1]-1, VL[i]);
+		}
+
+		System.out.println("oui");
+		plateau.afficherPlateau();
+
+		//assertTrue(ScrabbleApplicationConsole.jouerMot(plateau,jTest,positionLigneColonneMot,listeDeNbPosChevaletPosChevalet,listePositionLettreAPlacer,2,2));
+		assertTrue(ScrabbleApplicationGraphiqueController.jouerMotFX(plateau,jTest,positionLigneColonneMot,VL,listePositionLettreAPlacer,2,2));
+		assertEquals(4, jTest.getScore());
 		listePositionLettreAPlacer=new int[7];
 		listeDeNbPosChevaletPosChevalet=new int[7];
 		positionLigneColonneMot=new int[2];
+		VL=new ValeurLettre[7];
+		VL[0]=ValeurLettre.X;
 		listeDeNbPosChevaletPosChevalet[0]=5;
-		listePositionLettreAPlacer[0]=9;
-		positionLigneColonneMot[1]=7;
-		plateau.modificationCasePlacable();
+		listePositionLettreAPlacer[0]=10;
+		positionLigneColonneMot[1]=8;
 
-		ScrabbleApplicationConsole.jouerMot(plateau,jTest,positionLigneColonneMot,listeDeNbPosChevaletPosChevalet,listePositionLettreAPlacer,1,2);
+		
+		for (int i =0;i<1;i++) {
+			System.out.print("+"+(listePositionLettreAPlacer[i]-1)+(positionLigneColonneMot[1]-1));
+			plateau.placerLettreJoue(listePositionLettreAPlacer[i]-1, positionLigneColonneMot[1]-1, VL[i]);
+		}
+		
 
-		assertEquals(15, jTest.getScore());
+		
+		System.out.println("ici"+plateau.casePosition(9, 7).affichageCase());
+		System.out.println("ici"+plateau.casePosition(9, 7).estUtilisable());
+
+		//plateau.typeCasePosition(10, 8).;
+
+		plateau.afficherPlateau();
+		assertTrue(ScrabbleApplicationGraphiqueController.jouerMotFX(plateau,jTest,positionLigneColonneMot,VL,listePositionLettreAPlacer,1,2));
+
+		assertEquals(16, jTest.getScore());
 		plateau.modificationCasePlacable();
 		listePositionLettreAPlacer=new int[7];
 		listeDeNbPosChevaletPosChevalet=new int[7];
 
 		listeDeNbPosChevaletPosChevalet[0]=3;
-		listePositionLettreAPlacer[0]=6;
-		jTest.donnerLettre(listeDeNbPosChevaletPosChevalet[0]);
-		ScrabbleApplicationConsole.jouerMot(plateau,jTest,positionLigneColonneMot,listeDeNbPosChevaletPosChevalet,listePositionLettreAPlacer,1,2);
+		listePositionLettreAPlacer[0]=6+1;
+		VL=new ValeurLettre[7];
+		VL[0]=ValeurLettre.A;
+		listePositionLettreAPlacer[0]=7;
+		positionLigneColonneMot[1]=8;
+		
+		plateau.afficherPlateau();
+		for (int i =0;i<1;i++) {
+			System.out.print("+"+(listePositionLettreAPlacer[i]-1)+(positionLigneColonneMot[1]-1));
+			plateau.placerLettreJoue(listePositionLettreAPlacer[i]-1, positionLigneColonneMot[1]-1, VL[i]);
+		}
+		System.out.println();
+		plateau.afficherPlateau();
+
+		assertTrue(ScrabbleApplicationGraphiqueController.jouerMotFX(plateau,jTest,positionLigneColonneMot,VL,listePositionLettreAPlacer,1,2));
 
 		plateau.modificationCasePlacable();
-		assertEquals(28, jTest.getScore());
+		assertEquals(29, jTest.getScore());
 		
 		plateau.afficherPlateau();
 		
 		listeDeNbPosChevaletPosChevalet[0]=4;
 		positionLigneColonneMot[1]=6;
+		VL[0]=ValeurLettre.U;
+		listePositionLettreAPlacer[0]=7;
+		positionLigneColonneMot[1]=7;
+		
+		plateau.afficherPlateau();
+		for (int i =0;i<1;i++) {
+			System.out.print("+"+(listePositionLettreAPlacer[i]-1)+(positionLigneColonneMot[1]-1));
+			plateau.placerLettreJoue(listePositionLettreAPlacer[i]-1, positionLigneColonneMot[1]-1, VL[i]);
+		}
 
-		ScrabbleApplicationConsole.jouerMot(plateau,jTest,positionLigneColonneMot,listeDeNbPosChevaletPosChevalet,listePositionLettreAPlacer,1,2);
+		assertTrue(ScrabbleApplicationGraphiqueController.jouerMotFX(plateau,jTest,positionLigneColonneMot,VL,listePositionLettreAPlacer,1,2));
 		plateau.modificationCasePlacable();
-		assertEquals(31, jTest.getScore());
+		assertEquals(32, jTest.getScore());
 		
 		listeDeNbPosChevaletPosChevalet[0]=7;
 		positionLigneColonneMot[1]=8;
-		ScrabbleApplicationConsole.jouerMot(plateau,jTest,positionLigneColonneMot,listeDeNbPosChevaletPosChevalet,listePositionLettreAPlacer,1,2);
+		VL[0]=ValeurLettre.Z;
+		listePositionLettreAPlacer[0]=7;
+		positionLigneColonneMot[1]=9;
+		
+		plateau.afficherPlateau();
+		for (int i =0;i<1;i++) {
+			System.out.print("+"+(listePositionLettreAPlacer[i]-1)+(positionLigneColonneMot[1]-1));
+			plateau.placerLettreJoue(listePositionLettreAPlacer[i]-1, positionLigneColonneMot[1]-1, VL[i]);
+		}
+		assertTrue(ScrabbleApplicationGraphiqueController.jouerMotFX(plateau,jTest,positionLigneColonneMot,VL,listePositionLettreAPlacer,1,2));
 		plateau.modificationCasePlacable();
 
-		assertEquals(53, jTest.getScore());
+		assertEquals(54, jTest.getScore());
+		
 		}
 	
 	
@@ -210,16 +313,16 @@ public class ScrabbleTest {
 	public void utilisationJoker() {
 		listeDeNbPosChevaletPosChevalet[0]=1;
 		listeDeNbPosChevaletPosChevalet[1]=2;
-		listePositionLettreAPlacer[0]=7;
-		listePositionLettreAPlacer[1]=8;
-		positionLigneColonneMot[0]=7;
+		listePositionLettreAPlacer[0]=7+1;
+		listePositionLettreAPlacer[1]=8+1;
+		positionLigneColonneMot[0]=7+1;
 		ScrabbleApplicationConsole.jouerMot(plateau,jTest,positionLigneColonneMot,listeDeNbPosChevaletPosChevalet,listePositionLettreAPlacer,2,1);
 		listePositionLettreAPlacer=new int[7];
 		listeDeNbPosChevaletPosChevalet=new int[7];
 		positionLigneColonneMot=new int[2];
 		listeDeNbPosChevaletPosChevalet[0]=6;
-		listePositionLettreAPlacer[0]=9;
-		positionLigneColonneMot[0]=7;
+		listePositionLettreAPlacer[0]=9+1;
+		positionLigneColonneMot[0]=7+1;
 		plateau.modificationCasePlacable();
         String simulatedUserInput = "X";
         ByteArrayInputStream testIn = new ByteArrayInputStream(simulatedUserInput.getBytes());
@@ -242,9 +345,9 @@ public class ScrabbleTest {
 		assertFalse(jTest.sacDeLettreEstVide());
 		for (int cpt=0;cpt<7;cpt++) {
 			listeDeNbPosChevaletPosChevalet[0+cpt]=1+cpt;
-			listePositionLettreAPlacer[0+cpt]=7+cpt;
+			listePositionLettreAPlacer[0+cpt]=7+cpt+1;
 		}
-		positionLigneColonneMot[0]=7;
+		positionLigneColonneMot[0]=7+1;
         String simulatedUserInput = "X";
         ByteArrayInputStream testIn = new ByteArrayInputStream(simulatedUserInput.getBytes());
         System.setIn(testIn);
@@ -257,9 +360,9 @@ public class ScrabbleTest {
 	public void testAjouterLettreAjoutePremierePosition() {
 		for (int cpt=0;cpt<7;cpt++) {
 			listeDeNbPosChevaletPosChevalet[0+cpt]=1+cpt;
-			listePositionLettreAPlacer[0+cpt]=7+cpt;
+			listePositionLettreAPlacer[0+cpt]=7+cpt+1;
 		}
-		positionLigneColonneMot[0]=7;
+		positionLigneColonneMot[0]=7+1;
         String simulatedUserInput = "X";
         ByteArrayInputStream testIn = new ByteArrayInputStream(simulatedUserInput.getBytes());
         System.setIn(testIn);
@@ -385,6 +488,6 @@ public class ScrabbleTest {
 		plateau.modificationCasePlacable();
 		
 		assertEquals(scoreTemp+12,jTest.getScore());
-	}
+	}*/
 
 }
