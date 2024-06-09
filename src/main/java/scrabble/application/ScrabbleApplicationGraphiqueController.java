@@ -362,6 +362,7 @@ public class ScrabbleApplicationGraphiqueController {
         				}
                         
                         if(plateau.placerLettreJoue(i1, i2, j.donnerLettre(colonne))) {
+                        	System.out.println("i1: "+i1+"12: "+i2);
                         	ajouterPositionX(i1);
                         	ajouterPositionY(i2);
                         	ajouterListeValeurLettre(j.donnerLettre(colonne));
@@ -411,13 +412,13 @@ public class ScrabbleApplicationGraphiqueController {
 	                event.consume();
 	            }
 	        });
-	        /*
+	        
 	        sP.setOnDragOver(event -> {
                 if (event.getGestureSource() != sP && event.getDragboard().hasString()) {
                     event.acceptTransferModes(TransferMode.MOVE);
                 }
                 event.consume();
-            });
+            }); 
 
             sP.setOnDragDropped(event -> {
                 ValeurLettre temp;
@@ -428,10 +429,17 @@ public class ScrabbleApplicationGraphiqueController {
                     int sourceIndex = Integer.parseInt(split[1]);
                     
                     System.out.println(sourceIndex+" "+i);
+                    if (sourceIndex<i) {
+	                    temp=j.supprimerLettre(sourceIndex);
+	                    j.ajouterLettre(j.supprimerLettre(i));
+	                    j.ajouterLettre(temp);}
+                    else {
+	                    temp=j.supprimerLettre(i);
+	                    j.ajouterLettre(j.supprimerLettre(sourceIndex));
+	                    j.ajouterLettre(temp);
+	                    }
+
                     
-                    temp=j.supprimerLettre(sourceIndex);
-                    j.ajouterLettre(j.supprimerLettre(i));
-                    j.ajouterLettre(temp);
                     
                     actualiserAffichage(j, plateau, idGrilleScrabble, idGrilleChevaletJ1, lbScore, lbTour);
 
@@ -440,7 +448,7 @@ public class ScrabbleApplicationGraphiqueController {
                 }
                 event.setDropCompleted(success);
                 event.consume();
-            });*/
+            });
 		
             
 
@@ -656,6 +664,8 @@ public class ScrabbleApplicationGraphiqueController {
 	}
 	
 	public static boolean jouerMotFX(Jeu plateau,Joueur j,int[] positionLigneColonneMot,ValeurLettre[] listeValeurLettre,int[] listePosition,int nombreLettreAPlacer,int choix) {
+		System.out.println("nb et choix "+nombreLettreAPlacer+" "+choix);
+
 		boolean motEstJoue=true;
 		if (choix == 1) {
 			for(int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
@@ -692,14 +702,16 @@ public class ScrabbleApplicationGraphiqueController {
 				//	break;
 				//}
 				}
-
+			
 			if ((plateau.motEstPlacableColonne(listePosition,positionLigneColonneMot[1],nombreLettreAPlacer))&&(motEstJoue)) {
 				compterLesPointsColonneFX(j,plateau,nombreLettreAPlacer,listeValeurLettre,listePosition,positionLigneColonneMot[1]);
 			}					
 			else if (motEstJoue){
+				plateau.afficherPlateau();
+
 				motEstJoue=false;
 				for(int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
-					plateau.supprimerLettreEmplacement(positionLigneColonneMot[0], listePosition[cpt]);
+					plateau.supprimerLettreEmplacement(positionLigneColonneMot[0]-1, listePosition[cpt]-1);
 
 					//plateau.placerLettreJoue(listePosition[cpt],positionLigneColonneMot[1],null);
 				}
@@ -708,6 +720,8 @@ public class ScrabbleApplicationGraphiqueController {
 		if (motEstJoue) {
 			plateau.ajouterUnTour();
 		}
+		plateau.modificationCasePlacable();
+		plateau.afficherPlateau();
 		return motEstJoue;
 	}
 	
@@ -722,7 +736,7 @@ public class ScrabbleApplicationGraphiqueController {
 		for (int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
 
 			int multiplicateurLettre=1;
-			scoreMot=scoreMot+ScrabbleApplicationConsole.ajoutMotComplete(j,plateau,positionsLigne,positionsColonne[cpt],positionsColonne,lettreCompleteCompteLigne,lettreCompleteCompteColonne);
+			scoreMot=scoreMot+ScrabbleApplicationConsole.ajoutMotCompleteLigne(j,plateau,positionsLigne,positionsColonne[cpt],positionsColonne,lettreCompleteCompteLigne,lettreCompleteCompteColonne);
 			multiplicateurMot=multiplicateurMot*plateau.typeCasePosition(positionsLigne,positionsColonne[cpt]).multiplicateurCaseMot();
 			multiplicateurLettre=multiplicateurLettre*plateau.typeCasePosition(positionsLigne, positionsColonne[cpt]).multiplicateurCaseLettre();
 			j.afficherChevalet();
