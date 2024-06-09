@@ -66,14 +66,13 @@ public class ScrabbleApplicationGraphiqueController {
 		int[] positionLigneColonneMot= new int[2];
 		if(toutesValeursSontEgalsX()) {
 			positionLigneColonneMot[0]=positionsX[0];
-			//jouerMotFX(plateau,j,positionLigneColonneMot,listeValeurLettre,positionsY,nombreLettrePose,1);
 
 			if(verifierLigneContientPasEspace()) {
 				jouerMotFX(plateau,j,positionLigneColonneMot,listeValeurLettre,positionsY,nombreLettrePose,1);
 			}
 			else {
-				System.out.println("est pas place");
 				for (int cpt=0;cpt<nombreLettrePose;cpt++){
+					j.ajouterLettre(plateau.getLettre(positionsX[cpt],positionsY[cpt]));
 					plateau.supprimerLettreEmplacement(positionsX[cpt],positionsY[cpt]);
 				}
 			}
@@ -86,6 +85,7 @@ public class ScrabbleApplicationGraphiqueController {
 			}
 			else {
 				for (int cpt=0;cpt<nombreLettrePose;cpt++){
+					j.ajouterLettre(plateau.getLettre(positionsX[cpt],positionsY[cpt]));
 					plateau.supprimerLettreEmplacement(positionsX[cpt],positionsY[cpt]);
 				}
 			}
@@ -93,6 +93,7 @@ public class ScrabbleApplicationGraphiqueController {
 		else {
 			System.out.println("autre");
 			for (int cpt=0;cpt<nombreLettrePose;cpt++){
+				j.ajouterLettre(plateau.getLettre(positionsX[cpt],positionsY[cpt]));
 				plateau.supprimerLettreEmplacement(positionsX[cpt],positionsY[cpt]);
 			}
 			
