@@ -34,6 +34,7 @@ import scrabble.model.ValeurLettre;
 public class ScrabbleApplicationGraphiqueController {
 	int[]positionsX =new int[7];
 	int[]positionsY = new int[7];
+
 	int nombreLettrePose=0;
 	ValeurLettre[] listeValeurLettre=new ValeurLettre[7];
 	Joueur j;
@@ -101,13 +102,16 @@ public class ScrabbleApplicationGraphiqueController {
 		else {
 			System.out.println("autre");
 			for (int cpt=0;cpt<nombreLettrePose;cpt++){
-				j.ajouterLettre(plateau.getLettre(positionsX[cpt],positionsY[cpt]));
-				plateau.supprimerLettreEmplacement(positionsX[cpt],positionsY[cpt]);
+				System.out.println("Ligne a supprimer"+positionsX[cpt]);
+				j.ajouterLettre(plateau.getLettre(positionsX[cpt]-1,positionsY[cpt]-1));
+				plateau.supprimerLettreEmplacement(positionsX[cpt]-1,positionsY[cpt]-1);
 			}
 			
 	}
 		positionsX =new int[7];
+		actualisationPositionsX();
 		positionsY=new int[7];
+		actualisationPositionsY();
 		nombreLettrePose=0;
 		listeValeurLettre=new ValeurLettre[7];
 		plateau.modificationCasePlacable();
@@ -172,7 +176,7 @@ public class ScrabbleApplicationGraphiqueController {
 	public void ajouterPositionX(int nombreX) {
 		nombreX++;
 		for (int i = 0; i<7;i++) {
-			if (positionsX[i]==0) {
+			if (positionsX[i]==-1) {
 				positionsX[i]=nombreX;
 				break;
 			}
@@ -181,7 +185,7 @@ public class ScrabbleApplicationGraphiqueController {
 	public void ajouterPositionY(int nombreY) {
 		nombreY++;
 		for (int i = 0; i<7;i++) {
-			if (positionsY[i]==0) {
+			if (positionsY[i]==-1) {
 				positionsY[i]=nombreY;
 				break;
 			}
@@ -203,7 +207,7 @@ public class ScrabbleApplicationGraphiqueController {
 		int minimum=100;
 		for (int i =0;i<7;i++) {
 			System.out.println((positionLettre[i]));
-			if /*(*/(positionLettre[i]<minimum)/*&&(positionLettre[i]!=0))*/{
+			if ((positionLettre[i]<minimum)&&(positionLettre[i]!=-1)){
 				minimum=positionLettre[i];
 			}
 		}
@@ -219,7 +223,16 @@ public class ScrabbleApplicationGraphiqueController {
 		}
 		return maximum;
 	}
-	
+	public void actualisationPositionsX() {
+		for (int cpt =0; cpt<positionsX.length;cpt++) {
+			positionsX[cpt]=-1;
+		}
+	}
+	public void actualisationPositionsY() {
+		for (int cpt =0; cpt<positionsY.length;cpt++) {
+			positionsY[cpt]=-1;
+		}
+	}
 	public Boolean verifierLigneContientPasEspace() {
 		
 		int posPremiereLettreAjoute=premiereLettreAjoute(positionsY);
@@ -227,13 +240,14 @@ public class ScrabbleApplicationGraphiqueController {
 		int cpt=0;
 		System.out.println(posPremiereLettreAjoute +" "+posDerniereLettreAjoute);
 		if (posPremiereLettreAjoute!=100) {
-			while (plateau.getLettre(positionsX[0],posPremiereLettreAjoute+cpt)!=null) {
+			while (plateau.getLettre(positionsX[0]-1,posPremiereLettreAjoute+cpt-1)!=null) {
 				if (posPremiereLettreAjoute+cpt==posDerniereLettreAjoute) {
 					return true;
 				}
 				cpt++;
 			}
 		}
+		System.out.println("non");
 		return false;
 	}
 	
@@ -242,7 +256,7 @@ public class ScrabbleApplicationGraphiqueController {
 		int posDerniereLettreAjoute=derniereLettreAjoute(positionsX);
 		int cpt=0;
 		if (posPremiereLettreAjoute!=100) {
-			while (plateau.getLettre(posPremiereLettreAjoute+cpt,positionsY[0])!=null) {
+			while (plateau.getLettre(posPremiereLettreAjoute+cpt-1,positionsY[0]-1)!=null) {
 				if (posPremiereLettreAjoute+cpt==posDerniereLettreAjoute) {
 					return true;
 				}
@@ -263,18 +277,20 @@ public class ScrabbleApplicationGraphiqueController {
 	}
 	public Boolean toutesValeursSontEgalsX() {
 		for(int i=0;i<7;i++) {
-			if((positionsX[0]!=positionsX[i])&&(positionsX[i]!=0)){
+			System.out.println(positionsX[0]+"v"+positionsX[i]);
+			if((positionsX[0]!=positionsX[i])&&(positionsX[i]!=-1)){
 				System.out.println(positionsX[0]+" "+positionsX[1]);
 				return false;
 			}
 		}
+		System.out.println("posée en ligne");
 		return true;
 	}
 	
 	
 	public Boolean toutesValeursSontEgalsY() {
 		for(int i=0;i<7;i++) {
-			if((positionsY[0]!=positionsY[i])&&(positionsX[i]!=0)) {
+			if((positionsY[0]!=positionsY[i])&&(positionsX[i]!=-1)) {
 				System.out.println(positionsY[0]+" "+positionsY[1]);
 				return false;
 			}
@@ -346,8 +362,8 @@ public class ScrabbleApplicationGraphiqueController {
         				}
                         
                         if(plateau.placerLettreJoue(i1, i2, j.donnerLettre(colonne))) {
-                        	ajouterPositionX(i1-1);
-                        	ajouterPositionY(i2-1);
+                        	ajouterPositionX(i1);
+                        	ajouterPositionY(i2);
                         	ajouterListeValeurLettre(j.donnerLettre(colonne));
                         	j.afficherChevalet();
                         	nombreLettrePose++;
@@ -395,6 +411,36 @@ public class ScrabbleApplicationGraphiqueController {
 	                event.consume();
 	            }
 	        });
+	        /*
+	        sP.setOnDragOver(event -> {
+                if (event.getGestureSource() != sP && event.getDragboard().hasString()) {
+                    event.acceptTransferModes(TransferMode.MOVE);
+                }
+                event.consume();
+            });
+
+            sP.setOnDragDropped(event -> {
+                ValeurLettre temp;
+                Dragboard db = event.getDragboard();
+                boolean success = false;
+                if (db.hasString()) {
+                    String[] split = db.getString().split(",");
+                    int sourceIndex = Integer.parseInt(split[1]);
+                    
+                    System.out.println(sourceIndex+" "+i);
+                    
+                    temp=j.supprimerLettre(sourceIndex);
+                    j.ajouterLettre(j.supprimerLettre(i));
+                    j.ajouterLettre(temp);
+                    
+                    actualiserAffichage(j, plateau, idGrilleScrabble, idGrilleChevaletJ1, lbScore, lbTour);
+
+
+                    success = true;
+                }
+                event.setDropCompleted(success);
+                event.consume();
+            });*/
 		
             
 
@@ -630,7 +676,8 @@ public class ScrabbleApplicationGraphiqueController {
 				System.out.println("non placable");
 				motEstJoue=false;
 				for(int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
-					plateau.supprimerLettreEmplacement(positionLigneColonneMot[0], listePosition[cpt]);
+					System.out.println(positionLigneColonneMot[0]+" "+listePosition[cpt]);
+					plateau.supprimerLettreEmplacement(positionLigneColonneMot[0]-1, listePosition[cpt]-1);
 					
 				}
 			}
@@ -709,54 +756,6 @@ public class ScrabbleApplicationGraphiqueController {
 		}
 		j.setScore(j.getScore()+(scoreMot*multiplicateurMot));
 	}
-	/*
-    private static String demandeJoueurAffichageString(String demande,String nomFenetre,String contenu) {
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle(nomFenetre);
-        dialog.setHeaderText(demande);
-        dialog.setContentText(contenu);
-
-        ChoiceBox<String> choiceBox = new ChoiceBox<>();
-        choiceBox.getItems().addAll("Option 1", "Option 2", "Option 3");
-        
-        VBox vbox = new VBox();
-        vbox.getChildren().addAll(new Label(contenu), choiceBox);
-        dialog.getDialogPane().setContent(vbox);
-
-        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
-
-        
-        dialog.setResultConverter(dialogButton -> {
-            if (dialogButton == ButtonType.OK) {
-                return choiceBox.getValue();
-            }
-            return null;
-        });
-        
-        Optional<String> result = dialog.showAndWait();
-        if (result.isPresent()) {
-            return result.get();
-        } else {
-            return "Erreur";
-        }
-    }*/
-        
-        /*
-        if (result.isPresent()) {
-            try {
-                return result.get();
-            } catch (NumberFormatException e) {
-                showAlert("Erreur", "Veuillez entrer un numéro valide.");
-                return "Erreur";
-            }
-        } else {
-            return "Erreur";
-        }*/
-        
-        
-        
-    //}
-	
 	
 	   private static String demandeJoueurAffichageString(String demande, String nomFenetre, String contenu) {
 	        Dialog<String> dialog = new Dialog<>();

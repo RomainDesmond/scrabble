@@ -192,7 +192,7 @@ public class Jeu {
 	public boolean uneDesLettresEstSurCaseUtilisable(int positionLigne,int[] positionColonne,int nombreLettreAPlacer) {
 		boolean motAUneLettreSurCaseUtilisable = false;
 		for (int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
-			if (this.plateauDeJeu[positionLigne][positionColonne[cpt]].estUtilisable()==true) {
+			if (this.plateauDeJeu[positionLigne-1][positionColonne[cpt]-1].estUtilisable()==true) {
 				motAUneLettreSurCaseUtilisable=true;
 				break;
 			}
@@ -203,7 +203,7 @@ public class Jeu {
 	public boolean uneDesLettresEstSurCaseUtilisableColonne(int[] positionLigne,int positionColonne,int nombreLettreAPlacer) {
 		boolean motAUneLettreSurCaseUtilisable = false;
 		for (int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
-			if (this.plateauDeJeu[positionLigne[cpt]][positionColonne].estUtilisable()==true) {
+			if (this.plateauDeJeu[positionLigne[cpt]-1][positionColonne-1].estUtilisable()==true) {
 				motAUneLettreSurCaseUtilisable=true;
 				break;
 			}
@@ -248,21 +248,33 @@ public class Jeu {
 	public void modificationCasePlacable() {
 		for (int cpt=0;cpt<15;cpt++) {
 			for(int cpt1=0;cpt1<15;cpt1++) {
+				//System.out.print(this.plateauDeJeu[cpt][cpt1].getContenu());
+				//System.out.print(this.plateauDeJeu[cpt][cpt1].estUtilisable());
+
 				if(this.plateauDeJeu[cpt][cpt1].getContenu()!=null) {
 					if (cpt<14) {
 						plateauDeJeu[cpt+1][cpt1].setCaseUtilisable(true);
+
+						
 					}
 					if (cpt>0) {
+
 						plateauDeJeu[cpt-1][cpt1].setCaseUtilisable(true);
+
 					}
 					if (cpt1<14) {
+
 						plateauDeJeu[cpt][cpt1+1].setCaseUtilisable(true);
+
 					}
 					if (cpt1>0) {
+
 						plateauDeJeu[cpt][cpt1-1].setCaseUtilisable(true);
+
 					}
 				}
 			}
+			System.out.println();
 		}
 		for (int cpt=0;cpt<15;cpt++) {
 			for(int cpt1=0;cpt1<15;cpt1++) {
@@ -274,7 +286,7 @@ public class Jeu {
 	}
 	
 	public TypeCase typeCasePosition(int positionLigne, int positionColonne) {
-		return this.plateauDeJeu[positionLigne][positionColonne].getTypeCase();
+		return this.plateauDeJeu[positionLigne-1][positionColonne-1].getTypeCase();
 	}
 	
 	public Case casePosition(int positionLigne, int positionColonne) {
