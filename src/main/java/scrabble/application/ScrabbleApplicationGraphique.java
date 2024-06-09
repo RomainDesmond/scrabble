@@ -35,12 +35,9 @@ public class ScrabbleApplicationGraphique extends Application {
         Button idBtnValider = controller.getIdBtnValider();
 		j=controller.getJoueur();
 		plateau =controller.getPlateau(); 
-
-
-
-
-        
-		plateau.ajouteTypeCase();
+		controller.actualisationPositionsX();
+		controller.actualisationPositionsY();
+		
 		controller.actualiserAffichage(j,plateau,idGrilleScrabble,idGrilleChevaletJ1,idLbScore,idLbTour);
 		
 		Scene scene = new Scene (root,1250,900);
