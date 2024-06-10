@@ -77,14 +77,14 @@ public class ScrabbleApplicationGraphiqueController {
 	
 	@FXML
 	private Button idBtnPasserSonTour;
-	@FXML
+	/*@FXML
 	private Button idBtnTemp1;
 	
 	@FXML
 	private void btnTempAppuyer() throws FileNotFoundException {
 		ScrabbleException.estLisible("src/main/resources/motScrabble.txt");
 		System.out.println(lectureFichier("ABAISSAIENT"));
-	}
+	}*/
 	
 	@FXML
 	private void btnValiderAppuyer() {
@@ -271,8 +271,9 @@ public class ScrabbleApplicationGraphiqueController {
 		}
 		obj.close();
 		return false;
+		}
+	public void metMotJouerDansUnTableauLigne() {
 		
-		    //while (obj.hasNextLine()) System.out.println(obj.nextLine());
 	}
 	
 	public int premiereLettreAjoute(int[] positionLettre) {
@@ -867,20 +868,9 @@ public class ScrabbleApplicationGraphiqueController {
 	}
 	
 	public static boolean jouerMotFX(Jeu plateau,Joueur j,int[] positionLigneColonneMot,ValeurLettre[] listeValeurLettre,int[] listePosition,int nombreLettreAPlacer,int choix) {
-		System.out.println("nb et choix "+nombreLettreAPlacer+" "+choix);
-
 		boolean motEstJoue=true;
 		if (choix == 1) {
-			for(int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
-				/*
-				if (listeValeurLettre[cpt]==ValeurLettre.JOKER) {
-					choixJoker(j,listeValeurLettre,cpt);
-				}*/
-				//if(!(plateau.placerLettreJoue(positionLigneColonneMot[0], listePosition[cpt],j.donnerLettre(listeDeNombre[cpt]-1)))) {
-					//motEstJoue=false;
-					//break;
-				//}
-			}
+
 			plateau.afficherPlateau();
 			if ((plateau.motEstPlacableLigne(positionLigneColonneMot[0], listePosition,nombreLettreAPlacer))&&(motEstJoue)) {
 				compterLesPointsLigneFX(j,plateau,nombreLettreAPlacer,listeValeurLettre,positionLigneColonneMot[0],listePosition);
@@ -896,15 +886,6 @@ public class ScrabbleApplicationGraphiqueController {
 			}
 		}
 		else if(choix == 2) {
-			for(int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
-				if (listeValeurLettre[cpt]==ValeurLettre.JOKER) {
-					choixJoker(j,listeValeurLettre,cpt);
-				}
-				//if (!(plateau.placerLettreJoue(listePosition[cpt], positionLigneColonneMot[1],j.donnerLettre(listeDeNombre[cpt]-1)))) {
-					//motEstJoue=false;
-				//	break;
-				//}
-				}
 			
 			if ((plateau.motEstPlacableColonne(listePosition,positionLigneColonneMot[1],nombreLettreAPlacer))&&(motEstJoue)) {
 				compterLesPointsColonneFX(j,plateau,nombreLettreAPlacer,listeValeurLettre,listePosition,positionLigneColonneMot[1]);
@@ -919,6 +900,7 @@ public class ScrabbleApplicationGraphiqueController {
 					//plateau.placerLettreJoue(listePosition[cpt],positionLigneColonneMot[1],null);
 				}
 			}
+			
 		}
 		if (motEstJoue) {
 			plateau.ajouterUnTour();
