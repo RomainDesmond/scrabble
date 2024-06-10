@@ -91,6 +91,9 @@
                     </rowConstraints>
                   </GridPane>
                </children>
+               <padding>
+                  <Insets left="15.0" />
+               </padding>
             </VBox>
          </children>
       </HBox>
@@ -98,11 +101,13 @@
    <right>
       <VBox alignment="CENTER" prefHeight="750.0" prefWidth="280.0" BorderPane.alignment="CENTER">
          <children>
-            <Label text="Score : " />
+            <Label text="Score J1 : " />
             <Label fx:id="idLbScore" text="0" />
             <Button fx:id="idBtnEchanger" mnemonicParsing="false" onAction="#btnEchanger" text="Echanger" />
             <Button fx:id="idBtnPasserSonTour" mnemonicParsing="false" onAction="#btnPasserSonTour" text="Passer son tour" />
             <Button fx:id="idBtnValider" mnemonicParsing="false" onAction="#btnValiderAppuyer" text="Valider" />
+            <Label text="Score J2 : " />
+            <Label fx:id="idLbScore2" text="0" />
          </children>
       </VBox>
    </right>
