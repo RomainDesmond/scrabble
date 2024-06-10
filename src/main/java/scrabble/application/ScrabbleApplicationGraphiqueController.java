@@ -5,6 +5,10 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -28,6 +32,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import scrabble.exception.ScrabbleException;
 import scrabble.model.Jeu;
 import scrabble.model.Joueur;
 import scrabble.model.ValeurLettre;
@@ -72,6 +77,14 @@ public class ScrabbleApplicationGraphiqueController {
 	
 	@FXML
 	private Button idBtnPasserSonTour;
+	@FXML
+	private Button idBtnTemp1;
+	
+	@FXML
+	private void btnTempAppuyer() throws FileNotFoundException {
+		ScrabbleException.estLisible("src/main/resources/motScrabble.txt");
+		System.out.println(lectureFichier("ABAISSAIENT"));
+	}
 	
 	@FXML
 	private void btnValiderAppuyer() {
@@ -161,8 +174,9 @@ public class ScrabbleApplicationGraphiqueController {
 	}
 	
 	@FXML
-	private void btnPasserSonTour() {
+	private void btnPasserSonTour(){
 		plateau.ajouterUnTour();
+		//lectureFichier();
 		//menuChoixJeu(j, plateau,idGrilleScrabble,idGrilleChevaletJ1,idLbScore,idLbTour);
 	}
 	
@@ -242,6 +256,23 @@ public class ScrabbleApplicationGraphiqueController {
 				break;
 			}
 		}
+	}
+	
+	public boolean lectureFichier(String mot) throws FileNotFoundException {
+		//String mot = "AAS";
+		File doc = new File("src/main/resources/motScrabble.txt");
+		Scanner obj = new Scanner(doc);
+		String motAverif;
+		while (obj.hasNextLine()) {
+			motAverif=obj.nextLine();
+			if (Objects.equals(motAverif, mot)) {
+				return true;
+			}
+		}
+		obj.close();
+		return false;
+		
+		    //while (obj.hasNextLine()) System.out.println(obj.nextLine());
 	}
 	
 	public int premiereLettreAjoute(int[] positionLettre) {
@@ -903,7 +934,6 @@ public class ScrabbleApplicationGraphiqueController {
 		int scoreMot=0;
 		int[] lettreCompleteCompteColonne= new int[15];
 		int[] lettreCompleteCompteLigne= new int[15];
-		System.out.println(nombreLettreAPlacer);
 
 		for (int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
 
@@ -912,8 +942,6 @@ public class ScrabbleApplicationGraphiqueController {
 			multiplicateurMot=multiplicateurMot*plateau.typeCasePosition(positionsLigne,positionsColonne[cpt]).multiplicateurCaseMot();
 			multiplicateurLettre=multiplicateurLettre*plateau.typeCasePosition(positionsLigne, positionsColonne[cpt]).multiplicateurCaseLettre();
 			j.afficherChevalet();
-			System.out.println("cpt"+cpt);
-			System.out.println(listeValeurLettre[cpt]);
 			scoreMot=scoreMot+listeValeurLettre[cpt].getPoint()*multiplicateurLettre;
 		}
 		if (nombreLettreAPlacer==7){
