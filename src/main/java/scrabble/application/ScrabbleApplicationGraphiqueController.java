@@ -39,6 +39,9 @@ public class ScrabbleApplicationGraphiqueController {
 	int nombreLettrePose=0;
 	ValeurLettre[] listeValeurLettre=new ValeurLettre[7];
 	Joueur j;
+	Joueur autreJ;
+	Joueur j1;
+	Joueur j2;
 	Jeu plateau;
 	@FXML
 	private GridPane idGrilleScrabble;
@@ -51,6 +54,9 @@ public class ScrabbleApplicationGraphiqueController {
 	
 	@FXML
 	private Label idLbScore;
+	
+	@FXML
+	private Label idLbScore2;
 	
 	@FXML
 	private Label idLbTour;
@@ -78,11 +84,21 @@ public class ScrabbleApplicationGraphiqueController {
 			System.out.println("ligne");
 			if(verifierLigneContientPasEspace()) {
 				System.out.println("ligne2");
-				jouerMotFX(plateau,j,positionLigneColonneMot,listeValeurLettre,positionsY,nombreLettrePose,1);
+				if (plateau.getTour()%2==0) {
+					jouerMotFX(plateau,j,positionLigneColonneMot,listeValeurLettre,positionsY,nombreLettrePose,1);
+				}
+				else {
+					jouerMotFX(plateau,j2,positionLigneColonneMot,listeValeurLettre,positionsY,nombreLettrePose,1);
+				}
 			}
 			else {
 				for (int cpt=0;cpt<nombreLettrePose;cpt++){
-					j.ajouterLettre(plateau.getLettre(positionsX[cpt],positionsY[cpt]));
+					if (plateau.getTour()%2==0) {
+						j.ajouterLettre(plateau.getLettre(positionsX[cpt],positionsY[cpt]));
+					}
+					else {
+						j2.ajouterLettre(plateau.getLettre(positionsX[cpt],positionsY[cpt]));
+					}
 					plateau.supprimerLettreEmplacement(positionsX[cpt],positionsY[cpt]);
 				}
 			}
@@ -91,11 +107,21 @@ public class ScrabbleApplicationGraphiqueController {
 			positionLigneColonneMot[1]=positionsY[0];
 			System.out.println("vérification : "+verifierColonneContientPasEspace());
 			if(verifierColonneContientPasEspace()) {
-				jouerMotFX(plateau,j,positionLigneColonneMot,listeValeurLettre,positionsX,nombreLettrePose,2);
+				if (plateau.getTour()%2==0) {
+					jouerMotFX(plateau,j,positionLigneColonneMot,listeValeurLettre,positionsX,nombreLettrePose,2);
+				}
+				else {
+					jouerMotFX(plateau,j2,positionLigneColonneMot,listeValeurLettre,positionsX,nombreLettrePose,2);
+				}
 			}
 			else {
 				for (int cpt=0;cpt<nombreLettrePose;cpt++){
-					j.ajouterLettre(plateau.getLettre(positionsX[cpt],positionsY[cpt]));
+					if (plateau.getTour()%2==0) {
+						j.ajouterLettre(plateau.getLettre(positionsX[cpt],positionsY[cpt]));
+					}
+					else {
+						j2.ajouterLettre(plateau.getLettre(positionsX[cpt],positionsY[cpt]));
+					}
 					plateau.supprimerLettreEmplacement(positionsX[cpt],positionsY[cpt]);
 				}
 			}
@@ -104,7 +130,12 @@ public class ScrabbleApplicationGraphiqueController {
 			System.out.println("autre");
 			for (int cpt=0;cpt<nombreLettrePose;cpt++){
 				System.out.println("Ligne a supprimer"+positionsX[cpt]);
-				j.ajouterLettre(plateau.getLettre(positionsX[cpt]-1,positionsY[cpt]-1));
+				if (plateau.getTour()%2==0) {
+					j.ajouterLettre(plateau.getLettre(positionsX[cpt]-1,positionsY[cpt]-1));
+				}
+				else {
+					j.ajouterLettre(plateau.getLettre(positionsX[cpt]-1,positionsY[cpt]-1));
+				}
 				plateau.supprimerLettreEmplacement(positionsX[cpt]-1,positionsY[cpt]-1);
 			}
 			
@@ -117,6 +148,7 @@ public class ScrabbleApplicationGraphiqueController {
 		listeValeurLettre=new ValeurLettre[7];
 		plateau.modificationCasePlacable();
 		ScrabbleApplicationConsole.distribution(plateau, j);
+		ScrabbleApplicationConsole.distribution(plateau, j2);
 		actualiserAffichage(j, plateau, idGrilleScrabble, idGrilleChevaletJ1, idLbScore, idLbTour);
 		
 	}
@@ -130,7 +162,7 @@ public class ScrabbleApplicationGraphiqueController {
 	
 	@FXML
 	private void btnPasserSonTour() {
-		
+		plateau.ajouterUnTour();
 		//menuChoixJeu(j, plateau,idGrilleScrabble,idGrilleChevaletJ1,idLbScore,idLbTour);
 	}
 	
@@ -139,17 +171,25 @@ public class ScrabbleApplicationGraphiqueController {
 
 		idBorderPane.setBackground(background);
 		j=new Joueur("J1");
+		j2=new Joueur("J2");
 		plateau = new Jeu();
 		plateau.ajouteTypeCase();
 		
 		plateau.remplirSacDeLettre();
 		plateau.afficherPlateau();
-		ScrabbleApplicationConsole.distribution(plateau, j);		
+		ScrabbleApplicationConsole.distribution(plateau, j);
+		j.afficherChevalet();
+		j2.afficherChevalet();
+		System.out.println(j2.sacDeLettreEstVide());
+		ScrabbleApplicationConsole.distribution(plateau, j2);		
+		j2.afficherChevalet();
+
 	}
 
 	public Joueur getJoueur() {
 		return this.j;
 	}
+
 
 	public Jeu getPlateau() {
 		return this.plateau;
@@ -300,11 +340,11 @@ public class ScrabbleApplicationGraphiqueController {
 		return true;
 	}
 
-	
 	public void actualiserAffichage(Joueur j,Jeu plateau, GridPane idGrilleScrabble,GridPane idGrilleChevaletJ1,Label lbScore,Label lbTour) {
 		System.out.println("Afficher Chevalet");
 		j.afficherChevalet();
 		lbScore.setText(""+j.getScore());
+		idLbScore2.setText(""+j2.getScore());
 		lbTour.setText(""+plateau.getTour());
 	    idGrilleScrabble.getChildren().clear();
 	    idGrilleChevaletJ1.getChildren().clear();
@@ -369,27 +409,53 @@ public class ScrabbleApplicationGraphiqueController {
                 sP.setOnDragDropped(event -> {
                     Dragboard db = event.getDragboard();
                     boolean success = false;
-                    if (db.hasString()) {
-                        String[] parts = db.getString().split(",");
-                        int ligne = Integer.parseInt(parts[0]);
-                        int colonne = Integer.parseInt(parts[1]);
-        				if (j.donnerLettre(colonne)==ValeurLettre.JOKER) {
-        					choixJoker(j,listeValeurLettre,colonne);
-        				}
-                        
-                        if(plateau.placerLettreJoue(i1, i2, j.donnerLettre(colonne))) {
-                        	System.out.println("i1: "+i1+"12: "+i2);
-                        	ajouterPositionX(i1);
-                        	ajouterPositionY(i2);
-                        	ajouterListeValeurLettre(j.donnerLettre(colonne));
-                        	j.afficherChevalet();
-                        	nombreLettrePose++;
-                        	//afficher();
-                        	j.supprimerLettre(colonne);
-                        	actualiserAffichage(j, plateau, idGrilleScrabble, idGrilleChevaletJ1, lbScore, lbTour);
-                        }
-
-                        success = true;
+                    if(plateau.getTour()%2==0) {
+	                    if (db.hasString()) {
+	                        String[] parts = db.getString().split(",");
+	                        int ligne = Integer.parseInt(parts[0]);
+	                        int colonne = Integer.parseInt(parts[1]);
+	        				if (j.donnerLettre(colonne)==ValeurLettre.JOKER) {
+	        					choixJoker(j,listeValeurLettre,colonne);
+	        				}
+	                        
+	                        if(plateau.placerLettreJoue(i1, i2, j.donnerLettre(colonne))) {
+	    
+	                        	ajouterPositionX(i1);
+	                        	ajouterPositionY(i2);
+	                        	ajouterListeValeurLettre(j.donnerLettre(colonne));
+	                        	j.afficherChevalet();
+	                        	nombreLettrePose++;
+	                        	//afficher();
+	                        	j.supprimerLettre(colonne);
+	                        	actualiserAffichage(j, plateau, idGrilleScrabble, idGrilleChevaletJ1, lbScore, lbTour);
+	                        }
+	
+	                        success = true;
+	                    }
+                    }
+                    else {
+	                    if (db.hasString()) {
+	                        String[] parts = db.getString().split(",");
+	                        int ligne = Integer.parseInt(parts[0]);
+	                        int colonne = Integer.parseInt(parts[1]);
+	        				if (j2.donnerLettre(colonne)==ValeurLettre.JOKER) {
+	        					choixJoker(j2,listeValeurLettre,colonne);
+	        				}
+	                        
+	                        if(plateau.placerLettreJoue(i1, i2, j2.donnerLettre(colonne))) {
+	    
+	                        	ajouterPositionX(i1);
+	                        	ajouterPositionY(i2);
+	                        	ajouterListeValeurLettre(j2.donnerLettre(colonne));
+	                        	j.afficherChevalet();
+	                        	nombreLettrePose++;
+	                        	//afficher();
+	                        	j2.supprimerLettre(colonne);
+	                        	actualiserAffichage(j, plateau, idGrilleScrabble, idGrilleChevaletJ1, lbScore, lbTour);
+	                        }
+	
+	                        success = true;
+	                    }
                     }
 
 
@@ -402,7 +468,6 @@ public class ScrabbleApplicationGraphiqueController {
 			
 			}
 		}
-		
 	    for (int cpt = 0; cpt < 7; cpt++) {
 	        ValeurLettre lettre = j.donnerLettre(cpt);
 	        Rectangle tile = new Rectangle(55, 55);
@@ -431,6 +496,7 @@ public class ScrabbleApplicationGraphiqueController {
 	        idGrilleChevaletJ1.add(sP, cpt, 0);
 
 	        final int i = cpt;
+	        if (plateau.getTour()%2==0) {
 	        sP.setOnDragDetected(event -> {
 	            if (lettre != null) {
 	                Dragboard db = sP.startDragAndDrop(TransferMode.MOVE);
@@ -477,9 +543,87 @@ public class ScrabbleApplicationGraphiqueController {
                 event.setDropCompleted(success);
                 event.consume();
             });
-		
-            
+	        }
+		}
+	    
+	    for (int cpt = 0; cpt < 7; cpt++) {
+	    	System.out.println("Chevalet j2:" );
+	    	j2.afficherChevalet();
+	        ValeurLettre lettre = j2.donnerLettre(cpt);
+	        Rectangle tile = new Rectangle(55, 55);
+	        VBox vb= new VBox();
+	        Text text;
+	        Text textPoint;
+	        if (lettre != null) {
+	            text = new Text(lettre.AffichageLettre());
+	            textPoint= new Text(String.valueOf(lettre.getPoint()));
+	        } else {
+	            text = new Text("");
+		        textPoint= new Text("");
 
+	        }
+	        text.setFont(Font.font(20));
+	        tile.setFill(Color.BURLYWOOD);
+	        tile.setStroke(Color.BLACK);
+	        textPoint.setFont(Font.font(10));
+
+	        vb=new VBox(text,textPoint);;
+	        vb.setPrefWidth(50);
+	        vb.setPrefHeight(50);
+	        vb.setMaxWidth(50);
+	        vb.setMaxHeight(50);
+	        StackPane sP = new StackPane(tile, vb);
+	        idGrilleChevaletJ2.add(sP, cpt, 0);
+
+	        final int i = cpt;
+	        if (plateau.getTour()%2==1) {
+	        sP.setOnDragDetected(event -> {
+	            if (lettre != null) {
+	                Dragboard db = sP.startDragAndDrop(TransferMode.MOVE);
+	                ClipboardContent content = new ClipboardContent();
+	                content.putString("1," + i);
+	                db.setContent(content);
+	                event.consume();
+	            }
+	        });
+	        
+	        sP.setOnDragOver(event -> {
+                if (event.getGestureSource() != sP && event.getDragboard().hasString()) {
+                    event.acceptTransferModes(TransferMode.MOVE);
+                }
+                event.consume();
+            }); 
+
+            sP.setOnDragDropped(event -> {
+                ValeurLettre temp;
+                Dragboard db = event.getDragboard();
+                boolean success = false;
+                if (db.hasString()) {
+                    String[] split = db.getString().split(",");
+                    int sourceIndex = Integer.parseInt(split[1]);
+                    
+                    System.out.println(sourceIndex+" "+i);
+                    if (sourceIndex<i) {
+	                    temp=j2.supprimerLettre(sourceIndex);
+	                    j2.ajouterLettre(j2.supprimerLettre(i));
+	                    j2.ajouterLettre(temp);}
+                    else {
+	                    temp=j2.supprimerLettre(i);
+	                    j2.ajouterLettre(j2.supprimerLettre(sourceIndex));
+	                    j2.ajouterLettre(temp);
+	                    }
+
+                    
+                    
+                    actualiserAffichage(j, plateau, idGrilleScrabble, idGrilleChevaletJ1, lbScore, lbTour);
+
+
+                    success = true;
+                }
+                event.setDropCompleted(success);
+                event.consume();
+            });
+	        }
 		}
 	}
 	
