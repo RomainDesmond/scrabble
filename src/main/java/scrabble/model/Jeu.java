@@ -225,7 +225,6 @@ public class Jeu {
 					System.out.println("Non positionnable");
 					estPlacable=false;
 				}
-				System.out.println();
 			}
 		return estPlacable;
 	}
@@ -240,7 +239,6 @@ public class Jeu {
 					System.out.println("Mot non positionnable");
 					estPlacable=false;
 				}
-				System.out.println();
 			}
 		return estPlacable;
 	}
@@ -248,33 +246,21 @@ public class Jeu {
 	public void modificationCasePlacable() {
 		for (int cpt=0;cpt<15;cpt++) {
 			for(int cpt1=0;cpt1<15;cpt1++) {
-				//System.out.print(this.plateauDeJeu[cpt][cpt1].getContenu());
-				//System.out.print(this.plateauDeJeu[cpt][cpt1].estUtilisable());
-
 				if(this.plateauDeJeu[cpt][cpt1].getContenu()!=null) {
 					if (cpt<14) {
 						plateauDeJeu[cpt+1][cpt1].setCaseUtilisable(true);
-
-						
 					}
 					if (cpt>0) {
-
 						plateauDeJeu[cpt-1][cpt1].setCaseUtilisable(true);
-
 					}
 					if (cpt1<14) {
-
 						plateauDeJeu[cpt][cpt1+1].setCaseUtilisable(true);
-
 					}
 					if (cpt1>0) {
-
 						plateauDeJeu[cpt][cpt1-1].setCaseUtilisable(true);
-
 					}
 				}
 			}
-			System.out.println();
 		}
 		for (int cpt=0;cpt<15;cpt++) {
 			for(int cpt1=0;cpt1<15;cpt1++) {
