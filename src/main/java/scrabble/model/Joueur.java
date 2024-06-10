@@ -9,7 +9,7 @@ import scrabble.console.Console;
 public class Joueur {
 	private String nom;
 	private int score;
-	static ValeurLettre [] chevalet;
+	private ValeurLettre [] chevalet;
 
 	//private List<Lettre> chevalet;
 	private int valeurEchange;
