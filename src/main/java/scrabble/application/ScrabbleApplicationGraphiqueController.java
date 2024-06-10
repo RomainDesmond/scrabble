@@ -25,6 +25,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import scrabble.model.Jeu;
@@ -313,6 +314,20 @@ public class ScrabbleApplicationGraphiqueController {
 			for(int cpt2=0;cpt2<15;cpt2++) {
                 Rectangle tile = new Rectangle(50, 50);
                 Text text = new Text(plateau.casePosition(cpt2,cpt1).affichageCase());
+                //Text textPoint = new Text(String.valueOf(plateau.casePosition(cpt2, cpt1).getContenu().getPoint()));
+                //System.out.printl
+                /*Text textPoint = new Text();
+                VBox vb;
+    	        text.setFont(Font.font(20));
+    	        tile.setFill(Color.BURLYWOOD);
+    	        tile.setStroke(Color.BLACK);
+    	        textPoint.setFont(Font.font(10));
+
+    	        vb=new VBox(text,textPoint);
+    	        vb.setPrefWidth(50);
+    	        vb.setPrefHeight(50);
+    	        vb.setMaxWidth(50);
+    	        vb.setMaxHeight(50);*/
                 
                 text.setFont(Font.font(20));
                 if (plateau.casePosition(cpt2, cpt1).affichageTypeCase()!="") {
@@ -340,9 +355,10 @@ public class ScrabbleApplicationGraphiqueController {
   
                 tile.setStroke(Color.BLACK);
                 StackPane sP=new StackPane (tile,text);
+                //StackPane sP=new StackPane (tile,vb);
+
                 sP.setOnDragOver(event -> {
                     if (event.getGestureSource() != sP && event.getDragboard().hasString()) {
-                    	//System.out.println("oui");
                         event.acceptTransferModes(TransferMode.MOVE);
                     }
                     event.consume();
@@ -390,16 +406,28 @@ public class ScrabbleApplicationGraphiqueController {
 	    for (int cpt = 0; cpt < 7; cpt++) {
 	        ValeurLettre lettre = j.donnerLettre(cpt);
 	        Rectangle tile = new Rectangle(55, 55);
+	        VBox vb= new VBox();
 	        Text text;
+	        Text textPoint;
 	        if (lettre != null) {
 	            text = new Text(lettre.AffichageLettre());
+	            textPoint= new Text(String.valueOf(lettre.getPoint()));
 	        } else {
 	            text = new Text("");
+		        textPoint= new Text("");
+
 	        }
 	        text.setFont(Font.font(20));
 	        tile.setFill(Color.BURLYWOOD);
 	        tile.setStroke(Color.BLACK);
-	        StackPane sP = new StackPane(tile, text);
+	        textPoint.setFont(Font.font(10));
+
+	        vb=new VBox(text,textPoint);;
+	        vb.setPrefWidth(50);
+	        vb.setPrefHeight(50);
+	        vb.setMaxWidth(50);
+	        vb.setMaxHeight(50);
+	        StackPane sP = new StackPane(tile, vb);
 	        idGrilleChevaletJ1.add(sP, cpt, 0);
 
 	        final int i = cpt;
