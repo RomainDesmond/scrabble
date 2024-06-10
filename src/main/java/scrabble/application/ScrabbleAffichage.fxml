@@ -108,7 +108,6 @@
             <Button fx:id="idBtnValider" mnemonicParsing="false" onAction="#btnValiderAppuyer" text="Valider" />
             <Label text="Score J2 : " />
             <Label fx:id="idLbScore2" text="0" />
-            <Button fx:id="idBtnTemp1" mnemonicParsing="false" onAction="#btnTempAppuyer" text="BoutonTemporaire" />
          </children>
       </VBox>
    </right>
