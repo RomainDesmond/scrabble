@@ -879,7 +879,7 @@ public class ScrabbleApplicationGraphiqueController {
 				System.out.println("non placable");
 				motEstJoue=false;
 				for(int cpt=0;cpt<nombreLettreAPlacer;cpt++) {
-					System.out.println(positionLigneColonneMot[0]+" "+listePosition[cpt]);
+					j.ajouterLettre(plateau.getLettre(positionLigneColonneMot[0]-1, listePosition[cpt]-1));
 					plateau.supprimerLettreEmplacement(positionLigneColonneMot[0]-1, listePosition[cpt]-1);
 					
 				}
