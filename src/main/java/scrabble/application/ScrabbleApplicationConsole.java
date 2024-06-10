@@ -130,30 +130,30 @@ public class ScrabbleApplicationConsole {
 	}
 
 	
-	public static void distribution(Jeu plateau,Joueur j) {
+	public static void distribution(Jeu plateau,Joueur joueur) {
 		for (int i=0;i<7;i++) {
-			if (j.donnerLettre(i)==null){
-				distribuerUneLettre(plateau,j);
+			if (joueur.donnerLettre(i)==null){
+				distribuerUneLettre(plateau,joueur);
 			}
 			
 
 		}
 	}
-	public static void distribuerUneLettre(Jeu plateau,Joueur j) {
-		ValeurLettre lettreTemp=null;
-		int nombreTemporaire=-1;
-		while (lettreTemp==null){
-		nombreTemporaire=plateau.choixNombreAleatoire();
-		lettreTemp=plateau.distribuerLettre(nombreTemporaire);
-		}
-		if (j.ajouterLettre(lettreTemp)){
-			plateau.supprimerLettre(nombreTemporaire);
-			
-			lettreTemp=null;
-		}
+	public static void distribuerUneLettre(Jeu plateau,Joueur joueur) {
+        ValeurLettre lettreTemp = null;
+        int nombreTemporaire = -1;
+        while (lettreTemp == null) {
+            nombreTemporaire = plateau.choixNombreAleatoire();
+            lettreTemp = plateau.distribuerLettre(nombreTemporaire);
+        }
+        if (joueur.ajouterLettre(lettreTemp)) {
+            plateau.supprimerLettre(nombreTemporaire);
+            lettreTemp = null;
+        }
+    }
 		
 		
-	}
+
 	
 	public static int jouerLettre(Jeu plateau,int[] listeNb,int nbLettreJoue) {
 		System.out.println("Donnez une lettre à jouer");
